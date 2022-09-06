@@ -1,7 +1,7 @@
 import React from "react";
 import Collapsible from "react-collapsible";
 import { ArrowIcon } from "../../../icons";
-
+import { v4 } from "uuid";
 const Category = [
   "Cat1",
   "Cat2",
@@ -26,7 +26,7 @@ const ProductCategory = () => {
       >
         {Category.map((item) => {
           return (
-            <div className=" bg-gray-1350 px-3" >
+            <div key={v4()} className=" bg-gray-1350 px-3" >
               <label className="shopContainer flex items-center m-0   pt-2 py-2 font-semibold">
                 {item}
                 <input

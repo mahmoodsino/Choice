@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import {BaseButton} from '../../../buttons';
+import { v4 } from "uuid";
 
 interface OrdersType {
     orderId: number;
@@ -24,7 +25,7 @@ const Orders = () => {
     <div>
       {orderState.map((item) => {
             return (
-              <div className="border-b pb-5 mb-8 text-[#262626]">
+              <div key={v4()} className="border-b pb-5 mb-8 text-[#262626]">
                 <div className="flex flex-row justify-between mb-5">
                   <div className=" space-x-10 sm:text-xs md:text-sm">
                     <div className="inline-block  ">

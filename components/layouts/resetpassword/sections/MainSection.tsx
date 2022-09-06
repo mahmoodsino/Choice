@@ -13,8 +13,8 @@ const MainSection = () => {
 
       <div className='w-[38%] m-auto text-center space-y-3'>
             <span className='text-xl tracking-[0.08em] font-semibold block'>Reset your password</span>
-            <span className='font-semibold text-gray-1500 block'>Fill in your email and we'll send you a link to reset your password.</span>
-            <span className='text-gray-1550'>Don't forget to check your spam folder.</span>
+            <span className='font-semibold text-gray-1500 block'>Fill in your email and well send you a link to reset your password.</span>
+            <span className='text-gray-1550'>Dont forget to check your spam folder.</span>
       </div>
       <form className='w-[38%] m-auto mt-5'>
         <label className='text-left px-3 text-sm font-medium text-gray-1500' htmlFor='Email'>Email</label>

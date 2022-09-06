@@ -9,7 +9,7 @@ const LockOpenIcon = () => {
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <g clip-path="url(#clip0_54_1477)">
+      <g clipPath="url(#clip0_54_1477)">
         <path
           d="M43 86C47.6944 86 51.5 82.1944 51.5 77.5C51.5 72.8056 47.6944 69 43 69C38.3056 69 34.5 72.8056 34.5 77.5C34.5 82.1944 38.3056 86 43 86Z"
           fill="#ECB800"

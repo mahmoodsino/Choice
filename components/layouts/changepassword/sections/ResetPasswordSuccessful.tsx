@@ -12,7 +12,7 @@ const ResetPasswordSuccessful = () => {
         </div>
       <div className='text-center'>
         <span className='text-xl font-bold block'>Reset Password Successful</span>
-        <span className='text-sm text-gray-1500'>You've successfully reset your password, you can sign in again.</span>
+        <span className='text-sm text-gray-1500'>Youve successfully reset your password, you can sign in again.</span>
         <div className='px-16'>
         <Link href="/login" >
             <a className='w-full block text-white py-2 bg-blue-950 mt-10'>Back to sign in</a>

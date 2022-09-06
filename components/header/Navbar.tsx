@@ -6,6 +6,8 @@ import { SearchAtom } from "../../helper";
 import BaseButton from "../buttons/BaseButton";
 import { SearchIcon } from "../icons";
 import BaseInput from "../inputs/BaseInput";
+import { v4 } from 'uuid' 
+
 
 export const routse = [
   { path: "/", name: "Home" },
@@ -27,7 +29,7 @@ const Navbar = () => {
         <div className=" py-3 flex items-center text-sm space-x-4">
           {routse.map(route => {
             return(
-              <Link href={route.path}>
+              <Link key={v4()} href={route.path}>
             <a className={`text-white  border-r pr-4 ${pathname.slice(1) !== route.path.slice(1) ? "" : "font-bold"}`}>{route.name}</a>
           </Link>
             )
