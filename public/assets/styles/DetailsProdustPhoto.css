@@ -1,0 +1,15 @@
+.slick-dots.slick-thumb li {
+    width: 80px;
+    height: 80px; 
+    top: 90px;
+    border-radius: 5px;
+    border: 1px solid white;
+    background-color: white;
+    overflow: hidden;
+  }
+  
+  .slick-dots.slick-thumb li.slick-active {
+    border: 1px solid black;
+    width: 80px;
+  }
+  
