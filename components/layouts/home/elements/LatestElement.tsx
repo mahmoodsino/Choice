@@ -4,7 +4,7 @@ import BaseButton from '../../../buttons/BaseButton'
 const LatestElement = () => {
   return (
     <div className="py-3 border-b mx-3">
-        <div className="flex pl-3 space-x-3">
+        <div className="flex  space-x-3">
           <div className="border w-24 h-24"></div>
           <div className="text-gray-1200 whitespace-nowrap">
             <span className="block font-semibold">Product name / </span>

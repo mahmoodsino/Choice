@@ -68,10 +68,8 @@ const FormSection = () => {
 
         </div>
         </form>
-        <div className="mt-5">
-
+        <div className="mt-5 flex justify-center">
         <GoogleButton
-          className="w-full"
           type="light"
           onClick={() => {
             console.log("Google button clicked");

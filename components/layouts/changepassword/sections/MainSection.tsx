@@ -26,7 +26,9 @@ const MainSection = () => {
         <label className='text-left px-3 text-sm font-medium text-gray-1500 mt-3' htmlFor='Confirm New Password'>Confirm New Password</label>
         <BaseInput id="Confirm New Password" type='password' placeholder='**************'/>
         </div>
-        <BaseButton className='w-full text-white py-2 bg-blue-950 mt-10' title='Reset password'/>
+        <div className='flex justify-end'>
+          <BaseButton className='px-7 rounded-full text-white py-2 bg-blue-950 mt-5' title='Reset password'/>
+        </div>
       </form>
       {/* <ResetPasswordSuccessful /> */}
     </div>

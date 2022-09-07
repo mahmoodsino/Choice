@@ -5,9 +5,9 @@ import BaseButton from '../buttons/BaseButton'
 
 const BaseCard = () => {
   return (
-    <div className='pr-1 w-[250px] h-[300px] mb-3'>
+    <div className=' w-[250px] h-fit  border '>
 
-        <div className='border   '>
+        <div className='   '>
         <div>
           <div className='m-auto w-fit py-2 h-[190px] pt-8  bg-contain'>
             <Image  src={download} alt="" />
@@ -17,7 +17,7 @@ const BaseCard = () => {
                 <span className='block font-medium'>White Lithium Grease</span>
                 <span className='text-gray-1050 text-lg font-semibold'>$ 50.00</span>
             </div>
-            <div className='flex justify-around bg-[#F3F3F3] border py-1.5 mt-2'>
+            <div className='flex w-full  justify-around bg-[#F3F3F3] border  py-2'>
                 <BaseButton className='px-3 py-1 text-xs bg-blue-950 rounded-full font-semibold text-white ' title='ADD TO CART'  />
                 <BaseButton className='px-3 py-1 text-xs font-semibold bg-gray-1200 text-white rounded-full ' title="VIEW" />
             </div>

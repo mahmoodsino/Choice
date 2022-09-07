@@ -19,7 +19,10 @@ const MainSection = () => {
       <form className='w-[38%] m-auto mt-5'>
         <label className='text-left px-3 text-sm font-medium text-gray-1500' htmlFor='Email'>Email</label>
         <BaseInput id="Email" type='email' placeholder='Email Address'/>
-        <BaseButton className='w-full text-white py-2 bg-blue-950 mt-10' title='Request password reset'/>
+        <div className='flex justify-end'>
+          <BaseButton className='px-7 rounded-full text-white py-2 bg-blue-950 mt-5' title='Request password reset'/>
+
+        </div>
       </form>
     </div>
   )

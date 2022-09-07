@@ -48,7 +48,9 @@ const FormSection = () => {
             <BaseInput id="Zip/postal code"  />
           </div>
         </div>
-        <BaseButton className='w-full bg-blue-950 text-white font-semibold py-2 mt-5 ' title='Save' />
+        <div className="flex justify-center">
+          <BaseButton className='px-9 rounded-full bg-blue-950 text-white font-semibold py-2 mt-5 ' title='Save' />
+        </div>
 
       </form>
     </div>
