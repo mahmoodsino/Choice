@@ -69,10 +69,10 @@ const BestSeller = () => {
       return (
         <div className="mt-10">
           <div className="mb-5">
-            <span className="px-5 py-1.5 text-sm font-bold bg-yellow-950">
+            <span className="px-5  py-1.5 text-sm font-bold bg-yellow-950">
             BEST SELLER
             </span>
-            <div className="w-full border border-b"></div>
+            <div className="w-full mt-0.5 border border-b"></div>
           </div>
           <div className="">
             <Slider {...settings}>

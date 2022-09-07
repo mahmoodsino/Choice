@@ -6,8 +6,8 @@ import Link from "next/link";
 
 const FormSection = () => {
   return (
-    <div className="mt-5">
-      <form>
+    <div className="mt-5 borderb">
+      {/* <form>
         <div className="text-left">
           <label htmlFor="Email" className="text-lg font-semibold px-2 py-2">
             Email
@@ -43,16 +43,50 @@ const FormSection = () => {
             console.log("Google button clicked");
           }}
         />
-      </form>
+      </form> */}
+      <form className="border-b pb-5">
+        <div className="text-left">
+          <label htmlFor="Email" className="text-sm font-medium  py-2">
+            Email
+          </label>
+          <BaseInput id="Email" type="email" />
+        </div>
+        <div className="text-left mt-5">
+          <label htmlFor="Password" className="text-sm font-medium  py-2">
+            Password
+          </label>
+          <BaseInput id="Password" type="password" />
+        </div>
+        <div className="flex justify-between mt-6 items-center ">
+        <Link href="/resetpassword">
+          <a className='text-xs font-medium text-gray-1500'>Forgot your password?</a>
+          </Link>
+          <BaseButton
+            className="px-7 py-1.5  bg-blue-950 text-white rounded-full"
+            title="Sign in"
+          />
 
-      <div className="mt-5">
-        <span className="text-[#7B7B7B] font-medium">
-          Don,t have an account?
-        </span>
-        <Link href="/register">
-          <a className="font-bold">SIign up now</a>
+        </div>
+        </form>
+        <div className="mt-5">
+
+        <GoogleButton
+          className="w-full"
+          type="light"
+          onClick={() => {
+            console.log("Google button clicked");
+          }}
+        />
+        </div>
+
+        <div className="mt-10  m-auto text-center space-y-4">
+        <span className="block font-bold tracking-[0.08em]">Already have an account?</span>
+        <Link href="/register" >
+          <a className="w-[100%] block tracking-[0.08em] border border-black py-2 font-semibold ">SIign up now</a>
+
         </Link>
       </div>
+
     </div>
   );
 };

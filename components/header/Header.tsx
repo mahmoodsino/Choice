@@ -12,8 +12,8 @@ const Header = () => {
   const [activeDropDown, setActiveDropDown] =
     useRecoilState(ActiveDropDownAtom);
   return (
-    <div className="2xl:container m-auto ">
-      <div className="flex justify-between border-b px-[75px] ">
+    <div className="2xl:container m-auto md:block sm:hidden ">
+      <div className="flex justify-between border-b lg:px-[75px] md:px-[35px] ">
         <div className="flex ">
           <div className="flex space-x-2 items-center border-r py-2 pr-2">
             <PhoneIcon className="w-2.5 fill-gray-950" />
@@ -43,7 +43,7 @@ const Header = () => {
           
         </div>
       </div>
-      <div className="flex justify-between px-[65px] border-b">
+      <div className="flex justify-between lg:px-[65px] md:px-[25px] border-b">
         <Image alt="" src={choicePhoto} />
         <div className="flex items-center space-x-2 pr-3">
           <Link  href="/requestaqoute">

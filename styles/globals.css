@@ -4,6 +4,7 @@
 @import url(../public/assets/styles/Products.css);
 @import url(../public/assets/styles/DetailsProdustPhoto.css);
 @import url(../public/assets/styles/FixedNavbar.css);
+@import url(../public/assets/styles/MobailHeader.css);
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

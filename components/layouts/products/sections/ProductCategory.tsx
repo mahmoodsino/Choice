@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Collapsible from "react-collapsible";
 import { ArrowIcon } from "../../../icons";
 import { v4 } from "uuid";
@@ -14,20 +14,22 @@ const Category = [
 ];
 
 const ProductCategory = () => {
+  const [openCategories,setOpenCategory]=useState(true)
   return (
     <div className="w-[90%] mt-14">
       <Collapsible
+      open={openCategories}
         trigger={
-          <div className="flex justify-between items-center bg-gray-1350 py-1.5 px-3">
+          <div onClick={() => setOpenCategory(!openCategories)} className="flex justify-between items-center bg-gray-1350 py-1.5 px-3">
             <span>Categories</span>
-            <ArrowIcon className="w-3 fill-black" />
+            <ArrowIcon className={`w-3  fill-black transition-all duration-300 ease-in-out  ${openCategories ? "" : "rotate-180"}`} />
           </div>
         }
       >
         {Category.map((item) => {
           return (
             <div key={v4()} className=" bg-gray-1350 px-3" >
-              <label className="shopContainer flex items-center m-0   pt-2 py-2 font-semibold">
+              <label className="shopContainer flex items-center   pt-3 py-2 font-semibold">
                 {item}
                 <input
                   className="checkbox"

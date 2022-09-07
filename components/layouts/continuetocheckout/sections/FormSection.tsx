@@ -23,7 +23,10 @@ const FormSection = () => {
         <Link href="/resetpassword">
           <a className='text-xs font-medium text-gray-1500'>Forgot your password?</a>
           </Link>
-          <BaseButton className='font-medium bg-yellow-950 px-6 py-2 ' title='Checkout' />
+          <BaseButton
+            className="px-7 py-1.5  bg-yellow-950 rounded-full"
+            title="Checkout"
+          />
 
         </div>
         </form>

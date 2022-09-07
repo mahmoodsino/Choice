@@ -27,10 +27,10 @@ const CartSummary = () => {
       </div>
       <div className="px-2 text-white flex justify-between mt-5">
         <Link href="/products">
-          <a className="px-4 py-1 bg-gray-1200 rounded-lg ">Keep Shopping</a>
+          <a className="px-4 py-1 bg-gray-1200 rounded-full ">Keep Shopping</a>
         </Link>
         <Link href="/continuetocheckout">
-          <a className="px-4 py-1 bg-blue-950 rounded-lg">
+          <a className="px-4 py-1 bg-blue-950 rounded-full">
             Checkout
             <CheckoutIcon className="w-3 inline-block fill-white ml-3" />
           </a>
@@ -39,5 +39,6 @@ const CartSummary = () => {
     </div>
   );
 };
+
 
 export default CartSummary;

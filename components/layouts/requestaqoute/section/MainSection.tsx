@@ -24,8 +24,8 @@ const MainSection = () => {
           <div className="grid grid-cols-2 gap-10">
             <div>
               <label htmlFor="Full Name" className="flex items-center space-x-2 mb-2 px-3 h-10">
-                <PersonIcon className="w-6 fill-blue-950 inline-block" />
-                <span className="text-sm text-gray-1200">Full Name</span>
+                <PersonIcon className="w-5 fill-blue-950 inline-block" />
+                <span className="text-sm text-gray-1050">Full Name</span>
               </label>
               <BaseInput
               id="Full Name"
@@ -35,7 +35,7 @@ const MainSection = () => {
             <div>
               <label htmlFor="Email Address" className="flex items-center space-x-2 mb-2 px-3 h-10">
                 <LetterIcon className="w-6 fill-blue-950 inline-block" />
-                <span className="text-sm text-gray-1200">Email Address</span>
+                <span className="text-sm text-gray-1050">Email Address</span>
               </label>
               <BaseInput
               id="Email Address"
@@ -43,11 +43,11 @@ const MainSection = () => {
               />
             </div>
           </div>
-          <div className="grid grid-cols-2 gap-10 mt-5">
+          <div className="grid grid-cols-2 gap-10 mt-2">
             <div>
               <label htmlFor="Company Name" className="flex items-center space-x-2 mb-2 px-3 h-10">
-                <CompanyIcon className="w-6 fill-blue-950 inline-block" />
-                <span className="text-sm text-gray-1200">Company Name</span>
+                <CompanyIcon className="w-5 fill-blue-950 inline-block" />
+                <span className="text-sm text-gray-1050">Company Name</span>
               </label>
               <BaseInput
               id="Company Name"
@@ -57,7 +57,7 @@ const MainSection = () => {
             <div>
               <label htmlFor="Subject" className="flex items-center space-x-2 mb-2 px-3 h-10">
                 <WriteIcon className="w-6 fill-blue-950 inline-block" />
-                <span className="text-sm text-gray-1200">Subject</span>
+                <span className="text-sm text-gray-1050">Subject</span>
               </label>
               <BaseInput
               id="Subject"
@@ -66,10 +66,10 @@ const MainSection = () => {
             </div>
           </div>
 
-          <div className="mt-5">
+          <div className="mt-2">
             <label htmlFor="Message" className="flex items-center space-x-2 mb-2 px-3 h-10">
-              <MessageIcon className="w-8 fill-blue-950 inline-block" />
-              <span className="text-sm text-gray-1200">Message</span>
+              <MessageIcon className="w-7 fill-blue-950 inline-block" />
+              <span className="text-sm text-gray-1050">Message</span>
             </label>
             <textarea
             id="Message"
@@ -108,7 +108,7 @@ const MainSection = () => {
           </div>
           <div className="flex justify-center">
 
-          <BaseButton className="px-9 mt-8 py-1  bg-yellow-950 text-white text-lg font-bold" title="Submit " />
+          <BaseButton className="px-9 rounded-full mt-8 py-1  bg-yellow-950 text-white text-lg font-bold" title="Submit " />
           </div>
         </form>
       </div>

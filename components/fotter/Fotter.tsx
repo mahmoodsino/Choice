@@ -9,7 +9,7 @@ const Fotter = () => {
   return (
     <div className="bg-gray-1300">
       <div className="2xl:container m-auto">
-        <div className="px-36 mx-12 flex justify-between py-10  border-b">
+        <div className="lg:px-36 mx-12 flex justify-between py-10  border-b">
           <div className="flex flex-col items-center">
             <div className="w-14 mb-3 h-14 rounded-full bg-gray-1200 flex items-center ">
               <PhoneIcon className="w-3 -rotate-45 fill-white m-auto" />
@@ -34,7 +34,7 @@ const Fotter = () => {
           </div>
         </div>
         <div>
-          <div className="px-56">
+          <div className="lg:px-56">
             <div className="flex justify-between px-4 text-sm text-white underline py-5">
               <Link href="/">
                 <a>Home</a>

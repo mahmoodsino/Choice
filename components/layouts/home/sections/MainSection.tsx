@@ -9,8 +9,8 @@ import TOOLS1 from "../../../../public/assets/images/TOOLS1.png";
 import TOOLS2 from "../../../../public/assets/images/TOOLS2.png";
 import FeaturedProducts from "./FeaturedProducts";
 import BestSeller from "./BestSeller";
-import mobil from "../../../../public/assets/images/mobil.png"
-import spell from "../../../../public/assets/images/spell.png"
+import mobil from "../../../../public/assets/images/mobil.png";
+import spell from "../../../../public/assets/images/spell.png";
 import SpecialProducts from "./SpecialProducts";
 import Latest from "./Latest";
 import Information from "./Information";
@@ -22,19 +22,18 @@ import Offer from "./Offer";
 const MainSection = () => {
   return (
     <div className="pb-20">
-      
-      <div className="2xl:container grid-cols-4 grid px-[75px] m-auto">
+      <div className="2xl:container grid-cols-4 grid md:px-[35px] lg:px-[75px] m-auto">
         <div className="col-span-1">
           <Categories />
           <SpecialOffers />
           <Latest />
-         <Offer/>
+          <Offer />
           <Information />
         </div>
         <div className="col-span-3">
           <div className="w-[100%]">
             <MainCarousel />
-            <div className="flex justify-between items-center border mt-10 py-2">
+            <div className="flex justify-around lg:flex sm:hidden items-center border mt-10 py-2">
               <HomeHelp
                 image={<TruckIcon className="w-12 fill-yellow-950" />}
                 title="Free Delivery"
@@ -116,22 +115,24 @@ const MainSection = () => {
               <div className="py-2 ml-5 flex justify-between ">
                 <Image src={mobil} alt="" />
                 <div className="text-center mt-16 space-y-2">
-                  <span className="text-gray-950 text-xl font-semibold">ESSENTIAL AUTO FLUIDS</span>
+                  <span className="text-gray-950 text-xl font-semibold">
+                    ESSENTIAL AUTO FLUIDS
+                  </span>
                   <div className="border border-b-2 border-yellow-950 mx-6"></div>
-                  <span className="text-3xl text-blue-950 block font-semibold">BRAND NAME</span>
+                  <span className="text-3xl text-blue-950 block font-semibold">
+                    BRAND NAME
+                  </span>
                   <div className="border border-b-2 border-yellow-950 mx-6"></div>
-
                 </div>
                 <Image src={spell} alt="" />
               </div>
-
             </div>
             <SpecialProducts />
           </div>
         </div>
-      </div> 
+      </div>
       <div className="px-[75px] mt-10 2xl:container m-auto">
-      <BrandsCarosal />
+        <BrandsCarosal />
       </div>
     </div>
   );

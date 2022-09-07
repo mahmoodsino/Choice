@@ -18,7 +18,7 @@ const SpecialOffers = () => {
     dotsClass: "button__bar_offers",
   };
   return (
-    <div className="w-[90%] border mt-14">
+    <div className="w-[90%] border mt-8">
       <span className="font-bold block m-0.5 px-2 py-2 bg-gray-1100">
         SPECIAL OFFERS
       </span>

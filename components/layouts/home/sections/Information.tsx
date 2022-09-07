@@ -3,7 +3,7 @@ import React from 'react'
 
 const Information = () => {
   return (
-    <div className='border  mt-14 w-[90%]'>
+    <div className='border  mt-8 w-[90%]'>
       <span className="font-bold block m-0.5 px-2 py-2 bg-gray-1100">
       INFORMATION
       </span>

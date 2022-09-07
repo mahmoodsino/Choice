@@ -10,7 +10,7 @@ const DetailsCard = () => {
         <div className="w-[40%] flex justify-between items-center">
           <span className="text-[22px] font-bold">$29.50</span>
           <span className="line-through text-[#9098B1]">$39.50</span>
-          <span className="text-blue-950 font-bold">24% Off</span>
+          <span className="text-[#33A0FF] font-bold">24% Off</span>
         </div>
         <div className="w-[40%] flex justify-between items-center">
           <span className="text-gray-1400 text-sm">Availability:</span>

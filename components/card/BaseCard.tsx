@@ -5,11 +5,11 @@ import BaseButton from '../buttons/BaseButton'
 
 const BaseCard = () => {
   return (
-    <div className='pr-1'>
+    <div className='pr-1 w-[250px] h-[300px] mb-3'>
 
-        <div className='border w-[100%]  '>
+        <div className='border   '>
         <div>
-          <div className='m-auto w-fit py-2 h-[140px] bg-contain'>
+          <div className='m-auto w-fit py-2 h-[190px] pt-8  bg-contain'>
             <Image  src={download} alt="" />
           </div>
             <div className='mx-2'>

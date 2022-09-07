@@ -24,13 +24,13 @@ const Navbar = () => {
 
 
   return (
-    <div className="  bg-blue-950  ">
-      <div className="px-[75px]  flex   justify-between m-auto 2xl:container items-center h-fit">
+    <div className="  bg-blue-950 md:block sm:hidden  ">
+      <div className="lg:px-[75px] md:px-[35px]  flex   justify-between m-auto 2xl:container items-center h-fit">
         <div className=" py-3 flex items-center text-sm space-x-4">
           {routse.map(route => {
             return(
               <Link key={v4()} href={route.path}>
-            <a className={`text-white  border-r pr-4 ${pathname.slice(1) !== route.path.slice(1) ? "" : "font-bold"}`}>{route.name}</a>
+            <a className={`text-white  lg:border-r md:pr-2 lg:pr-4 whitespace-nowrap ${pathname.slice(1) !== route.path.slice(1) ? "" : "font-bold"}`}>{route.name}</a>
           </Link>
             )
           })}

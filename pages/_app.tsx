@@ -2,9 +2,8 @@ import "../styles/globals.css";
 import type { AppProps } from "next/app";
 import { ReactNode } from "react";
 import {RecoilRoot, useRecoilState} from "recoil"
-import { Fotter, Header, Navbar } from "../components";
+import { FixedNavbar, Fotter, Header, MobaiHeader, MobileSidbar, Navbar } from "../components";
 import { ActiveDropDownAtom, showCategoriesAtom } from "../helper";
-import FixedNavbar from "../components/header/FixedNavbar";
 
 
 interface Props {
@@ -36,7 +35,9 @@ function MyApp({ Component, pageProps }: AppProps) {
         <App>
           <Header />
           <FixedNavbar />
+          <MobaiHeader/>
           <Navbar/>
+          <MobileSidbar />
             <Component {...pageProps} />
             <Fotter/>
         </App>

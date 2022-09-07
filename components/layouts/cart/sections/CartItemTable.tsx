@@ -5,7 +5,7 @@ import { BlusIcon, MinusIcon, TrashIcon } from "../../../icons";
 const CartItemTable = () => {
   return (
     <div>
-      <div className="px-10 py-10 lg:block sm:hidden">
+      <div className=" py-10 lg:block sm:hidden">
         <table className="w-full">
           <thead className="">
             <tr className="border-b text-left text-xl font-semibold  ">

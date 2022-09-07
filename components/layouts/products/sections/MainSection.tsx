@@ -23,7 +23,7 @@ const MainSection = () => {
                     <span className='text-lg font-semibold'>124 Results</span>
                     <ProductSelect />
                 </div>
-                <div className='grid grid-cols-4 mt-7 gap-2'>
+                <div className='grid grid-cols-4 mt-7 gap-4'>
                     <BaseCard />
                     <BaseCard />
                     <BaseCard />
