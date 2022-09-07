@@ -11,23 +11,23 @@ import BaseInput from "../../../inputs/BaseInput";
 
 const MainSection = () => {
   return (
-    <div className="px-[75px] 2xl:container m-auto py-10">
+    <div className="lg:px-[75px] md:px-[35px] sm:px-5 2xl:container m-auto py-10">
       <div className="flex justify-between  mt-10">
-        <span className="font-medium block ">Request a Quote</span>
-        <div className="border h-0 mt-3.5 border-yellow-950 w-[85%]"></div>
+        <span className="font-medium block whitespace-nowrap ">Request a Quote</span>
+        <div className="border h-0 md:mt-3 lg:mt-3.5 border-yellow-950 md:w-[80%] lg:w-[85%]"></div>
       </div>
       <span className="block text-center text-[30px] font-bold mt-5">
         Submit a Request
       </span>
-      <div className="px-48 mt-10">
+      <div className="lg:px-48 md:px-20  mt-10">
         <form>
-          <div className="grid grid-cols-2 gap-10">
+          <div className="grid lg:grid-cols-2 lg:gap-10">
             <div>
               <label htmlFor="Full Name" className="flex items-center space-x-2 mb-2 px-3 h-10">
                 <PersonIcon className="w-5 fill-blue-950 inline-block" />
                 <span className="text-sm text-gray-1050">Full Name</span>
               </label>
-              <BaseInput
+              <BaseInput 
               id="Full Name"
                 placeholder=""
               />
@@ -43,7 +43,7 @@ const MainSection = () => {
               />
             </div>
           </div>
-          <div className="grid grid-cols-2 gap-10 mt-2">
+          <div className="grid lg:grid-cols-2 lg:gap-10 mt-2">
             <div>
               <label htmlFor="Company Name" className="flex items-center space-x-2 mb-2 px-3 h-10">
                 <CompanyIcon className="w-5 fill-blue-950 inline-block" />

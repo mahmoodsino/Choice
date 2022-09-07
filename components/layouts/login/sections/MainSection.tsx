@@ -7,7 +7,7 @@ const MainSection = () => {
       <div className="text-center">
         <span className="text-[32px] font-bold block py-3">WELCOME BACK!</span>
         <span className="text-gray-1200 text-xl font-medium">Please enter your details</span>
-        <div className="w-[35%] m-auto">
+        <div className="lg:w-[35%] m-auto">
 
             <FormSection />
         </div>

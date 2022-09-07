@@ -53,7 +53,7 @@ const Header = () => {
           </a>
           </Link>
         
-          <Link href="./cart" >
+          <Link href="/cart" >
             <a className="flex space-x-2 pl-3">
 
               <BasketIcon className="w-7 fill-blue-950 inline-block" />

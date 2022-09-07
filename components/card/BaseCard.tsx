@@ -5,7 +5,7 @@ import BaseButton from '../buttons/BaseButton'
 
 const BaseCard = () => {
   return (
-    <div className=' w-[250px] h-fit  border '>
+    <div className=' w-[250px] h-fit  border ml-3 mt-2'>
 
         <div className='   '>
         <div>

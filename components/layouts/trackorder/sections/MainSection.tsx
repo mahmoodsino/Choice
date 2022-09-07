@@ -10,7 +10,7 @@ const MainSection = () => {
             </div>
         </div>
       <div className="">
-        <div className="overflow-y-scroll left-0 right-0 m-auto sm:w-[100%] md:w-[80%] lg:w-[60%] h-[400px] overflow-auto sm:px-2 md:px-5 text-gray-1050 bg-gray-1350">
+        <div className=" left-0 right-0 m-auto sm:w-[100%] md:w-[80%] lg:w-[60%]   sm:px-2 md:px-5 text-gray-1050 bg-gray-1350">
           <h1 className="font-bold text-xl pt-5 pb-5 text-[#262626]  ">My Orders</h1>
           <Orders/>
         </div>

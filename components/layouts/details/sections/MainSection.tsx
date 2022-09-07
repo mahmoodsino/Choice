@@ -5,12 +5,12 @@ import RelatedProducts from "./RelatedProducts";
 
 const MainSection = () => {
   return (
-    <div className="px-[75px] 2xl:container m-auto pb-40">
-      <div className="flex">
-        <div className="w-1/2 mt-10">
+    <div className="lg:px-[75px] md:px-[35px] sm:px-[20px] 2xl:container m-auto pb-40">
+      <div className="lg:flex">
+        <div className="lg:w-1/2 mt-10">
           <DetailsProductPhoto />
         </div>
-        <div className="w-1/2 mt-10 px-5">
+        <div className="lg:w-1/2 sm:mt-40 lg:mt-10  px-5">
           <DetailsCard />
         </div>
       </div>

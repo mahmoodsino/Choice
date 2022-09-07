@@ -9,7 +9,7 @@ const MainSection = () => {
   const [progressPercentage, setProgressPercentage] = useState(35);
 
   return (
-    <div className="px-[75px] 2xl:container m-auto py-10">
+    <div className="lg:px-[75px] md:px-[35px] sm:px-[20px] 2xl:container m-auto py-10">
       <span className="text-2xl font-bold">Order Status</span>
       <div className="md:w-[65%] flex flex-col justify-between left-0 right-0 m-auto">
         <div className="flex flex-row justify-between md:text-xl text-gray-950 mb-3">

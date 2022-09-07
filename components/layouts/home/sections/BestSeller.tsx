@@ -58,13 +58,13 @@ const BestSeller = () => {
         infinite: true,
         speed: 500,
         autoplay: false,
-        slidesToShow: 4,
+        // slidesToShow: 4,
         rows: 1,
         autoplaySpeed: 2000,
         slidesToScroll: 1,
         nextArrow: <SampleNextArrow />,
         prevArrow: <SamplePrevArrow />,
-        // variableWidth: true,
+        variableWidth: true,
       };
       return (
         <div className="mt-10">

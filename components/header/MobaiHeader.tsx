@@ -53,8 +53,7 @@ const MobaiHeader = () => {
             onClick={() => setActiveDropDown(!activeDropDown)}
             className=" flex space-x-2 items-center whitespace-nowrap  py-2 px-2"
           >
-            <AccountIcon className="w-4 fill-white" />
-            <span className="text-xs text-white ">My Account</span>
+            <AccountIcon className="w-10 fill-white" />
           </BaseButton>
           {activeDropDown ? (
             <div className="bg-white absolute  z-10  top-[100%] right-0  shadow-[0_0_5px_rgba(0,0,0,0.12)]">
@@ -63,7 +62,7 @@ const MobaiHeader = () => {
           ) : null}
         </div>
         <div className="relative ">
-          <Link href="./cart">
+          <Link href="/cart">
             <a className="flex space-x-2 pl-3 whitespace-nowrap">
               <div className="absolute px-0.5 right-0  bg-yellow-950 rounded-full text-xs text-white font-extrabold">
                 0

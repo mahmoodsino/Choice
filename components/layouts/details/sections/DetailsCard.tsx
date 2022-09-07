@@ -5,7 +5,7 @@ import { BlusIcon, CartIcon, MinusIcon } from "../../../icons";
 const DetailsCard = () => {
   return (
     <div>
-      <span className="text-3xl font-medium block px-3"> Product Name 1</span>
+      <span className="text-3xl font-medium block "> Product Name 1</span>
       <div className="mt-5 border-b-2 space-y-2 pb-10">
         <div className="w-[40%] flex justify-between items-center">
           <span className="text-[22px] font-bold">$29.50</span>

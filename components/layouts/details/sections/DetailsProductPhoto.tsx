@@ -6,7 +6,7 @@ function SampleNextArrow(props: any) {
   const { className, style, onClick } = props;
   return (
     <div
-      className={`text-black absolute right-32  top-[450px]  bg-[#f3f3f3]   h-10 w-10   text-center cursor-pointer  z-20 `}
+      className={`text-black absolute right-[10%] top-[110%]  bg-[#f3f3f3]   h-10 w-10   text-center cursor-pointer  z-20 `}
       onClick={onClick}
     >
       <svg
@@ -32,7 +32,7 @@ function SamplePrevArrow(props: any) {
   const { className, style, onClick } = props;
   return (
     <div
-      className={`text-black absolute top-[450px] left-32 bg-[#f3f3f3]      h-10 w-10   text-center  cursor-pointer   z-20    `}
+      className={`text-black absolute top-[110%] left-[10%] bg-[#f3f3f3]      h-10 w-10   text-center  cursor-pointer   z-20    `}
       onClick={onClick}
     >
       <svg
@@ -78,13 +78,13 @@ const DetailsProductPhoto = () => {
   return (
     <div className=" border">
       <Slider {...settings}>
-        <div className="ml-24">
+        <div className="md:ml-36 lg:ml-24">
           <Image width={400} height={400} src={no_image} />
         </div>
-        <div className="ml-24">
+        <div className="md:ml-36 lg:ml-24">
           <Image width={400} height={400} src={no_image} />
         </div>
-        <div className="ml-24">
+        <div className="md:ml-36 lg:ml-24">
           <Image width={400} height={400} src={no_image} />
         </div>
       </Slider>

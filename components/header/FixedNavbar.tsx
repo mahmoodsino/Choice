@@ -141,7 +141,7 @@ const FixedNavbar = () => {
                 </a>
               </Link> */}
             </div>
-            <Link href="./cart">
+            <Link href="/cart">
               <a className="flex space-x-2 pl-3 whitespace-nowrap">
                 <BasketIcon className="md:w-5 lg:w-7 fill-blue-950 inline-block" />
                 <div>
