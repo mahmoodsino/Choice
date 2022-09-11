@@ -4,31 +4,20 @@ import Select, { StylesConfig, ActionMeta } from "react-select";
 import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { orderBySchema } from "../../../../helper/validation";
+import { useRecoilState } from "recoil";
+import { getProducts, OrderByAtom, ProductsAtom } from "../../../../helper";
 
 export interface optionType {
   value: string;
   label: string;
 }
-
 interface IFormInputs {
   orderBy: string;
 }
-
-const orderByState = [{
-    value:1,
-    label :"older"
-},{
-    value:2,
-    label :"older"
-},{
-    value:3,
-    label :"older"
-},{
-    value:3,
-    label :"older"
-}]
-
 const ProductSelect = () => {
+  const [orderByState, setOrderByState] = useRecoilState(OrderByAtom);
+  const [productsState, setProductsState] = useRecoilState(ProductsAtom);
+
   const customStyles: StylesConfig<optionType> = {
     option: (provided: ActionMeta, state: ActionMeta) => ({
       ...provided,
@@ -44,7 +33,6 @@ const ProductSelect = () => {
       paddingBottom: 5,
     }),
   };
-
   const {
     control,
     register,
@@ -63,7 +51,8 @@ const ProductSelect = () => {
             const handleSelectChange = async (
               selectedOption: optionType | null
             ) => {
-              console.log(selectedOption);
+              const res = await getProducts({orderBy:selectedOption?.label});
+              setProductsState(res.result.items);
             };
             return (
               <Select

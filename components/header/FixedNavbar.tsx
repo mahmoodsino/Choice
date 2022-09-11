@@ -54,6 +54,8 @@ const FixedNavbar = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, [goingUp]);
 
+  
+
   return (
     <div
       className={

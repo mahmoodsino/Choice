@@ -1,6 +1,5 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { MainCarousel } from "../../../carousel";
-import { Header, Navbar } from "../../../header";
 import { CommentIcon, FluentIcon, LikeIcon, TruckIcon } from "../../../icons";
 import HomeHelp from "../elements/HomeHelp";
 import Categories from "./Categories";
@@ -14,12 +13,28 @@ import spell from "../../../../public/assets/images/spell.png";
 import SpecialProducts from "./SpecialProducts";
 import Latest from "./Latest";
 import Information from "./Information";
-import { GradientElement } from "../elements";
 import BrandsCarosal from "./BrandsCarosal";
 import Image from "next/image";
 import Offer from "./Offer";
+import { getHomeInfo, HomePageAtom } from "../../../../helper";
+import { useRecoilState } from "recoil";
 
 const MainSection = () => {
+  const [homePageState,setHomePageState]=useRecoilState(HomePageAtom)
+
+
+  useEffect(() => {
+      const getData = async () => {
+        const res = await getHomeInfo ()
+        if(res==null){
+          alert("some thing went wrong")
+        }else(
+          setHomePageState(res.result)
+        )
+      }
+      getData()
+  },[])
+
   return (
     <div className="pb-20">
       <div className="2xl:container grid-cols-4 grid md:px-[35px] lg:px-[75px] m-auto">

@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Slider from "react-slick";
+import { getFeaturedProducts, ProductsType } from "../../../../helper";
 import { BaseCard } from "../../../card";
+import { Spinner } from "../../../spinner";
 
 function SampleNextArrow(props: any) {
   const { className, style, onClick } = props;
@@ -10,7 +12,7 @@ function SampleNextArrow(props: any) {
       onClick={onClick}
     >
       <svg
-      className="absolute w-5 top-1 left-1"
+        className="absolute w-5 top-1 left-1"
         viewBox="0 0 18 18"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
@@ -22,8 +24,6 @@ function SampleNextArrow(props: any) {
           fill="black"
         />
       </svg>
-
-     
     </div>
   );
 }
@@ -32,7 +32,7 @@ function SamplePrevArrow(props: any) {
   const { className, style, onClick } = props;
   return (
     <div
-      className={`text-black absolute -top-[52px] right-10  border    h-8 w-8   text-center  cursor-pointer   z-20    `}
+      className={`text-black absolute -top-[52px] right-10 border h-8 w-8 text-center cursor-pointer z-20`}
       onClick={onClick}
     >
       <svg
@@ -53,6 +53,8 @@ function SamplePrevArrow(props: any) {
 }
 
 const FeaturedProducts = () => {
+  const [featuredProduct, setFeatureProduct] = useState<ProductsType[]>([]);
+  const [loading, setLoading] = useState(false);
   const settings = {
     dots: false,
     infinite: true,
@@ -62,10 +64,26 @@ const FeaturedProducts = () => {
     rows: 1,
     autoplaySpeed: 2000,
     slidesToScroll: 1,
-    nextArrow: <SampleNextArrow />,
+    nextArrow: <SampleNextArrow  />,
     prevArrow: <SamplePrevArrow />,
     variableWidth: true,
   };
+
+  useEffect(() => {
+    const getData = async () => {
+      setLoading(true);
+      const res = await getFeaturedProducts();
+      if(res===null){
+        alert("some thing went wrong")
+      }
+      else{
+        setFeatureProduct(res.result.items);
+        setLoading(false)
+     }
+    };
+    getData();
+  }, []);
+
   return (
     <div className="mt-10">
       <div className="mb-5">
@@ -74,15 +92,28 @@ const FeaturedProducts = () => {
         </span>
         <div className="w-full mt-0.5 border border-b"></div>
       </div>
-      <div className="">
-        <Slider {...settings}>
-          <BaseCard />
-          <BaseCard />
-          <BaseCard />
-          <BaseCard />
-          <BaseCard />
-        </Slider>
-      </div>
+      {!loading ? (
+        <div className="">
+          <Slider {...settings}>
+            {featuredProduct.map((item) => {
+              return (
+                <BaseCard
+                  key={item.id}
+                  description={item.short_description}
+                  id={item.id}
+                  name={item.name}
+                  img={item.images[0]?.path}
+                  price={item.variation.price}
+                />
+              );
+            })}
+          </Slider>
+        </div>
+      ) : (
+        <div className="flex justify-center">
+          <Spinner className="w-40" />
+        </div>
+      )}
     </div>
   );
 };

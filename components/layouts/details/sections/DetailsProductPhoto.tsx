@@ -1,5 +1,7 @@
 import Image from "next/image";
 import Slider from "react-slick";
+import { useRecoilState } from "recoil";
+import { DetailsAtom } from "../../../../helper";
 import no_image from "../../../../public/assets/images/no_image.jpg";
 
 function SampleNextArrow(props: any) {
@@ -10,7 +12,7 @@ function SampleNextArrow(props: any) {
       onClick={onClick}
     >
       <svg
-      className="absolute w-4 top-1.5 left-2.5"
+        className="absolute w-4 top-1.5 left-2.5"
         viewBox="0 0 11 17"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
@@ -22,8 +24,6 @@ function SampleNextArrow(props: any) {
           strokeWidth="0.25"
         />
       </svg>
-
-
     </div>
   );
 }
@@ -53,11 +53,20 @@ function SamplePrevArrow(props: any) {
 }
 
 const DetailsProductPhoto = () => {
+  const [detailsState, setDetailsState] = useRecoilState(DetailsAtom);
+
   const settings = {
     customPaging: function (i: number) {
       return (
-        <a className="">
-          <Image width={75} height={75} src={no_image} />
+        <a className="product-slider-img">
+          {detailsState.product?.images &&
+              (
+              <Image
+                width={75}
+                height={75}
+                src={detailsState.product.images[i]?.path}
+              />
+            )}
         </a>
       );
     },
@@ -78,15 +87,18 @@ const DetailsProductPhoto = () => {
   return (
     <div className=" border">
       <Slider {...settings}>
-        <div className="md:ml-36 lg:ml-24">
-          <Image width={400} height={400} src={no_image} />
-        </div>
-        <div className="md:ml-36 lg:ml-24">
-          <Image width={400} height={400} src={no_image} />
-        </div>
-        <div className="md:ml-36 lg:ml-24">
-          <Image width={400} height={400} src={no_image} />
-        </div>
+        {detailsState.product?.images && detailsState.product.images.length !==0 ?
+          detailsState.product.images.map((img) => {
+            return (
+              <div key={img.id} className="md:ml-36 lg:ml-24 product-slider-img">
+                <Image width={400} height={400} src={img.path} />
+              </div>
+            );
+          }) :
+          <div className="md:ml-36 lg:ml-24">
+            <Image width={400} height={400} src={no_image} />
+          </div>
+          }
       </Slider>
     </div>
   );

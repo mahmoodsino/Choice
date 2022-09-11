@@ -19,7 +19,14 @@ export const routse = [
 
 const Navbar = () => {
   const [searchState, setSearchState] = useRecoilState(SearchAtom);
-  const { pathname } = useRouter();
+  const { pathname,push } = useRouter();
+
+  const handelSearch = async () => {
+    push({
+      pathname: "/products",
+      query: { search: encodeURI(searchState) },
+    });
+  };
 
 
 
@@ -46,7 +53,7 @@ const Navbar = () => {
             />
             <BaseButton
               className="px-5 py-0.5 bg-yellow-950"
-              onClick={() => console.log("")}
+              onClick={() => handelSearch()}
             >
               <SearchIcon className="w-5 fill-blue-950 " />
             </BaseButton>

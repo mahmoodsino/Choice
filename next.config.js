@@ -4,4 +4,10 @@ const nextConfig = {
   swcMinify: true,
 }
 
-module.exports = nextConfig
+module.exports = {
+  reactStrictMode: true,
+  images: {
+      domains: ["192.168.1.12"],
+      formats: ["image/webp"],
+  },
+};
