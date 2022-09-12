@@ -1,10 +1,24 @@
 import React, { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
-import { DetailsAtom, VariationsAtom } from "../../../../helper";
+import {
+  addToCart,
+  AllCartsInfoAtom,
+  CartItemsAtom,
+  CouninueAsGuestModalAtom,
+  DetailsAtom,
+  DetailsType,
+  getCartItems,
+  itemsType,
+  LocalCartAtom,
+  TokenAtom,
+  VariationsAtom,
+} from "../../../../helper";
 import BaseButton from "../../../buttons/BaseButton";
 import { BlusIcon, CartIcon, MinusIcon } from "../../../icons";
 //@ts-ignore
 import Select, { StylesConfig, ActionMeta } from "react-select";
+import { MoveToCartPageModalAtom } from "./MoveToCartPageModal";
+import { Spinner } from "../../../spinner";
 
 const DetailsCard = () => {
   const [detailsState, setDetailsState] = useRecoilState(DetailsAtom);
@@ -21,9 +35,115 @@ const DetailsCard = () => {
   const [attributeToSetVAriation, setAttributesToSetVAriation] = useState<{}[]>(
     []
   );
-
-  console.log(variationsState);
+  const [localCart, setLocalCart] = useRecoilState(LocalCartAtom);
+  const [ContinueAsGuestModal, setContinueAsGuestModal] = useRecoilState(
+    CouninueAsGuestModalAtom
+  );
+  const [token, setToken] = useRecoilState(TokenAtom);
+  const [allCartsInfo,setAllCartsInfo]=useRecoilState(AllCartsInfoAtom)
+  const [cartItems,setCartItems]=useRecoilState(CartItemsAtom)
+  const [loading,setLoading]=useState(false)
+  const [MoveToCartPageModalState, setMoveToCartPageModalState] =
+  useRecoilState(MoveToCartPageModalAtom);
   
+
+  const handleAddToCart = async (clickedItem: DetailsType) => {
+    setLocalCart((prev) => {
+      const isItemInCarts = prev.find(
+        (item) =>
+          item.product_id === clickedItem.product.id &&
+          item.variation_id === variationsState.id
+      );
+      if (isItemInCarts) {
+        return prev.map((item) =>
+          item.product_id === clickedItem.product.id &&
+          item.variation_id === variationsState.id
+            ? { ...item, quantity: item.quantity + 1 }
+            : item
+        );
+      }
+      return [
+        ...prev,
+        {
+          type: 1,
+          quantity: 1,
+          product_id: clickedItem.product.id,
+          branch_id: 1,
+          variation_id: variationsState.id,
+        },
+      ];
+    });
+  };
+
+  const handleRemoveFromCart = async (id: number, reomve?: string) => {
+    setLocalCart((prev) =>
+      prev.reduce((ack, item) => {
+        if (item.id === id) {
+          if (item.quantity === 1) return ack;
+          if (reomve) return ack;
+          return [...ack, { ...item, quantity: item.quantity - 1 }];
+        } else {
+          return [...ack, item];
+        }
+      }, [] as itemsType[])
+    );
+  };
+
+  useEffect(() => {
+    if (variationsState.available_quantity > 0) {
+      setLocalCart([
+        {
+          type: 1,
+          quantity: 1,
+          product_id: detailsState.product.id,
+          branch_id: 1,
+          variation_id: variationsState.id,
+        },
+      ]);
+    }
+  }, [variationsState]);
+
+  const CartButton = (id: number) => {
+    if (variationsState.available_quantity === 0) {
+      return (
+        <p className="text-sm block text-red-950 h-[24px]">
+          this product is not available now !!
+        </p>
+      );
+    } else {
+      let indexcart: number;
+      indexcart = localCart.findIndex((item) => item.variation_id === id);
+      if (indexcart >= 0) {
+        return (
+          <div className="flex mt-5 items-center">
+                <div className="border space-x-5 flex items-center justify-between px-2 py-1">
+                  <BaseButton
+                  //@ts-ignore
+                    onClick={() => handleRemoveFromCart(localCart[indexcart].id)}
+                    className="rounded-full w-5 h-5 bg-yellow-950 flex items-center m-auto"
+                    disabled={localCart[indexcart].quantity === 1 ? true : false}
+                  >
+                    <MinusIcon className="w-3 fill-black ml-1" />
+                  </BaseButton>
+                  <span className="block w-[40px] text-center"> {localCart[indexcart].quantity}</span>
+                  <BaseButton
+                    onClick={() => handleAddToCart(detailsState)}
+                    className="rounded-full w-5 h-5 bg-yellow-950 flex items-center m-auto"
+                    disabled={
+                      localCart[indexcart].quantity ===
+                      variationsState.available_quantity
+                        ? true
+                        : false
+                    }
+                  >
+                    <BlusIcon className="w-3 fill-black ml-1" />
+                  </BaseButton>
+                </div> 
+          </div>
+        );
+      }
+    }
+  };
 
   useEffect(() => {
     const newNames = attributeNames;
@@ -199,6 +319,35 @@ const DetailsCard = () => {
     return isfound;
   };
 
+
+  const finallAddtoCart = async () => {
+    localCart.map(async (item) => {
+      setLoading(true)
+      if (item.variation_id) {
+        const res = await addToCart(
+          token,
+          1,
+          item.product_id,
+          item.variation_id,
+          1,
+          1,
+          item.quantity,
+        );
+      }
+    });
+    const response = await getCartItems(token);
+    setCartItems(response.result.items);
+    const res = await getCartItems(token);
+    setAllCartsInfo(res.result)
+    if(res){
+      setLoading(false)
+    }
+    if(response){
+
+      setMoveToCartPageModalState(true)
+    }
+    
+  };
   return (
     <div>
       <span className="text-3xl font-medium block ">
@@ -261,21 +410,24 @@ const DetailsCard = () => {
           );
         })}
       </div>
-      <div className="flex justify-between mt-5 items-center">
-        <div className="border flex items-center space-x-8 px-2 py-1">
-          <BaseButton className="rounded-full w-5 h-5 bg-yellow-950 flex items-center m-auto">
-            <MinusIcon className="w-3 fill-black ml-1" />
-          </BaseButton>
-          <span>1</span>
-          <BaseButton className="rounded-full w-5 h-5 bg-yellow-950 flex items-center m-auto">
-            <BlusIcon className="w-3 fill-black ml-1" />
-          </BaseButton>
-        </div>
-        <div className="font-medium space-x-2">
-          <BaseButton className="text-black px-3 py-1 border border-black rounded-full ">
-            <CartIcon className="w-4 fill-black inline-block mr-2" />
-            Add to cart
-          </BaseButton>
+      <div className="flex justify-between items-center">
+        {CartButton(variationsState.id)}
+        <div className="font-medium space-x-2 h-24 flex items-center">
+          {!loading ? 
+              <BaseButton onClick={() =>
+                      token.length > 1
+                        ? finallAddtoCart()
+                        : setContinueAsGuestModal(true)
+                    } className="text-black px-3 py-1 border border-black rounded-full ">
+                <CartIcon className="w-4 fill-black inline-block mr-2" />
+                
+                Add to cart
+              </BaseButton> : 
+              <div className=" inline-block justify-center items-center h-24 mt-9">
+                <Spinner className="w-16 "/>
+              </div>
+          
+        }
           <BaseButton
             className="px-7 py-1.5  bg-yellow-950 rounded-full"
             title="Buy Now"

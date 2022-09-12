@@ -10,11 +10,16 @@ import {
   ProductsAtom,
   productsCategoreyAtom,
   SearchAtom,
+  selectBrandAtom,
+  SelectedAttributeAtom,
+  SelectedProductsCategoryAtom,
   TokenAtom,
 } from "../../../../helper";
 import { BaseCard } from "../../../card";
 import { Spinner } from "../../../spinner";
 import { Latest, Offer } from "../../home";
+import Attributes from "./Attributes";
+import Brands from "./Brands";
 import ProductCategory from "./ProductCategory";
 import ProductSelect from "./ProductSelect";
 
@@ -23,15 +28,19 @@ const MainSection = () => {
   const [loading, setLoading] = useState(false);
   const [token, setToken] = useRecoilState(TokenAtom);
   const [orderByState, setOrderByState] = useRecoilState(OrderByAtom);
-  const [productsCategorey, setProductsCategory] = useRecoilState(productsCategoreyAtom)
+  const [productsCategorey, setProductsCategory] = useRecoilState(
+    productsCategoreyAtom
+  );
   const [brands, setBrands] = useRecoilState(BrandsAtom);
   const [attributes, setAttributes] = useRecoilState(AttributesProductsAtom);
 
-console.log({brands});
-console.log({attributes});
-console.log({productsCategorey});
-
-
+  const [selecterCategory, setSelectedCategory] = useRecoilState(
+    SelectedProductsCategoryAtom
+  );
+  const [selectBrand, setSelectBrand] = useRecoilState(selectBrandAtom);
+  const [selectedAttribute, setSelectedAttribute] = useRecoilState(
+    SelectedAttributeAtom
+  );
 
   const route = useRouter().query;
 
@@ -44,21 +53,30 @@ console.log({productsCategorey});
         value: index,
       }));
       setOrderByState(result);
-      setProductsCategory(res.result.categories)
+      setProductsCategory(res.result.categories);
       setAttributes(res.result.attributes);
       setBrands(res.result.brands);
     };
-
     getData();
   }, []);
 
-
+  useEffect(() => {
+    if (typeof route.categorey !== "undefined") {
+      //@ts-ignore
+      setSelectedCategory((prev) => [...prev, +route.categorey]);
+    }
+  }, [route.categorey]);
 
   useEffect(() => {
     const getData = async () => {
       setLoading(true);
+      const res = await getProducts({
+        token: token,
       //@ts-ignore
-      const res = await getProducts({token: token,product_name: route.search,categoryId: route.categorey,
+        product_name: route.search,
+        categoryId: selecterCategory,
+        AttributeValues: selectedAttribute,
+        Brands: selectBrand,
       });
       if (res === null) {
         alert("some thing went wrong");
@@ -68,7 +86,7 @@ console.log({productsCategorey});
       }
     };
     getData();
-  }, [route.search, route.categorey]);
+  }, [route.search, selecterCategory, selectBrand, selectedAttribute]);
   return (
     <div className="2xl:container m-auto px-[75px] pb-10">
       {!loading ? (
@@ -80,6 +98,8 @@ console.log({productsCategorey});
           <div className="grid grid-cols-4 ">
             <div className="col-span-1 mt-10">
               <ProductCategory />
+              <Brands />
+              <Attributes />
               <Latest />
               <Offer />
             </div>
@@ -98,6 +118,7 @@ console.log({productsCategorey});
                       name={item.name}
                       img={item.images[0]?.path}
                       price={item.variation.price}
+                      variationId={item.variation.id}
                     />
                   );
                 })}

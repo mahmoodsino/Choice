@@ -23,6 +23,7 @@ const RelatedProducts = ({ products }: Props) => {
                 name={item.name}
                 img={item.images[0]?.path}
                 price={item.variation.price}
+                variationId={item.variation.id}
               />
             );
           })}

@@ -7,9 +7,11 @@ import {
   getSimilarProducts,
   ProductsType,
 } from "../../../../helper";
+import { ContinueAsGuest } from "../../../continueAsGuest";
 import { Spinner } from "../../../spinner";
 import DetailsCard from "./DetailsCard";
 import DetailsProductPhoto from "./DetailsProductPhoto";
+import MoveToCartPageModal from "./MoveToCartPageModal";
 import RelatedProducts from "./RelatedProducts";
 
 const MainSection = () => {
@@ -64,6 +66,8 @@ const MainSection = () => {
           <Spinner className="w-72" />
         </div>
       )}
+      <ContinueAsGuest />
+      <MoveToCartPageModal/>
     </div>
   );
 };

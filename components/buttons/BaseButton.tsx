@@ -6,11 +6,15 @@ interface Props {
   title?: string;
   className: string | undefined;
   children?: ReactNode;
+  disabled?: boolean;
+
 }
 
-const BaseButton = ({ onClick, title, className, type, children }: Props) => {
+const BaseButton = ({ onClick,disabled, title, className, type, children }: Props) => {
   return (
     <button
+    disabled={disabled}
+
       type={type ? type : "button"}
       onClick={onClick}
       className={`${

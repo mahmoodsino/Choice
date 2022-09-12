@@ -5,12 +5,17 @@ import Image from "next/image";
 import Link from "next/link";
 import { BaseButton } from "../buttons";
 import { useRecoilState } from "recoil";
-import { ActiveDropDownAtom } from "../../helper";
+import { ActiveDropDownAtom, AllCartsInfoAtom, CartItemsAtom } from "../../helper";
 import { Dropdown } from "../dropdown";
 
 const Header = () => {
   const [activeDropDown, setActiveDropDown] =
     useRecoilState(ActiveDropDownAtom);
+
+    const [allCartsInfo,setAllCartsInfo]=useRecoilState(AllCartsInfoAtom)
+    const [cartItems,setCartItems]=useRecoilState(CartItemsAtom)
+    console.log(allCartsInfo);
+    
   return (
     <div className="2xl:container m-auto md:block sm:hidden ">
       <div className="flex justify-between border-b lg:px-[75px] md:px-[35px] ">
@@ -59,7 +64,7 @@ const Header = () => {
               <BasketIcon className="w-7 fill-blue-950 inline-block" />
               <div>
                 <span className="block text-sm text-blue-950 font-bold">Shopping Cart</span>
-                <span className="block text-xs text-gray-1050">0 item(s)- $0.00</span>
+                <span className="block text-xs text-gray-1050">{allCartsInfo.items.length} item(s)- ${allCartsInfo.total_price}</span>
               </div>
 
             </a>

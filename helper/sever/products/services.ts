@@ -4,9 +4,11 @@ const root = process.env.NEXT_PUBLIC_ROOT
 
 interface Params {
   token?: string,
-  categoryId?: number
+  categoryId?: number|number[]
   product_name?: string
   orderBy?:string
+  Brands?:number[]
+  AttributeValues?:{ [key: number]: number[] }
 }
 
 const getProducts = async (params: Params) => {
@@ -19,7 +21,9 @@ const getProducts = async (params: Params) => {
       },
       params: {
         category: params.categoryId,
-        product_name: params.product_name
+        product_name: params.product_name,
+        Brands:params.Brands,
+        AttributeValues : JSON.stringify(params.AttributeValues)
         
       }
     })
