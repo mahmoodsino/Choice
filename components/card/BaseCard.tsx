@@ -4,7 +4,17 @@ import BaseButton from "../buttons/BaseButton";
 import no_image from "../../public/assets/images/no_image.jpg";
 import { useRouter } from "next/router";
 import { useRecoilState } from "recoil";
-import { addToCart, CartItemsAtom, deleteCart, FetchedItemsType, getCartItems, TokenAtom, updateCart } from "../../helper";
+import {
+  addToCart,
+  AllCartsInfoAtom,
+  CartItemsAtom,
+  CouninueAsGuestModalAtom,
+  deleteCart,
+  FetchedItemsType,
+  getCartItems,
+  TokenAtom,
+  updateCart,
+} from "../../helper";
 import { BlusIcon, MinusIcon } from "../icons";
 import { Spinner } from "../spinner";
 
@@ -15,6 +25,9 @@ interface Props {
   price?: number;
   id?: number;
   variationId?: number;
+  width:string
+  smallWidth?:string
+
 }
 
 const BaseCard = ({
@@ -24,12 +37,17 @@ const BaseCard = ({
   price,
   id,
   variationId,
+  width,
+  smallWidth
 }: Props) => {
   const [cartItems, setCartItems] = useRecoilState(CartItemsAtom);
-  const [token,setToken]=useRecoilState(TokenAtom)
-  const [loading,setLoading]=useState(false)
+  const [token, setToken] = useRecoilState(TokenAtom);
+  const [loading, setLoading] = useState(false);
   const timerRef = useRef() as MutableRefObject<NodeJS.Timeout>;
-
+  const [ContinueAsGuestModal, setContinueAsGuestModal] = useRecoilState(
+    CouninueAsGuestModalAtom
+  );
+  const [allCartsInfo,setAllCartsInfo]=useRecoilState(AllCartsInfoAtom)
 
   const { push } = useRouter();
 
@@ -51,23 +69,16 @@ const BaseCard = ({
     return isFound;
   };
 
-
-  
-
   const handleAddToCart = async () => {
-    if(id&&variationId){
+    if (id && variationId) {
       setCartItems((prev) => {
         const isItemInCarts = prev.find(
-          (item) =>
-            item.product_id === id &&
-            item.variation_id === variationId
+          (item) => item.product_id === id && item.variation_id === variationId
         );
         if (isItemInCarts) {
           return prev.map((item) =>
-            item.product_id === id &&
-            item.variation_id === variationId
-            ?
-                { ...item, quantity: item.quantity + 1 }
+            item.product_id === id && item.variation_id === variationId
+              ? { ...item, quantity: item.quantity + 1 }
               : item
           );
         }
@@ -76,7 +87,7 @@ const BaseCard = ({
           {
             type: 1,
             quantity: 1,
-            product_id:id,
+            product_id: id,
             branch_id: 1,
             variation_id: variationId,
           },
@@ -84,27 +95,25 @@ const BaseCard = ({
       });
     }
     const isItemInCarts = cartItems.findIndex(
-      (item) =>
-        item.product_id === id &&
-        item.variation_id === variationId
+      (item) => item.product_id === id && item.variation_id === variationId
     );
     if (isItemInCarts < 0) {
-      setLoading(true)
-      if(id&&variationId){
-          const res = await addToCart(
-            token,
-            1,
-            id,
-            variationId,
-            1,
-            1,
-            1,
-          );
-          const response = await getCartItems(token);
+      setLoading(true);
+      if (id && variationId) {
+        const res = await addToCart(token, 1, id, variationId, 1, 1, 1);
+        if(res===null){
+          alert("some thing went wrong")
+        }
+        const response = await getCartItems(token);
+        setAllCartsInfo(response.result)
+        if(response===null){
+          alert("some thing went wrong")
+        }else{
           setCartItems(response.result.items);
-          if(res){
-            setLoading(false)
-          }
+        }
+        if (res) {
+          setLoading(false);
+        }
       }
     }
     if (isItemInCarts >= 0) {
@@ -113,21 +122,21 @@ const BaseCard = ({
       newQuantity++;
 
       let id = cartItems[isItemInCarts].id;
-        clearTimeout(timerRef.current);
+      clearTimeout(timerRef.current);
       timerRef.current = setTimeout(async () => {
         if (id) {
           const res = await updateCart(token, id, newQuantity);
-          console.log(res);
+          if(res===null){
+            alert("some thing went wrong")
+          }
           const response = await getCartItems(token);
-        setCartItems(response.result.items);
+        setAllCartsInfo(response.result)
         }
       }, 1000);
-
     }
   };
 
-
-  const handleRemoveFromCart = async () => {
+  const handleRemoveFromCart = async (id: number) => {
     setCartItems((prev) =>
       prev.reduce((ack, item) => {
         if (item.id === id) {
@@ -148,23 +157,24 @@ const BaseCard = ({
       timerRef.current = setTimeout(async () => {
         if (id) {
           const res = await updateCart(token, id, itemQuantity);
-          console.log(res);
+          if(res===null){
+            alert("some thing went wrong")
+          }
           const response = await getCartItems(token);
-        setCartItems(response.result.items);
+          setAllCartsInfo(response.result)
         }
       }, 1000);
     } else if (itemQuantity === 1) {
-      if(id){
+      if (id) {
         const res = await deleteCart(token, id);
+        const response = await getCartItems(token);
+        setAllCartsInfo(response.result)
+        if(res===null){
+          alert("some thing went wrong")
+        }
       }
     }
   };
-
-
-
-
-
-
 
   const EditCArt = (id: number) => {
     let indexcart = cartItems.findIndex(
@@ -175,10 +185,8 @@ const BaseCard = ({
       <div className=" space-x-2 flex items-center justify-between px-2 ">
         <BaseButton
           //@ts-ignore
-          // onClick={() => handleRemoveFromCart(localCart[indexcart].id)}
-          onClick={() => handleRemoveFromCart()}
+          onClick={() => handleRemoveFromCart(cartItems[indexcart].id)}
           className="rounded-full w-5 h-5 bg-yellow-950 flex items-center m-auto"
-          // disabled={cartItems[indexcart].quantity === 1 ? true : false}
         >
           <MinusIcon className="w-3 fill-black ml-1" />
         </BaseButton>
@@ -189,12 +197,12 @@ const BaseCard = ({
         <BaseButton
           onClick={() => handleAddToCart()}
           className="rounded-full w-5 h-5 bg-yellow-950 flex items-center m-auto"
-          // disabled={
-          //   cartItems[indexcart].quantity ===
-          //   variationsState.available_quantity
-          //     ? true
-          //     : false
-          // }
+          disabled={
+            cartItems[indexcart].quantity ===
+            cartItems[indexcart].available_quantity
+              ? true
+              : false
+          }
         >
           <BlusIcon className="w-3 fill-black ml-1" />
         </BaseButton>
@@ -203,12 +211,12 @@ const BaseCard = ({
   };
 
   return (
-    <div className=" w-[250px] h-fit  border ml-3 mt-2">
+    <div className={`sm:w-[${smallWidth ? smallWidth : "100%"}] lg:w-[${width}] h-fit  border ml-3 mt-2`}>
       <div className="   ">
         <div>
           <div className="m-auto w-fit py-2 product-slider-img h-[190px] pt-8  bg-contain">
             {img ? (
-              <img src={img} className="bg-cover w-40 h-32 border" alt="" />
+              <img src={img} className="bg-cover w-40 h-32 " alt="" />
             ) : (
               <Image width={110} height={121} src={no_image} />
             )}
@@ -225,29 +233,29 @@ const BaseCard = ({
             </span>
           </div>
           <div className="flex w-full  justify-around bg-[#F3F3F3] border  py-2">
-            {!loading ? 
-                <div>
-                  {cartItems.length === 0 ? (
-                    <BaseButton
-                    onClick={() => handleAddToCart()}
-                      className="px-3 py-1 text-xs bg-blue-950 rounded-full font-semibold text-white "
-                      title="ADD TO CART"
-                    />
-                  ) : variationId && handelCart(variationId) ? (
-                    EditCArt(variationId)
-                  ) : (
-                    <BaseButton
-                    onClick={() => handleAddToCart()}
-                      className="px-3 py-1 text-xs bg-blue-950 rounded-full font-semibold text-white "
-                      title="ADD TO CART"
-                    />
-                  )}
-                </div> : 
-                <div className="w-[104.28]">
-                  <Spinner className="w-7" />
-                </div>
-            
-          }
+            {!loading ? (
+              <div>
+                {cartItems.length === 0 ? (
+                  <BaseButton
+                    onClick={() => token.length>1 ? handleAddToCart() : setContinueAsGuestModal(true)}
+                    className="px-3 whitespace-nowrap py-1 text-xs bg-blue-950 rounded-full font-semibold text-white "
+                    title="ADD TO CART"
+                  />
+                ) : variationId && handelCart(variationId) ? (
+                  EditCArt(variationId)
+                ) : (
+                  <BaseButton
+                  onClick={() => token.length>1 ? handleAddToCart() : setContinueAsGuestModal(true)}
+                    className="px-3 whitespace-nowrap py-1 text-xs bg-blue-950 rounded-full font-semibold text-white "
+                    title="ADD TO CART"
+                  />
+                )}
+              </div>
+            ) : (
+              <div className="w-[104.28]">
+                <Spinner className="w-7" />
+              </div>
+            )}
             <BaseButton
               onClick={() => id && handelMoveToDetails(id)}
               className="px-3 py-1 text-xs font-semibold bg-gray-1200 text-white rounded-full "

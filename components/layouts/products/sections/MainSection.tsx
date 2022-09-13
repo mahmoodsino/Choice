@@ -9,18 +9,16 @@ import {
   OrderByAtom,
   ProductsAtom,
   productsCategoreyAtom,
-  SearchAtom,
   selectBrandAtom,
   SelectedAttributeAtom,
   SelectedProductsCategoryAtom,
   TokenAtom,
 } from "../../../../helper";
+import { BaseButton } from "../../../buttons";
 import { BaseCard } from "../../../card";
 import { Spinner } from "../../../spinner";
-import { Latest, Offer } from "../../home";
-import Attributes from "./Attributes";
-import Brands from "./Brands";
-import ProductCategory from "./ProductCategory";
+import FillterProductsMobile, { showFillterProductAtom } from "./FillterProductsMobile";
+import Fillters from "./Fillters";
 import ProductSelect from "./ProductSelect";
 
 const MainSection = () => {
@@ -41,8 +39,24 @@ const MainSection = () => {
   const [selectedAttribute, setSelectedAttribute] = useRecoilState(
     SelectedAttributeAtom
   );
+  const [showFillterProducts, setShowFillterProducts] =
+  useRecoilState(showFillterProductAtom);
 
   const route = useRouter().query;
+
+
+    useEffect(() => {
+      const leave = () => {
+        setSelectedCategory([])
+        setSelectBrand([])
+        setSelectedAttribute({})
+      }
+      return () => {
+        leave()
+      }
+    },[])
+
+
 
   useEffect(() => {
     const getData = async () => {
@@ -88,30 +102,30 @@ const MainSection = () => {
     getData();
   }, [route.search, selecterCategory, selectBrand, selectedAttribute]);
   return (
-    <div className="2xl:container m-auto px-[75px] pb-10">
+    <div className="2xl:container m-auto lg:px-[75px] md:px-[35px] sm:px-[px] pb-10">
       {!loading ? (
         <div>
-          <div className="flex justify-between  mt-10">
+          <div className="flex justify-between  mt-10 sm:ml-3 md:ml-0">
             <span className="font-medium block ">Products</span>
-            <div className="border h-0 mt-3.5 border-yellow-950 w-[93%]"></div>
+            <div className="border h-0 mt-3.5 sm:hidden lg:block border-yellow-950 w-[93%]"></div>
           </div>
-          <div className="grid grid-cols-4 ">
-            <div className="col-span-1 mt-10">
-              <ProductCategory />
-              <Brands />
-              <Attributes />
-              <Latest />
-              <Offer />
+          <div className="grid lg:grid-cols-4 sm:ml-3 md:ml-0 ">
+            <div className="col-span-1 mt-10 sm:hidden lg:block">
+              <Fillters />
             </div>
             <div className="col-span-3 mt-5 ">
-              <div className="flex justify-between items-center">
-                <span className="text-lg font-semibold">124 Results</span>
+              <div className="flex justify-between items-center ">
+                <span className="text-lg font-semibold whitespace-nowrap">124 Results</span>
+                <div className="md:w-[30%] sm:w-[50%]">
                 <ProductSelect />
+                </div>
               </div>
-              <div className="grid md:grid-cols-3 sm:grid-cols-2 lg:grid-cols-4 mt-7 gap-4">
+              <BaseButton onClick={() => setShowFillterProducts(true)} className="px-4 py-1 sm:block lg:hidden text-white font-semibold rounded-full bg-blue-950" title="Fillters" />
+              <div className="grid md:grid-cols-3 sm:grid-cols-2 lg:grid-cols-4 sm:px-0 mt-7 sm:gap-1 lg:gap-4">
                 {productsState.map((item) => {
                   return (
                     <BaseCard
+                    width="100%"
                       key={item.id}
                       description={item.short_description}
                       id={item.id}
@@ -131,6 +145,7 @@ const MainSection = () => {
           <Spinner className="w-72" />
         </div>
       )}
+      <FillterProductsMobile />
     </div>
   );
 };

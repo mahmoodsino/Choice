@@ -1,8 +1,35 @@
+import { yupResolver } from "@hookform/resolvers/yup";
 import React from "react";
+import { useForm } from "react-hook-form";
+import { useRecoilState } from "recoil";
+import { UserInfoAtom } from "../../../../helper";
 import { BaseButton } from "../../../buttons";
 import { BaseInput } from "../../../inputs";
 
+  interface IFormInputs {
+    firstName:string,
+    lastName:string,
+    email:string,
+    company:string,
+    state:string,
+    zipCode:string
+  }
+
+
 const FormSection = () => {
+const [userInfo,setUserInfo]=useRecoilState(UserInfoAtom)
+
+
+// const {
+//   control,
+//   register,
+//   handleSubmit,
+//   setValue,
+//   formState: { errors },
+// } = useForm<IFormInputs>({
+//   resolver: yupResolver(),
+// });
+
   return (
     <div className="text-left">
       <form className="space-y-5">

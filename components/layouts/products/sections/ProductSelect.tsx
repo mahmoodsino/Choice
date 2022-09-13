@@ -42,7 +42,7 @@ const ProductSelect = () => {
     resolver: yupResolver(orderBySchema),
   });
   return (
-    <div className="inline-block sm:w-[100%] md:w-[25%]  lg:w-[22%]">
+    <div className="inline-block w-[100%]">
       <form>
         <Controller
           name="orderBy"

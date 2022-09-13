@@ -8,6 +8,9 @@ interface Props {
   onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
   title?: string | undefined;
   id?:any
+  name?: string;
+  register?:any
+  disabled?:boolean
 }
 
 const BaseInput = ({
@@ -17,7 +20,10 @@ const BaseInput = ({
   placeholder,
   onChange,
   title,
-  id
+  id,
+  name,
+  disabled,
+  register
 }: Props) => {
   return (
     <div className="w-full  ">
@@ -35,6 +41,9 @@ const BaseInput = ({
         value={value}
         type={type ? type : "text"}
         placeholder={placeholder}
+        name={name}
+        {...register && {...register(name)}}
+        disabled={disabled}
       />
       
     </div>

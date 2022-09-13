@@ -49,7 +49,7 @@ class Carousel extends Component {
                     </Link>
                 </div>
               </div>
-              <div className="sm:block h-96">
+              <div className="sm:hidden md:block h-96">
                 <Image width={200} height={384} className="" src={mainImage} alt="" />
               </div>
             </div>
@@ -77,7 +77,7 @@ class Carousel extends Component {
                     </Link>
                 </div>
               </div>
-              <div className="sm:block h-96 ">
+              <div className="sm:hidden md:block h-96 ">
                 <Image width={200} height={384} className="" src={mainImage} alt="" />
               </div>
             </div>

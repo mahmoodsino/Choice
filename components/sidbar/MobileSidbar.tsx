@@ -1,7 +1,7 @@
 import Link from "next/link";
 import React from "react";
 import { useRecoilState } from "recoil";
-import { ShowSidbarAtom } from "../../helper";
+import { OpenCategoryModalAtom, ShowSidbarAtom } from "../../helper";
 import { BaseButton } from "../buttons";
 import { CloseIcon } from "../icons";
 import choicePhoto from "../../public/assets/images/choicePhoto.png"
@@ -11,7 +11,9 @@ import Image from "next/image";
 
 const MobileSidbar = () => {
   const [showSidbarState, setShowSidbarState] = useRecoilState(ShowSidbarAtom);
-
+  const [openCategoryModal, setOpencategoryModal] = useRecoilState(
+    OpenCategoryModalAtom
+  );
   return (
     <div
       className={` ${
@@ -42,7 +44,7 @@ const MobileSidbar = () => {
           <Link href="/contactus">
             <a className="block">CONTACT US</a>
           </Link>
-          <BaseButton className=" " title="Category"/>
+          <BaseButton onClick={() => setOpencategoryModal(true)} className=" " title="Category"/>
         </div>
       </div>
     </div>

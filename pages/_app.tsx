@@ -2,7 +2,7 @@ import "../styles/globals.css";
 import type { AppProps } from "next/app";
 import { MutableRefObject, ReactNode, useEffect, useRef } from "react";
 import {RecoilRoot, useRecoilState} from "recoil"
-import { FixedNavbar, Fotter, Header, MobaiHeader, MobileSidbar, Navbar } from "../components";
+import { ContinueAsGuest, FixedNavbar, Fotter, Header, MobaiHeader, MobailCategoryModal, MobileSidbar, Navbar } from "../components";
 import { ActiveDropDownAtom, AllCartsInfoAtom, CartItemsAtom, getCartItems, showCategoriesAtom, TokenAtom } from "../helper";
 
 
@@ -30,8 +30,6 @@ const App = ({ children }: Props) => {
       
       const getData = async () => {
         const res = await getCartItems(token);
-        console.log(res);
-        
         setAllCartsInfo(res.result)
       };
       if(token.length>1) {
@@ -61,6 +59,8 @@ const App = ({ children }: Props) => {
     onClick={() => (activeDropDown || showCategories ?( setActiveDropDown(false),setShowCategories(false)) : null)}
       className="font-Poppins min-h-[60vh]"
     >
+       <ContinueAsGuest />
+       <MobailCategoryModal />
       {children}
     </div>
   );

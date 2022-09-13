@@ -8,7 +8,7 @@ function SampleNextArrow(props: any) {
   const { className, style, onClick } = props;
   return (
     <div
-      className={`text-black absolute right-[10%] top-[110%]  bg-[#f3f3f3]   h-10 w-10   text-center cursor-pointer  z-20 `}
+      className={`text-black absolute right-0 top-[110%]  bg-[#f3f3f3]   h-10 w-10   text-center cursor-pointer  z-20 `}
       onClick={onClick}
     >
       <svg
@@ -32,7 +32,7 @@ function SamplePrevArrow(props: any) {
   const { className, style, onClick } = props;
   return (
     <div
-      className={`text-black absolute top-[110%] left-[10%] bg-[#f3f3f3]      h-10 w-10   text-center  cursor-pointer   z-20    `}
+      className={`text-black absolute top-[110%] left-0 bg-[#f3f3f3]      h-10 w-10   text-center  cursor-pointer   z-20    `}
       onClick={onClick}
     >
       <svg
@@ -83,6 +83,30 @@ const DetailsProductPhoto = () => {
     nextArrow: <SampleNextArrow />,
     prevArrow: <SamplePrevArrow />,
     arrows: true,
+    // responsive: [
+    //   {
+    //     breakpoint: 1024,
+    //     settings: {
+    //       slidesToShow: 1,
+    //       slidesToScroll: 1,
+    //       infinite: true,
+    //     }
+    //   },
+    //   {
+    //     breakpoint: 600,
+    //     settings: {
+    //       slidesToShow: 1,
+    //       slidesToScroll: 1
+    //     }
+    //   },
+    //   {
+    //     breakpoint: 480,
+    //     settings: {
+    //       slidesToShow: 1,
+    //       slidesToScroll: 1
+    //     }
+    //   }
+    // ]
   };
   return (
     <div className=" border">
@@ -90,8 +114,8 @@ const DetailsProductPhoto = () => {
         {detailsState.product?.images && detailsState.product.images.length !==0 ?
           detailsState.product.images.map((img) => {
             return (
-              <div key={img.id} className="md:ml-36 lg:ml-24 product-slider-img">
-                <Image width={400} height={400} src={img.path} />
+              <div key={img.id} className="product-slider-img">
+                <img  className="m-auto lg:w-[300px] md:w-[250px] sm:w-[150px] "  src={img.path} />
               </div>
             );
           }) :

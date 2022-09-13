@@ -366,7 +366,7 @@ const DetailsCard = () => {
         <div className="w-[40%] flex justify-between items-center">
           <span className="text-gray-1400 text-sm">Availability:</span>
           <span className="text-gray-1400 text-sm">
-            {variationsState.in_stock}
+            {variationsState.available_quantity}
           </span>
         </div>
         <div className="w-[40%] flex justify-between items-center">
@@ -410,7 +410,7 @@ const DetailsCard = () => {
           );
         })}
       </div>
-      <div className="flex justify-between items-center">
+      <div className="flex sm:flex-col md:flex-row justify-between items-center">
         {CartButton(variationsState.id)}
         <div className="font-medium space-x-2 h-24 flex items-center">
           {!loading ? 
@@ -418,7 +418,7 @@ const DetailsCard = () => {
                       token.length > 1
                         ? finallAddtoCart()
                         : setContinueAsGuestModal(true)
-                    } className="text-black px-3 py-1 border border-black rounded-full ">
+                    } className="text-black whitespace-nowrap px-3 py-1 border border-black rounded-full ">
                 <CartIcon className="w-4 fill-black inline-block mr-2" />
                 
                 Add to cart
@@ -429,7 +429,7 @@ const DetailsCard = () => {
           
         }
           <BaseButton
-            className="px-7 py-1.5  bg-yellow-950 rounded-full"
+            className="px-7 py-1.5 whitespace-nowrap  bg-yellow-950 rounded-full"
             title="Buy Now"
           />
         </div>

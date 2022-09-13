@@ -33,7 +33,7 @@ const SpecialOffers = () => {
             <span className="text-2xl text-red-800 font-bold">30%</span>
             <span className="text-xs text-gray-1200 font-bold">OFF</span>
           </div>
-          <div className="relative">
+          <div className="relative w-fit m-auto">
             <Image className="" src={offers} alt="" />
             <span className="absolute top-[40%] left-[30%] text-white text-lg font-semibold ">WIPERS 10</span>
           </div>
@@ -49,7 +49,7 @@ const SpecialOffers = () => {
             <span className="text-2xl text-red-800 font-bold">30%</span>
             <span className="text-xs text-gray-1200 font-bold">OFF</span>
           </div>
-          <div className="relative">
+          <div className="relative w-fit m-auto">
             <Image className="" src={offers} alt="" />
             <span className="absolute top-[40%] left-[30%] text-white text-lg font-semibold ">WIPERS 10</span>
           </div>

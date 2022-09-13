@@ -11,11 +11,11 @@ const SendMessage = () => {
       </div>
       <div>
         <form>
-            <div className='grid grid-cols-2 px-5 py-3 gap-4'>
+            <div className='grid lg:grid-cols-2 px-5 py-3 gap-4'>
                 <BaseInput placeholder='Full Name ' className=' px-3 py-2 w-full border' />
                 <BaseInput placeholder='Email Address ' className=' px-3 py-2 w-full border' />
             </div>
-            <div className='grid grid-cols-2 px-5 pb-3 gap-4'>
+            <div className='grid lg:grid-cols-2 px-5 pb-3 gap-4'>
                 <BaseInput placeholder='Company Name' className=' px-3 py-2 w-full border' />
                 <BaseInput placeholder='Subject ' className=' px-3 py-2 w-full border' />
             </div>

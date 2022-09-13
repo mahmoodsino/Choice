@@ -98,6 +98,8 @@ const FeaturedProducts = () => {
             {featuredProduct.map((item) => {
               return (
                 <BaseCard
+                width="230px"
+                smallWidth="200px"
                   key={item.id}
                   description={item.short_description}
                   id={item.id}

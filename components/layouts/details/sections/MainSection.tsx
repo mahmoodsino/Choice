@@ -46,11 +46,11 @@ const MainSection = () => {
             <div className="lg:w-1/2 mt-10">
               <DetailsProductPhoto />
             </div>
-            <div className="lg:w-1/2 sm:mt-40 lg:mt-10  px-5">
+            <div className="lg:w-1/2 sm:mt-40 lg:mt-10  lg:px-5">
               <DetailsCard />
             </div>
           </div>
-          <div className="mt-36 bg-[#FBFBFB] py-5 px-5">
+          <div className="lg:mt-36 bg-[#FBFBFB] py-5 px-5">
             <span className="font-bold text-lg">Product Infomation</span>
             <div className="h-0 w-[70%] border mt-2">
               <div className="ml-10 h-0 border border-black w-[15%]"></div>
@@ -66,7 +66,7 @@ const MainSection = () => {
           <Spinner className="w-72" />
         </div>
       )}
-      <ContinueAsGuest />
+     
       <MoveToCartPageModal/>
     </div>
   );

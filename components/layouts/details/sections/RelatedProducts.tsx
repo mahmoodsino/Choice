@@ -8,15 +8,16 @@ interface Props {
 
 const RelatedProducts = ({ products }: Props) => {
   return (
-    <div className="  mt-14">
+    <div className="  lg:mt-14 sm:mt-5">
       <span className="text-4xl block  text-center font-semibold">
         RELATED PRODUCTS
       </span>
       {products.length > 0 ? (
-        <div className="sm:grid md:grid-cols-3 sm:grid-cols-2 lg:flex lg:justify-center mt-10 space-x-3">
+        <div className="grid lg:grid-cols-4 sm:gap-2 lg:gap-4 md:grid-cols-3 sm:grid-cols-2  mt-10 ">
           {products.map((item) => {
             return (
               <BaseCard
+              width="100%"
                 key={item.id}
                 description={item.short_description}
                 id={item.id}
