@@ -18,6 +18,7 @@ const BrandsCarosal = () => {
       };
   return (
     <div>
+
       <Slider {...settings}>
         <GradientElement image={penray} />
         <GradientElement image={penray} />
@@ -28,6 +29,7 @@ const BrandsCarosal = () => {
         <GradientElement image={penray} />
         <GradientElement image={penray} />
       </Slider>
+      
     </div>
   )
 }
