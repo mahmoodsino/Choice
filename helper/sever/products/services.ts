@@ -13,7 +13,7 @@ interface Params {
 
 const getProducts = async (params: Params) => {
   try {
-    const res = await axios.get(`${root}/products?${params.orderBy}`, {
+    const res = await axios.get(`${root}/products?${params.orderBy ? params.orderBy : "OrderByNewest"}`, {
       headers: {
         "branch-id": 1,
         "company-id": 1,
@@ -22,7 +22,7 @@ const getProducts = async (params: Params) => {
       params: {
         category: params.categoryId,
         product_name: params.product_name,
-        Brands:params.Brands,
+        Brand:params.Brands,
         AttributeValues : JSON.stringify(params.AttributeValues)
         
       }

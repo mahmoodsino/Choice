@@ -39,7 +39,7 @@ const MainSection = () => {
   }, [route.product]);
 
   return (
-    <div className="lg:px-[75px] md:px-[35px] sm:px-[20px] 2xl:container m-auto pb-40">
+    <div className="lg:px-[75px] md:px-[35px] sm:px-[10px] 2xl:container m-auto pb-40">
       {!loading ? (
         <div>
           <div className="lg:flex">

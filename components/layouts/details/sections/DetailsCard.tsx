@@ -414,11 +414,13 @@ const DetailsCard = () => {
         {CartButton(variationsState.id)}
         <div className="font-medium space-x-2 h-24 flex items-center">
           {!loading ? 
-              <BaseButton onClick={() =>
+              <BaseButton
+              disabled={variationsState.available_quantity < 1 ? true : false}
+              onClick={() =>
                       token.length > 1
                         ? finallAddtoCart()
                         : setContinueAsGuestModal(true)
-                    } className="text-black whitespace-nowrap px-3 py-1 border border-black rounded-full ">
+                    } className="text-black whitespace-nowrap px-3 py-1 border border-black rounded-full disabled:cursor-not-allowed ">
                 <CartIcon className="w-4 fill-black inline-block mr-2" />
                 
                 Add to cart

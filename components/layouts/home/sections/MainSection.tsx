@@ -34,7 +34,7 @@ const MainSection = () => {
 
   return (
     <div className="pb-20">
-      <div className="2xl:container lg:grid-cols-4 lg:grid md:px-[35px] sm:px-[20px] lg:px-[75px] m-auto">
+      <div className="2xl:container lg:grid-cols-4 lg:grid md:px-[35px] sm:px-[10px] lg:px-[75px] m-auto">
         <div className="col-span-1 lg:block sm:hidden">
           <Categories />
           <SpecialOffers />
@@ -83,7 +83,7 @@ const MainSection = () => {
                   <span className="block font-semibold text-[#4A4A4A]">
                     TOOLS KIT
                   </span>
-                  <span className="block text-2xl text-blue-950 font-semibold">
+                  <span className="block md:text-2xl text-blue-950 font-semibold">
                     EQUIPMENTS
                   </span>
                   <span className="text-gray-1200 block font-semibold">
@@ -112,10 +112,10 @@ const MainSection = () => {
                   <span className="block font-semibold text-[#4A4A4A]">
                     WEATHER PREP
                   </span>
-                  <span className="block text-2xl text-blue-950 font-semibold">
+                  <span className="block md:text-2xl text-blue-950 font-semibold">
                     ANTI FREEZE
                   </span>
-                  <span className="text-yellow-1000 block font-semibold">
+                  <span className="text-yellow-1000 block sm:text-xs md:text-base font-semibold">
                     SCORE EVERYTHING FROM ANTIFREEZE TO REFRIGERANT & BEYOND
                   </span>
                 </div>

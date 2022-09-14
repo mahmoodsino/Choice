@@ -5,12 +5,11 @@ import penray from "../../../../public/assets/images/penray.png"
 
 
 const BrandsCarosal = () => {
-
     const settings = {
         dots: false,
         infinite: true,
         speed: 500,
-        autoplay: false,
+        autoplay: true,
         slidesToShow: 1,
         rows: 1,
         autoplaySpeed: 2000,

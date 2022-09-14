@@ -36,7 +36,7 @@ class Carousel extends Component {
                 backgroundImage: `url(/assets/images/Rectangle.png)`,
               }}
             >
-              <div className="2xl:left-[500px] pb-10  text-left ml mt-12">
+              <div className="2xl:left-[500px] pb-10 sm:mx-5 md:px-0  text-left ml mt-12">
                 <span className="text-lg font-bold block">TiTAN Racheting ToolS</span>
                 <span className="text-4xl text-yellow-1000 block font-semibold">TOOLS & EQUIPMENTS</span>
                 <span className="text-blue-950 mt-2 font-bold block">STYLUS AND COMFORTABLE</span>

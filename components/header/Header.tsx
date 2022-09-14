@@ -14,7 +14,6 @@ const Header = () => {
 
     const [allCartsInfo,setAllCartsInfo]=useRecoilState(AllCartsInfoAtom)
     const [cartItems,setCartItems]=useRecoilState(CartItemsAtom)
-    console.log(allCartsInfo);
     
   return (
     <div className="2xl:container m-auto md:block sm:hidden ">

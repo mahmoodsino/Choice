@@ -10,7 +10,6 @@ const Brands = () => {
   const [brands, setBrands] = useRecoilState(BrandsAtom);
   const [selectBrand, setSelectBrand] = useRecoilState(selectBrandAtom);
 
-
   const handeBrands =async (id: number) => {
     const index = selectBrand.findIndex((brand) => brand === id);
     if (index < 0) {
@@ -18,10 +17,7 @@ const Brands = () => {
     } else if (index >= 0) {
       setSelectBrand(prev => prev.filter(item => item!==id))
     }
-
   };
-
-
   return (
     <div className="w-[90%] mt-8">
       <Collapsible

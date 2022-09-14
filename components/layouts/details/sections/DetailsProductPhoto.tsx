@@ -83,30 +83,7 @@ const DetailsProductPhoto = () => {
     nextArrow: <SampleNextArrow />,
     prevArrow: <SamplePrevArrow />,
     arrows: true,
-    // responsive: [
-    //   {
-    //     breakpoint: 1024,
-    //     settings: {
-    //       slidesToShow: 1,
-    //       slidesToScroll: 1,
-    //       infinite: true,
-    //     }
-    //   },
-    //   {
-    //     breakpoint: 600,
-    //     settings: {
-    //       slidesToShow: 1,
-    //       slidesToScroll: 1
-    //     }
-    //   },
-    //   {
-    //     breakpoint: 480,
-    //     settings: {
-    //       slidesToShow: 1,
-    //       slidesToScroll: 1
-    //     }
-    //   }
-    // ]
+    
   };
   return (
     <div className=" border">
@@ -115,7 +92,7 @@ const DetailsProductPhoto = () => {
           detailsState.product.images.map((img) => {
             return (
               <div key={img.id} className="product-slider-img">
-                <img  className="m-auto lg:w-[300px] md:w-[250px] sm:w-[150px] "  src={img.path} />
+                <img  className="m-auto lg:w-[400px] md:w-[280px] sm:w-[180px] "  src={img.path} />
               </div>
             );
           }) :

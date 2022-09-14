@@ -64,7 +64,7 @@ const FeaturedProducts = () => {
     rows: 1,
     autoplaySpeed: 2000,
     slidesToScroll: 1,
-    nextArrow: <SampleNextArrow  />,
+    nextArrow: <SampleNextArrow />,
     prevArrow: <SamplePrevArrow />,
     variableWidth: true,
   };
@@ -73,13 +73,12 @@ const FeaturedProducts = () => {
     const getData = async () => {
       setLoading(true);
       const res = await getFeaturedProducts();
-      if(res===null){
-        alert("some thing went wrong")
-      }
-      else{
+      if (res === null) {
+        alert("some thing went wrong");
+      } else {
         setFeatureProduct(res.result.items);
-        setLoading(false)
-     }
+        setLoading(false);
+      }
     };
     getData();
   }, []);
@@ -97,17 +96,18 @@ const FeaturedProducts = () => {
           <Slider {...settings}>
             {featuredProduct.map((item) => {
               return (
-                <BaseCard
-                width="230px"
-                smallWidth="200px"
-                  key={item.id}
-                  description={item.short_description}
-                  id={item.id}
-                  name={item.name}
-                  img={item.images[0]?.path}
-                  price={item.variation.price}
-                  variationId={item.variation.id}
-                />
+                <div key={item.id} className="ml-3">
+                  <BaseCard
+                    width="230px"
+                    smallWidth="200px"
+                    description={item.short_description}
+                    id={item.id}
+                    name={item.name}
+                    img={item.images[0]?.path}
+                    price={item.variation.price}
+                    variationId={item.variation.id}
+                  />
+                </div>
               );
             })}
           </Slider>

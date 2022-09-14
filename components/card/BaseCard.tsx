@@ -211,7 +211,7 @@ const BaseCard = ({
   };
 
   return (
-    <div className={`sm:w-[${smallWidth ? smallWidth : "100%"}] lg:w-[${width}] h-fit  border ml-3 mt-2`}>
+    <div className={`sm:w-[${smallWidth ? smallWidth:"100%"}] lg:w-[${width}] h-fit  border  mt-2`}>
       <div className="   ">
         <div>
           <div className="m-auto w-fit py-2 product-slider-img h-[190px] pt-8  bg-contain">
@@ -222,7 +222,7 @@ const BaseCard = ({
             )}
           </div>
           <div className="mx-2">
-            <span className="block font-bold line-clamp">
+            <span className="block font-bold line-clamp sm:w-[150px] lg:w-[210px]">
               {name ? name : "LubriMatic"}
             </span>
             <span className="block font-medium line-clamp">
