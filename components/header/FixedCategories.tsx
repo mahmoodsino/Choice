@@ -4,7 +4,6 @@ import { v4 } from 'uuid'
 import { useRecoilState } from 'recoil'
 import { HomePageAtom } from '../../helper'
 import HomeTree from '../layouts/home/sections/HomeTree'
-const Categorie= ["Air Filter","Oil Filter","Chemicals","Motor Oil","Lubricants","Wipers","Gloves","Tools"]
 
 const FixedCategories = () => {
   const [homePageState,setHomePageState]=useRecoilState(HomePageAtom)

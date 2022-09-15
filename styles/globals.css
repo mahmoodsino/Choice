@@ -10,6 +10,8 @@
 @tailwind utilities;
 
 
+
+
 .product-slider-img img {
   object-fit: contain;
 }

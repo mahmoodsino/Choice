@@ -1,5 +1,6 @@
 import React from 'react'
 import { MyAccountMainSection } from '../components'
+import withAuth from '../helper/with-auth'
 
 const myaccoutn = () => {
   return (
@@ -9,4 +10,4 @@ const myaccoutn = () => {
   )
 }
 
-export default myaccoutn
+export default withAuth(myaccoutn)

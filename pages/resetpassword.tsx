@@ -1,5 +1,6 @@
 import React from 'react'
 import { ResetPasswordMainSection } from '../components/layouts/resetpassword'
+import withAuth from '../helper/with-auth'
 
 const resetpassword = () => {
   return (
@@ -9,4 +10,4 @@ const resetpassword = () => {
   )
 }
 
-export default resetpassword
+export default withAuth(resetpassword)

@@ -15,6 +15,9 @@ const CartItemTable = () => {
   const timerRef = useRef() as MutableRefObject<NodeJS.Timeout>;
   const [token, setToken] = useRecoilState(TokenAtom);
 
+  console.log(cartItems);
+  
+
   const handleAddToCart = async (clickedItem: FetchedItemsType) => {
     setCartItems((prev) => {
       const isItemInCarts = prev.find((item) => item.id === clickedItem.id);
@@ -124,7 +127,9 @@ const CartItemTable = () => {
                       >
                         <TrashIcon className="w-5 fill-red-950 m-auto mt-0.5" />
                       </BaseButton>
-                      <div className="w-20 h-20 border"></div>
+                      <div className=" border product-slider-img">
+                        <img className="w-20 h-20" src={item.product?.image.path} />
+                      </div>
                       <div>
                         {item.variation?.attributes.map((att) => {
                           return (

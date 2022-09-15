@@ -9,11 +9,12 @@ interface Params {
   orderBy?:string
   Brands?:number[]
   AttributeValues?:{ [key: number]: number[] }
+  page?:number
 }
 
 const getProducts = async (params: Params) => {
   try {
-    const res = await axios.get(`${root}/products?${params.orderBy ? params.orderBy : "OrderByNewest"}`, {
+    const res = await axios.get(`${root}/products?${params.orderBy ? params.orderBy : "OrderByNewest"}&page_size=25`, {
       headers: {
         "branch-id": 1,
         "company-id": 1,
@@ -23,7 +24,8 @@ const getProducts = async (params: Params) => {
         category: params.categoryId,
         product_name: params.product_name,
         Brand:params.Brands,
-        AttributeValues : JSON.stringify(params.AttributeValues)
+        AttributeValues : JSON.stringify(params.AttributeValues),
+        page:params.page
         
       }
     })

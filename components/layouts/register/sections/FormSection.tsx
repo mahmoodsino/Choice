@@ -4,9 +4,11 @@ import { BaseInput } from "../../../inputs";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { registerSchema } from "../../../../helper/validation";
-import { handelRegister, TokenAtom } from "../../../../helper";
+import { handelRegister, TokenAtom, YouHaveItemsModalAtom } from "../../../../helper";
 import { useRecoilState } from "recoil";
 import { useRouter } from "next/router";
+import { YouHaveItemInCartModal } from "../../../you-have-item-modal";
+import { Spinner } from "../../../spinner";
 
 interface IFormInputs {
   firstName: string;
@@ -20,6 +22,10 @@ const FormSection = () => {
   const [token,setToken]=useRecoilState(TokenAtom)
   const [guestUsrerId, setGuestUserId] = useState<number | null>(null);
   const{push}=useRouter()
+  const [openYouHaveItemsModal, setYouHaveItemsModal] = useRecoilState(
+    YouHaveItemsModalAtom
+  );
+  const [loading,setLoading]=useState(false)
 
 
   const {
@@ -31,9 +37,13 @@ const FormSection = () => {
   });
 
   const submitForm = async (data: IFormInputs) => {
+    setLoading(true)
     const res = await handelRegister(data.firstName,data.lastName,data.email,data.password,token)
-    if(res===null){
-      alert("some thing went wrong")
+    console.log(res);
+    
+    if(res.message!=="Congratulation, you get your first  points"){
+      alert(res.response.data.message)
+      setLoading(false)
     }else{
       localStorage.setItem("token", res.result.token);
       localStorage.setItem("id", res.result.user.id);
@@ -46,8 +56,9 @@ const FormSection = () => {
         push("./");
       } else if (res.result.guest_user_id !== null) {
         setGuestUserId(res.result.guest_user_id);
-        // setYouHaveItemsModal(true);
+        setYouHaveItemsModal(true);
       }
+      setLoading(false)
     }
   };
 
@@ -114,14 +125,22 @@ const FormSection = () => {
         </div>
 
         <div className=" m-auto flex justify-center">
-          <BaseButton
-            type="submit"
-            className=" px-7 py-1.5 rounded-full bg-blue-950 text-white font-semibold  "
-            title="Create account"
-          />
+          {!loading ?
+           <BaseButton
+             type="submit"
+             className=" px-7 py-1.5 rounded-full bg-blue-950 text-white font-semibold  "
+             title="Create account"
+           /> : 
+           <div>
+            <Spinner className="w-9" />
+           </div>
+           
+          }
 
         </div>
       </form>
+      <YouHaveItemInCartModal guest_user_id={guestUsrerId} />
+
     </div>
   );
 };

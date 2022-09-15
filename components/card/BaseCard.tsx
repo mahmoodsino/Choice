@@ -182,7 +182,7 @@ const BaseCard = ({
       // &&item.modifierGroup?.find(modifier => modifier===modifiersId)!==undefined
     );
     return (
-      <div className=" space-x-2 flex items-center justify-between px-2 ">
+      <div  className=" space-x-2 flex items-center justify-between px-2 ">
         <BaseButton
           //@ts-ignore
           onClick={() => handleRemoveFromCart(cartItems[indexcart].id)}
@@ -211,7 +211,7 @@ const BaseCard = ({
   };
 
   return (
-    <div className={`sm:w-[${smallWidth ? smallWidth:"100%"}] lg:w-[${width}] h-fit  border  mt-2`}>
+    <div  className={`sm:w-[${smallWidth ? smallWidth:"100%"}] lg:w-[${width}] h-fit  border  mt-2`}>
       <div className="   ">
         <div>
           <div className="m-auto w-fit py-2 product-slider-img h-[190px] pt-8  bg-contain">

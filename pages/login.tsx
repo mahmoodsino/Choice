@@ -1,5 +1,6 @@
 import React from 'react'
 import { LoginMainSection } from '../components'
+import withAuth from '../helper/with-auth'
 
 const login = () => {
   return (
@@ -9,4 +10,4 @@ const login = () => {
   )
 }
 
-export default login
+export default withAuth(login)

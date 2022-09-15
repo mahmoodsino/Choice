@@ -4,6 +4,7 @@ import { useRecoilState } from "recoil";
 import {
   AttributesProductsAtom,
   BrandsAtom,
+  CurrentPageAtom,
   getProducts,
   handelFilterProduct,
   OrderByAtom,
@@ -13,9 +14,11 @@ import {
   SelectedAttributeAtom,
   SelectedProductsCategoryAtom,
   TokenAtom,
+  totalPagesAtom,
 } from "../../../../helper";
 import { BaseButton } from "../../../buttons";
 import { BaseCard } from "../../../card";
+import { Pagination } from "../../../pagination";
 import { Spinner } from "../../../spinner";
 import FillterProductsMobile, { showFillterProductAtom } from "./FillterProductsMobile";
 import Fillters from "./Fillters";
@@ -42,6 +45,10 @@ const MainSection = () => {
   const [showFillterProducts, setShowFillterProducts] =
   useRecoilState(showFillterProductAtom);
 
+  const [totalPages,setTotalPages]=useRecoilState(totalPagesAtom)
+  const [currentPage, setCurrentPage] = useRecoilState(CurrentPageAtom);
+
+
   const route = useRouter().query;
 
 
@@ -50,6 +57,7 @@ const MainSection = () => {
         setSelectedCategory([])
         setSelectBrand([])
         setSelectedAttribute({})
+        setCurrentPage(1)
       }
       return () => {
         leave()
@@ -91,7 +99,10 @@ const MainSection = () => {
         categoryId: selecterCategory,
         AttributeValues: selectedAttribute,
         Brands: selectBrand,
+        page:currentPage
       });
+      setTotalPages(res.result.pages_count)
+      
       if (res === null) {
         alert("some thing went wrong");
       } else {
@@ -100,7 +111,11 @@ const MainSection = () => {
       }
     };
     getData();
-  }, [route.search, selecterCategory, selectBrand, selectedAttribute]);
+  }, [route.search, selecterCategory, selectBrand, selectedAttribute,currentPage]);
+
+  const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
+
+
   return (
     <div className="2xl:container m-auto lg:px-[75px] md:px-[35px] sm:px-[px] pb-10">
       {!loading ? (
@@ -137,6 +152,7 @@ const MainSection = () => {
                   );
                 })}
               </div>
+          <Pagination paginate={paginate}  />
             </div>
           </div>
         </div>

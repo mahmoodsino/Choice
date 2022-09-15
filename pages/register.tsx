@@ -1,5 +1,6 @@
 import React from 'react'
 import { RegisterMainSection } from '../components'
+import withAuth from '../helper/with-auth'
 
 const register = () => {
   return (
@@ -9,4 +10,4 @@ const register = () => {
   )
 }
 
-export default register
+export default withAuth(register)

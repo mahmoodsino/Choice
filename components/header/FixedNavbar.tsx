@@ -14,6 +14,7 @@ import { BaseInput } from "../inputs";
 import { BaseButton } from "../buttons";
 import {
   ActiveDropDownAtom,
+  AllCartsInfoAtom,
   SearchAtom,
   showCategoriesAtom,
 } from "../../helper";
@@ -36,6 +37,8 @@ const FixedNavbar = () => {
     useRecoilState(ActiveDropDownAtom);
   const [showCategories, setShowCategories] =
     useRecoilState(showCategoriesAtom);
+    const [allCartsInfo,setAllCartsInfo]=useRecoilState(AllCartsInfoAtom)
+
 
   const prevScrollY = useRef(0);
   useEffect(() => {
@@ -147,12 +150,8 @@ const FixedNavbar = () => {
               <a className="flex space-x-2 pl-3 whitespace-nowrap">
                 <BasketIcon className="md:w-5 lg:w-7 fill-blue-950 inline-block" />
                 <div>
-                  <span className="block md:text-xs lg:text-sm text-blue-950 font-bold">
-                    Shopping Cart
-                  </span>
-                  <span className="block text-xs text-gray-1050">
-                    0 item(s)- $0.00
-                  </span>
+                <span className="block text-sm text-blue-950 font-bold">Shopping Cart</span>
+                <span className="block text-xs text-gray-1050">{allCartsInfo.items.length} item(s)- ${allCartsInfo.total_price}</span>
                 </div>
               </a>
             </Link>

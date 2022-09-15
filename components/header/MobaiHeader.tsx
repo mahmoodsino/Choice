@@ -9,6 +9,7 @@ import { BaseInput } from "../inputs";
 import { ActiveDropDownAtom, SearchAtom, ShowSidbarAtom } from "../../helper";
 import { Dropdown } from "../dropdown";
 import Link from "next/link";
+import LoginIcon from "../icons/LoginIcon";
 
 const MobaiHeader = () => {
   const [goingUp, setGoingUp] = useRecoilState(goingUpAtom);
@@ -17,6 +18,11 @@ const MobaiHeader = () => {
     useRecoilState(ActiveDropDownAtom);
   const [showSidbarState, setShowSidbarState] = useRecoilState(ShowSidbarAtom);
 
+  let userType;
+
+  if (typeof window !== "undefined") {
+    userType = localStorage.getItem("type" || "");
+  }
 
   return (
     <div
@@ -25,7 +31,10 @@ const MobaiHeader = () => {
       }`}
     >
       <div className="flex items-center ">
-        <BaseButton onClick={() => setShowSidbarState(!showSidbarState)} className=" ">
+        <BaseButton
+          onClick={() => setShowSidbarState(!showSidbarState)}
+          className=" "
+        >
           <BurgerIcon className="w-10 fill-white" />
         </BaseButton>
         <div className="invert w-16 mt-1">
@@ -49,12 +58,20 @@ const MobaiHeader = () => {
       </div>
       <div className=" flex items-center">
         <div className="relative">
-          <BaseButton
-            onClick={() => setActiveDropDown(!activeDropDown)}
-            className=" flex space-x-2 items-center whitespace-nowrap  py-2 px-2"
-          >
-            <AccountIcon className="w-10 fill-white" />
-          </BaseButton>
+          {userType === " user" ? (
+            <BaseButton
+              onClick={() => setActiveDropDown(!activeDropDown)}
+              className=" flex space-x-2 items-center whitespace-nowrap  py-2 px-2"
+            >
+              <AccountIcon className="w-10 fill-white" />
+            </BaseButton>
+          ) : (
+            <Link href="/login" className="">
+              <a >
+                <LoginIcon className="w-10 fill-white" />
+              </a>
+            </Link>
+          )}
           {activeDropDown ? (
             <div className="bg-white absolute  z-10  top-[100%] right-0  shadow-[0_0_5px_rgba(0,0,0,0.12)]">
               <Dropdown />

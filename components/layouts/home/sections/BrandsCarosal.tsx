@@ -12,7 +12,7 @@ const BrandsCarosal = () => {
         autoplay: true,
         slidesToShow: 1,
         rows: 1,
-        autoplaySpeed: 2000,
+        autoplaySpeed: 1000,
         slidesToScroll: 1,
         variableWidth: true,
       };

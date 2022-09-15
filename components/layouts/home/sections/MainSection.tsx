@@ -45,7 +45,7 @@ const MainSection = () => {
         <div className="col-span-3">
           <div className="w-[100%]">
             <MainCarousel />
-            <div className="flex justify-around lg:flex sm:hidden items-center border mt-10 py-2">
+            <div className="flex justify-around lg:flex sm:hidden items-center border mt-10 ">
               <HomeHelp
                 image={<TruckIcon className="w-12 fill-yellow-950" />}
                 title="Free Delivery"

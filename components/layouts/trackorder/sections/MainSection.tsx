@@ -3,10 +3,10 @@ import Orders from './Order'
 
 const MainSection = () => {
   return (
-    <div className='px-[75px] 2xl:container m-auto py-10 '>
+    <div className='lg:px-[75px] md:px-[35px] sm:px-[10px] 2xl:container m-auto py-10 '>
         <div className='flex justify-between  mb-10'>
-            <span className='font-medium block '>Track Order</span>
-            <div className='border h-0 mt-3.5 border-yellow-950 w-[90%]'>
+            <span className='font-medium block whitespace-normal '>Track Order</span>
+            <div className='border h-0 mt-3.5 border-yellow-950 lg:block sm:hidden w-[90%]'>
             </div>
         </div>
       <div className="">

@@ -26,7 +26,6 @@ const App = ({ children }: Props) => {
     const timerRef = useRef() as MutableRefObject<NodeJS.Timeout>;
 
     useEffect(() => {
-      console.log();
       
       const getData = async () => {
         const res = await getCartItems(token);
@@ -70,15 +69,15 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <div>
       <RecoilRoot>
-        <App>
           <Header />
+        <App>
           <FixedNavbar />
           <MobaiHeader/>
           <Navbar/>
           <MobileSidbar />
             <Component {...pageProps} />
-            <Fotter/>
         </App>
+            <Fotter/>
       </RecoilRoot>
     </div>
   );

@@ -14,6 +14,13 @@ const Header = () => {
 
     const [allCartsInfo,setAllCartsInfo]=useRecoilState(AllCartsInfoAtom)
     const [cartItems,setCartItems]=useRecoilState(CartItemsAtom)
+
+    let userType
+
+    if (typeof window !== "undefined") {
+       userType = localStorage.getItem("type" || "");
+    }
+
     
   return (
     <div className="2xl:container m-auto md:block sm:hidden ">
@@ -29,21 +36,24 @@ const Header = () => {
           </div>
         </div>
         <div className="flex relative">
+          {userType==="user" ?
           <BaseButton onClick={() => setActiveDropDown(!activeDropDown)} className=" flex space-x-2 items-center border-l py-2 px-6">
             <AccountIcon className="w-5 fill-gray-950" />
             <span className="text-sm text-gray-950 ">My Account</span>
-          </BaseButton>
-          {activeDropDown ? (
-            <div className="bg-white absolute  z-10  top-[100%]  shadow-[0_0_5px_rgba(0,0,0,0.12)]">
-              <Dropdown />
-            </div>
-          ) : null}
+          </BaseButton> : 
+          
           <Link href="/login">
           <a className="flex  items-center space-x-2 border-l">
           <LoginIcon className="fill-gray-950 w-8 py-2 pl-2" />
             <span className="text-sm text-gray-950">Login</span>
           </a>
           </Link>
+        }
+          {activeDropDown ? (
+            <div className="bg-white absolute  z-10  top-[100%]  shadow-[0_0_5px_rgba(0,0,0,0.12)]">
+              <Dropdown />
+            </div>
+          ) : null}
           
         </div>
       </div>

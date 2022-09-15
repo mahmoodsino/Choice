@@ -1,4 +1,4 @@
-import { ProductsType } from "../../type"
+import { CartProductType, ProductsType } from "../../type"
 import { variationsDetailsType } from "../details"
 import { variationType } from "../products"
 
@@ -11,7 +11,7 @@ interface FetchedItemsType {
     branch_id:number,
     quantity:number,
     description?:string
-    product?:ProductsType,
+    product?:CartProductType,
     price?:number,
     variation?:variationsDetailsType
     title?:string

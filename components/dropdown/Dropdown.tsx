@@ -22,32 +22,43 @@ const Dropdown = () => {
     window.location.reload();
   };
 
-  const useType = localStorage.getItem("type" || "");
+  let userType;
 
+  if (typeof window !== "undefined") {
+    userType = localStorage.getItem("type" || "");
+  }
   return (
     <div className="flex flex-col w-[160px]">
-      <div className="">
-        <Link onClick={() => setActiveDropDown(false)} href="/myaccoutn">
-          <a className="px-7 w-full py-3 border-b font-medium inline-block hover:bg-gray-1150 ">
-            My Account
-          </a>
-        </Link>
+      {userType === "user" ? (
+        <div className="">
+          <Link onClick={() => setActiveDropDown(false)} href="/myaccoutn">
+            <a className="px-7 w-full py-3 border-b font-medium inline-block hover:bg-gray-1150 ">
+              My Account
+            </a>
+          </Link>
+          <Link onClick={() => setActiveDropDown(false)} href="/trackorder">
+            <a className="px-7 w-full py-3 border-b font-medium inline-block hover:bg-gray-1150">
+              Track Order
+            </a>
+          </Link>
+          <Link onClick={() => setActiveDropDown(false)} href="/orderhistory">
+            <a className="px-7 w-full py-3 border-b font-medium inline-block whitespace-nowrap hover:bg-gray-1150">
+              Order History
+            </a>
+          </Link>
+          <BaseButton
+            onClick={() => (LogoutHandel(), push("./"))}
+            className="px-7 w-full py-3 text-left border-b font-medium inline-block hover:bg-gray-1150"
+            title="Log out"
+          ></BaseButton>
+        </div>
+      ) : userType === "guest" ? (
         <Link onClick={() => setActiveDropDown(false)} href="/trackorder">
           <a className="px-7 w-full py-3 border-b font-medium inline-block hover:bg-gray-1150">
             Track Order
           </a>
         </Link>
-        <Link onClick={() => setActiveDropDown(false)} href="/orderhistory">
-          <a className="px-7 w-full py-3 border-b font-medium inline-block whitespace-nowrap hover:bg-gray-1150">
-            Order History
-          </a>
-        </Link>
-        <BaseButton
-          onClick={() => (LogoutHandel(), push("./"))}
-          className="px-7 w-full py-3 text-left border-b font-medium inline-block hover:bg-gray-1150"
-          title="Log out"
-        ></BaseButton>
-      </div>
+      ) : null}
     </div>
   );
 };
