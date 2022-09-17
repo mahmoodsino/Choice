@@ -58,7 +58,7 @@ const Attributes = () => {
   };
 
   return (
-    <div className="w-[90%] mt-8">
+    <div className={`w-[90%] mt-8 ${attributes.length !==0 ? "" : "hidden"}`}>
       <Collapsible
         open={openAttributes}
         trigger={
@@ -75,7 +75,7 @@ const Attributes = () => {
           </BaseButton>
         }
       >
-        <div className="px-3 bg-gray-1350 h-96 overflow-y-auto">
+        <div className="px-3 bg-gray-1350 max-h-96 overflow-y-auto">
           {attributes.map((attribute) => {
             return (
               <ul key={attribute.id} className="">

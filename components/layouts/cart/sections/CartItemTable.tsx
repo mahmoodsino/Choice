@@ -9,6 +9,7 @@ import {
 } from "../../../../helper";
 import BaseButton from "../../../buttons/BaseButton";
 import { BlusIcon, MinusIcon, TrashIcon } from "../../../icons";
+import CartItemsResponse from "./CartItemsResponse";
 
 const CartItemTable = () => {
   const [cartItems, setCartItems] = useRecoilState(CartItemsAtom);
@@ -179,6 +180,7 @@ const CartItemTable = () => {
           </tbody>
         </table>
       </div>
+      <CartItemsResponse handleAddToCart={handleAddToCart} handleRemoveFromCart={handleRemoveFromCart} />
     </div>
   );
 };

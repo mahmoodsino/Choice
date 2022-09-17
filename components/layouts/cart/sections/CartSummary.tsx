@@ -8,7 +8,7 @@ const CartSummary = () => {
   const [allCartsInfo,setAllCartsInfo]=useRecoilState(AllCartsInfoAtom)
 
   return (
-    <div className="w-[25%]">
+    <div className="lg:w-[25%] whitespace-nowrap">
       <span className="text-[22px] py-2 font-bold border-t border-b block text-gray-1400">
         Cart Summary
       </span>

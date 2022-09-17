@@ -49,7 +49,7 @@ const MainSection = () => {
   }, []);
 
   return (
-    <div className="px-[75px] 2xl:container m-auto py-10">
+    <div className="lg:px-[75px] md:px-[35px] sm:px-[10px] 2xl:container m-auto py-10">
       {!loading ? (
         <div>
           {cartItems.length !== 0 ? (

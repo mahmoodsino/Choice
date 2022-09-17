@@ -15,7 +15,7 @@ const ShopTree = ({ data }: data) => {
   const [ShopselectedParentId, setShopParentId] = useState(-1);
   if (Array.isArray(data)) {
     return (
-      <div className=" ">
+      <div className=" max-h-96 overflow-y-auto">
         <ul className="">
           {data.map((tree) => (
             <ShopTreeNode
@@ -30,7 +30,7 @@ const ShopTree = ({ data }: data) => {
     );
   } else
     return (
-      <div className=" ">
+      <div className=" max-h-96 overflow-y-auto">
         <ul className="">
           {data.categories.map((tree) => (
             <ShopTreeNode

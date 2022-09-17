@@ -19,7 +19,7 @@ const Brands = () => {
     }
   };
   return (
-    <div className="w-[90%] mt-8">
+    <div className={`w-[90%] mt-8 ${brands.length !==0 ? "" : "hidden"}`}>
       <Collapsible
         open={openBrands}
         trigger={
@@ -36,7 +36,7 @@ const Brands = () => {
           </BaseButton>
         }
       >
-        <div className=" flex flex-col justify-between  text-sm tracking-[0.03em] cursor-pointer h-96  overflow-y-auto px-3 bg-gray-1350">
+        <div className=" flex flex-col justify-between  text-sm tracking-[0.03em] cursor-pointer max-h-96  overflow-y-auto px-3 bg-gray-1350">
           {brands.map((brand) => {
             return (
               <div className="" key={brand.id}>

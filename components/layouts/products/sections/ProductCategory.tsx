@@ -11,7 +11,7 @@ const ProductCategory = () => {
   const [productsCategorey, setProductsCategory] = useRecoilState(productsCategoreyAtom)
 
   return (
-    <div className="w-[90%] mt-14">
+    <div className={`w-[90%] mt-14 ${productsCategorey.length !==0 ? "" : "hidden"}}`}>
       <Collapsible
       open={openCategories}
         trigger={

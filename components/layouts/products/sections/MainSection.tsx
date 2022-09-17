@@ -20,13 +20,15 @@ import { BaseButton } from "../../../buttons";
 import { BaseCard } from "../../../card";
 import { Pagination } from "../../../pagination";
 import { Spinner } from "../../../spinner";
-import FillterProductsMobile, { showFillterProductAtom } from "./FillterProductsMobile";
+import FillterProductsMobile, {
+  showFillterProductAtom,
+} from "./FillterProductsMobile";
 import Fillters from "./Fillters";
 import ProductSelect from "./ProductSelect";
 
 const MainSection = () => {
   const [productsState, setProductsState] = useRecoilState(ProductsAtom);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [token, setToken] = useRecoilState(TokenAtom);
   const [orderByState, setOrderByState] = useRecoilState(OrderByAtom);
   const [productsCategorey, setProductsCategory] = useRecoilState(
@@ -42,29 +44,26 @@ const MainSection = () => {
   const [selectedAttribute, setSelectedAttribute] = useRecoilState(
     SelectedAttributeAtom
   );
-  const [showFillterProducts, setShowFillterProducts] =
-  useRecoilState(showFillterProductAtom);
+  const [showFillterProducts, setShowFillterProducts] = useRecoilState(
+    showFillterProductAtom
+  );
 
-  const [totalPages,setTotalPages]=useRecoilState(totalPagesAtom)
+  const [totalPages, setTotalPages] = useRecoilState(totalPagesAtom);
   const [currentPage, setCurrentPage] = useRecoilState(CurrentPageAtom);
-
 
   const route = useRouter().query;
 
-
-    useEffect(() => {
-      const leave = () => {
-        setSelectedCategory([])
-        setSelectBrand([])
-        setSelectedAttribute({})
-        setCurrentPage(1)
-      }
-      return () => {
-        leave()
-      }
-    },[])
-
-
+  useEffect(() => {
+    const leave = () => {
+      setSelectedCategory([]);
+      setSelectBrand([]);
+      setSelectedAttribute({});
+      setCurrentPage(1);
+    };
+    return () => {
+      leave();
+    };
+  }, []);
 
   useEffect(() => {
     const getData = async () => {
@@ -94,15 +93,15 @@ const MainSection = () => {
       setLoading(true);
       const res = await getProducts({
         token: token,
-      //@ts-ignore
+        //@ts-ignore
         product_name: route.search,
         categoryId: selecterCategory,
         AttributeValues: selectedAttribute,
         Brands: selectBrand,
-        page:currentPage
+        page: currentPage,
       });
-      setTotalPages(res.result.pages_count)
-      
+      setTotalPages(res.result.pages_count);
+
       if (res === null) {
         alert("some thing went wrong");
       } else {
@@ -111,10 +110,15 @@ const MainSection = () => {
       }
     };
     getData();
-  }, [route.search, selecterCategory, selectBrand, selectedAttribute,currentPage]);
+  }, [
+    route.search,
+    selecterCategory,
+    selectBrand,
+    selectedAttribute,
+    currentPage,
+  ]);
 
   const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
-
 
   return (
     <div className="2xl:container m-auto lg:px-[75px] md:px-[35px] sm:px-[px] pb-10">
@@ -130,29 +134,35 @@ const MainSection = () => {
             </div>
             <div className="col-span-3 mt-5 ">
               <div className="flex justify-between ml-3 items-center ">
-                <span className="text-lg font-semibold whitespace-nowrap">124 Results</span>
+                <span className="text-lg font-semibold whitespace-nowrap">
+                  124 Results
+                </span>
                 <div className="md:w-[30%] sm:w-[50%]">
-                <ProductSelect />
+                  <ProductSelect />
                 </div>
               </div>
-              <BaseButton onClick={() => setShowFillterProducts(true)} className="px-4 ml-3 py-1 sm:block lg:hidden text-white font-semibold rounded-full bg-blue-950" title="Fillters" />
-              <div  className="grid md:grid-cols-3 sm:grid-cols-2 lg:grid-cols-4  mt-7 sm:gap-1 lg:gap-4">
+              <BaseButton
+                onClick={() => setShowFillterProducts(true)}
+                className="px-4 ml-3 py-1 sm:block lg:hidden text-white font-semibold rounded-full bg-blue-950"
+                title="Fillters"
+              />
+              <div className="grid md:grid-cols-3 sm:grid-cols-2 lg:grid-cols-4  mt-7 sm:gap-1 lg:gap-4">
                 {productsState.map((item) => {
                   return (
                     <BaseCard
-                    width="100%"
+                      width="100%"
                       key={item.id}
                       description={item.short_description}
                       id={item.id}
                       name={item.name}
-                      img={item.images[0]?.path}
+                      img={item.images}
                       price={item.variation.price}
                       variationId={item.variation.id}
                     />
                   );
                 })}
               </div>
-          <Pagination paginate={paginate}  />
+              <Pagination paginate={paginate} />
             </div>
           </div>
         </div>
