@@ -17,9 +17,9 @@ const CartItemsResponse = ({
 
   return (
     <div className="mt-5 lg:hidden sm:block">
-      {cartItems.map((item) => {
+      {cartItems.map((item,i) => {
         return (
-          <div className="border px-5">
+          <div key={i} className="border px-5">
             <div className="flex justify-end mt-2">
               <BaseButton
                 onClick={() =>

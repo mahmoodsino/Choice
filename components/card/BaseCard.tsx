@@ -219,10 +219,10 @@ const BaseCard = ({
         <div>
           <div className="m-auto w-fit py-2 product-slider-img h-[190px] pt-8  bg-contain">
             {img ? (
-              img?.map((item) => {
+              img?.map((item,i) => {
                 if (item.is_default) {
                   return (
-                    <div>
+                    <div key={i}>
                       <img
                         src={item.path}
                         className="bg-cover w-40 h-32 "
