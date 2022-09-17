@@ -103,7 +103,7 @@ const FeaturedProducts = () => {
                     description={item.short_description}
                     id={item.id}
                     name={item.name}
-                    img={item.images[0]?.path}
+                    img={item.images}
                     price={item.variation.price}
                     variationId={item.variation.id}
                   />
