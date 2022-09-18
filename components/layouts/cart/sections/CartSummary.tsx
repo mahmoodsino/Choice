@@ -1,11 +1,32 @@
 import Link from "next/link";
+import { useRouter } from "next/router";
 import React from "react";
 import { useRecoilState } from "recoil";
-import { AllCartsInfoAtom } from "../../../../helper";
+import { AllCartsInfoAtom, CartItemsAtom } from "../../../../helper";
+import { BaseButton } from "../../../buttons";
 import { CheckoutIcon } from "../../../icons";
 
 const CartSummary = () => {
-  const [allCartsInfo,setAllCartsInfo]=useRecoilState(AllCartsInfoAtom)
+  const [allCartsInfo, setAllCartsInfo] = useRecoilState(AllCartsInfoAtom);
+  const [cartItems, setCartItems] = useRecoilState(CartItemsAtom);
+
+  const checkQuantity = () => {
+    let isFound = true;
+    for (const item of cartItems) {
+      if (item.available_quantity) {
+         if (item.available_quantity >= item.quantity) {
+          return (isFound = true);
+        } else if (item.available_quantity < item.quantity) {
+          isFound = false;
+        }
+      }
+    }
+    return isFound;
+  };
+
+  
+
+  const { push } = useRouter();
 
   return (
     <div className="lg:w-[25%] whitespace-nowrap">
@@ -15,7 +36,9 @@ const CartSummary = () => {
       <div className="mt-5 space-y-3 px-2">
         <div className="flex justify-between">
           <span className="text-gray-950 font-semibold">Subtotal:</span>
-          <span className="text-[#999999]">${allCartsInfo.sub_total_price}</span>
+          <span className="text-[#999999]">
+            ${allCartsInfo.sub_total_price}
+          </span>
         </div>
         <div className="flex justify-between">
           <span className="text-gray-950 font-semibold">
@@ -32,16 +55,17 @@ const CartSummary = () => {
         <Link href="/products">
           <a className="px-4 py-1 bg-gray-1200 rounded-full ">Keep Shopping</a>
         </Link>
-        <Link href="/continuetocheckout">
-          <a className="px-4 py-1 bg-blue-950 rounded-full">
-            Checkout
-            <CheckoutIcon className="w-3 inline-block fill-white ml-3" />
-          </a>
-        </Link>
+        <BaseButton
+          disabled={checkQuantity() ? false : true}
+          onClick={() => push("/continuetocheckout")}
+          className="px-4 py-1 bg-blue-950 rounded-full disabled:bg-gray-500 disabled:cursor-not-allowed"
+        >
+          Checkout
+          <CheckoutIcon className="w-3 inline-block fill-white ml-3" />
+        </BaseButton>
       </div>
     </div>
   );
 };
-
 
 export default CartSummary;

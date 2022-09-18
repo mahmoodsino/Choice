@@ -114,10 +114,15 @@ const CartItemTable = () => {
               <th className=" p-2 pb-5 w-auto">TOTAL PRICE</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody className="">
             {cartItems.map((item) => {
               return (
-                <tr key={item.id} className="border-b text-left ">
+                <tr key={item.id} className={`border-b text-left ${
+                  item.available_quantity &&
+                  (item.quantity > item.available_quantity ||item.available_quantity===0)
+                    ? "bg-red-100"
+                    : "bg-white"
+                }`}>
                   <td className=" p-2 w-[25%] ">
                     <div className="flex flex-row items-center space-x-5 ">
                       <BaseButton
@@ -145,16 +150,16 @@ const CartItemTable = () => {
                   </td>
                   <td className="p-2 w-[25%] ">
                     <div>
-                      <div className="border flex w-fit items-center space-x-8 px-2 py-1">
+                      <div className="border w-[130px] flex  items-center space-x-8 px-2 py-1">
                         <BaseButton
                           onClick={() =>
                             item.id && handleRemoveFromCart(item.id)
                           }
                           className="rounded-full w-5 h-5 bg-yellow-950 flex items-center m-auto"
                         >
-                          <MinusIcon className="w-3 fill-black ml-1" />
+                          <MinusIcon className="w-3 fill-black ml-1 mr-1" />
                         </BaseButton>
-                        <span>{item.quantity}</span>
+                        <span className="block w-[30px] text-center">{item.quantity}</span>
                         <BaseButton
                           onClick={() => handleAddToCart(item)}
                           className="rounded-full w-5 h-5 bg-yellow-950 flex items-center m-auto"
@@ -162,7 +167,7 @@ const CartItemTable = () => {
                             item.quantity === item.available_quantity ? true : false
                           }
                         >
-                          <BlusIcon className="w-3 fill-black ml-1" />
+                          <BlusIcon className="w-3 fill-black  ml-1 mr-1" />
                         </BaseButton>
                       </div>
                     </div>

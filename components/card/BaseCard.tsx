@@ -275,8 +275,8 @@ const BaseCard = ({
                 )}
               </div>
             ) : (
-              <div className="w-[104.28]">
-                <Spinner className="w-7" />
+              <div className="w-[104.28px]">
+                <Spinner className="w-[26px]" />
               </div>
             )}
             <BaseButton

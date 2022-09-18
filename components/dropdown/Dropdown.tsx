@@ -30,18 +30,18 @@ const Dropdown = () => {
   return (
     <div className="flex flex-col w-[160px]">
       {userType === "user" ? (
-        <div className="">
-          <Link onClick={() => setActiveDropDown(false)} href="/myaccoutn">
+        <div onClick={() => setActiveDropDown(false)} className="">
+          <Link href="/myaccoutn">
             <a className="px-7 w-full py-3 border-b font-medium inline-block hover:bg-gray-1150 ">
               My Account
             </a>
           </Link>
-          <Link onClick={() => setActiveDropDown(false)} href="/trackorder">
+          <Link href="/trackorder">
             <a className="px-7 w-full py-3 border-b font-medium inline-block hover:bg-gray-1150">
               Track Order
             </a>
           </Link>
-          <Link onClick={() => setActiveDropDown(false)} href="/orderhistory">
+          <Link href="/orderhistory">
             <a className="px-7 w-full py-3 border-b font-medium inline-block whitespace-nowrap hover:bg-gray-1150">
               Order History
             </a>

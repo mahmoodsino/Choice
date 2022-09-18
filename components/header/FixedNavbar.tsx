@@ -37,8 +37,7 @@ const FixedNavbar = () => {
     useRecoilState(ActiveDropDownAtom);
   const [showCategories, setShowCategories] =
     useRecoilState(showCategoriesAtom);
-    const [allCartsInfo,setAllCartsInfo]=useRecoilState(AllCartsInfoAtom)
-
+  const [allCartsInfo, setAllCartsInfo] = useRecoilState(AllCartsInfoAtom);
 
   const prevScrollY = useRef(0);
   useEffect(() => {
@@ -57,7 +56,11 @@ const FixedNavbar = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, [goingUp]);
 
-  
+  let userType;
+
+  if (typeof window !== "undefined") {
+    userType = localStorage.getItem("type" || "");
+  }
 
   return (
     <div
@@ -127,31 +130,39 @@ const FixedNavbar = () => {
           </div>
           <div className="flex items-center  space-x-2 pr-3">
             <div className="flex ">
-              <BaseButton
-                onClick={() => setActiveDropDown(!activeDropDown)}
-                className="relative whitespace-nowrap flex space-x-2 items-center border-r py-2 lg:px-6 md:px-3"
-              >
-                <AccountIcon className="w-5 fill-gray-950" />
-                <span className="lg:text-sm md:text-xs text-gray-950 ">My Account</span>
-              </BaseButton>
+              {userType === "user" ? (
+                <BaseButton
+                  onClick={() => setActiveDropDown(!activeDropDown)}
+                  className=" flex space-x-2 items-center border-r py-2 px-6"
+                >
+                  <AccountIcon className="w-5 fill-gray-950" />
+                  <span className="text-sm text-gray-950 ">My Account</span>
+                </BaseButton>
+              ) : (
+                <Link href="/login">
+                  <a className="flex  items-center space-x-2 border-r pr-2">
+                    <LoginIcon className="fill-gray-950 w-8 py-2 pl-2" />
+                    <span className="text-sm text-gray-950">Login</span>
+                  </a>
+                </Link>
+              )}
               {activeDropDown ? (
                 <div className="bg-white absolute  z-10  top-[100%]  shadow-[0_0_5px_rgba(0,0,0,0.12)]">
                   <Dropdown />
                 </div>
               ) : null}
-              {/* <Link href="/login">
-                <a className="flex  items-center space-x-2 border-r pr-5">
-                  <LoginIcon className="fill-gray-950 w-8 py-2 pl-2" />
-                  <span className="text-sm text-gray-950">Login</span>
-                </a>
-              </Link> */}
             </div>
             <Link href="/cart">
               <a className="flex space-x-2 pl-3 whitespace-nowrap">
                 <BasketIcon className="md:w-5 lg:w-7 fill-blue-950 inline-block" />
                 <div>
-                <span className="block text-sm text-blue-950 font-bold">Shopping Cart</span>
-                <span className="block text-xs text-gray-1050">{allCartsInfo.items.length} item(s)- ${allCartsInfo.total_price}</span>
+                  <span className="block text-sm text-blue-950 font-bold">
+                    Shopping Cart
+                  </span>
+                  <span className="block text-xs text-gray-1050">
+                    {allCartsInfo.items.length} item(s)- $
+                    {allCartsInfo.total_price}
+                  </span>
                 </div>
               </a>
             </Link>

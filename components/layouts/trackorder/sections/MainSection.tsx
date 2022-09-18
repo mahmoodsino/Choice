@@ -1,7 +1,28 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { useRecoilState } from 'recoil'
+import { getOrders, TokenAtom, TrackOrderAtom } from '../../../../helper'
+import { Spinner } from '../../../spinner'
 import Orders from './Order'
 
 const MainSection = () => {
+  const [ordersState, setOrdersState] = useRecoilState(TrackOrderAtom)
+  const [loading,setLoading]=useState(false)
+  const [token,setToken]=useRecoilState(TokenAtom)
+
+  useEffect(() => {
+    const getData= async ()=>{
+      setLoading(true)
+      const res = await getOrders(token)
+      
+      setOrdersState(res.result)
+
+      if(res){
+        setLoading(false)
+      }
+    }
+    getData()
+  },[])
+
   return (
     <div className='lg:px-[75px] md:px-[35px] sm:px-[10px] 2xl:container m-auto py-10 '>
         <div className='flex justify-between  mb-10'>
@@ -11,8 +32,16 @@ const MainSection = () => {
         </div>
       <div className="">
         <div className=" left-0 right-0 m-auto sm:w-[100%] md:w-[80%] lg:w-[60%]   sm:px-2 md:px-5 text-gray-1050 bg-gray-1350">
-          <h1 className="font-bold text-xl pt-5 pb-5 text-[#262626]  ">My Orders</h1>
+          <span className="font-bold text-xl block pt-5 pb-5 text-[#262626]  ">My Orders</span>
+          {!loading ? 
+        <div>
           <Orders/>
+
+        </div>  :
+        <div>
+          <Spinner  className='w-56'/>
+        </div>
+        }
         </div>
       </div>
     </div>
