@@ -13,6 +13,7 @@ import {
   FetchedItemsType,
   getCartItems,
   imagesType,
+  ProductsAtom,
   TokenAtom,
   updateCart,
 } from "../../helper";
@@ -48,9 +49,24 @@ const BaseCard = ({
     CouninueAsGuestModalAtom
   );
   const [allCartsInfo, setAllCartsInfo] = useRecoilState(AllCartsInfoAtom);
+  const [productsState, setProductsState] = useRecoilState(ProductsAtom);
+
 
   const { push } = useRouter();
-  
+
+
+  const isDesaibled = () => {
+    let isFouned:boolean = false
+    for (const item of productsState) {
+      if(item.variation.available_quantity>0){
+        return isFouned=false
+      }else if(item.variation.available_quantity===0){
+        return isFouned=true
+      }
+    }
+    return isFouned
+  }
+
 
   const handelMoveToDetails = async (id: number) => {
     push({
@@ -191,7 +207,6 @@ const BaseCard = ({
           <MinusIcon className="w-3 fill-black ml-1" />
         </BaseButton>
         <span className="block w-[40px] text-center">
-          {" "}
           {cartItems[indexcart].quantity}
         </span>
         <BaseButton
@@ -253,24 +268,26 @@ const BaseCard = ({
               <div>
                 {cartItems.length === 0 ? (
                   <BaseButton
+                  disabled={isDesaibled() ? true : false}
                     onClick={() =>
                       token.length > 1
                         ? handleAddToCart()
                         : setContinueAsGuestModal(true)
                     }
-                    className="px-3 whitespace-nowrap py-1 text-xs bg-blue-950 rounded-full font-semibold text-white "
+                    className="px-3 whitespace-nowrap py-1 text-xs bg-blue-950 rounded-full font-semibold text-white disabled:bg-gray-500 disabled:cursor-not-allowed"
                     title="ADD TO CART"
                   />
                 ) : variationId && handelCart(variationId) ? (
                   EditCArt(variationId)
                 ) : (
                   <BaseButton
+                  disabled={isDesaibled() ? true : false}
                     onClick={() =>
                       token.length > 1
                         ? handleAddToCart()
                         : setContinueAsGuestModal(true)
                     }
-                    className="px-3 whitespace-nowrap py-1 text-xs bg-blue-950 rounded-full font-semibold text-white "
+                    className="px-3 whitespace-nowrap py-1 text-xs bg-blue-950 rounded-full font-semibold text-white disabled:bg-gray-500 disabled:cursor-not-allowed"
                     title="ADD TO CART"
                   />
                 )}

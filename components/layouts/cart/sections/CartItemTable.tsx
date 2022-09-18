@@ -16,7 +16,6 @@ const CartItemTable = () => {
   const timerRef = useRef() as MutableRefObject<NodeJS.Timeout>;
   const [token, setToken] = useRecoilState(TokenAtom);
 
-  console.log(cartItems);
   
 
   const handleAddToCart = async (clickedItem: FetchedItemsType) => {
