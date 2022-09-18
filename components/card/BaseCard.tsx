@@ -50,6 +50,7 @@ const BaseCard = ({
   const [allCartsInfo, setAllCartsInfo] = useRecoilState(AllCartsInfoAtom);
 
   const { push } = useRouter();
+  
 
   const handelMoveToDetails = async (id: number) => {
     push({
