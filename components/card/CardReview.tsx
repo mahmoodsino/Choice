@@ -8,9 +8,9 @@ const CardReview = () => {
 
   return (
     <div>
-      {orderDetails.items?.map((item) => {
+      {orderDetails.items?.map((item,i) => {
         return (
-          <div className="flex flex-row border-b  pb-5 justify-between items-center sm:w-[100%] md:w-[90%] mb-5">
+          <div key={i} className="flex flex-row border-b  pb-5 justify-between items-center sm:w-[100%] md:w-[90%] mb-5">
             <div className="">
               <div className="flex flex-row items-center ">
                 <span className="md:text-sm sm:text-xs text-[#262626]">x{item.quantity}</span>
