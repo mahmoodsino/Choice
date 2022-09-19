@@ -13,7 +13,7 @@ const RelatedProducts = ({ products }: Props) => {
         RELATED PRODUCTS
       </span>
       {products.length > 0 ? (
-        <div className="grid lg:grid-cols-4 sm:gap-2 lg:gap-4 md:grid-cols-3 sm:grid-cols-2  mt-10 ">
+        <div className="grid lg:grid-cols-5 sm:gap-2 lg:gap-4 md:grid-cols-3 sm:grid-cols-2  mt-10 ">
           {products.map((item) => {
             return (
               <BaseCard

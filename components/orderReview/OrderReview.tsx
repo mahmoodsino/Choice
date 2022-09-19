@@ -11,8 +11,6 @@ const OrderReview = ({gridForLargScreen}:props) => {
         <h1 className="font-bold md:text-xl pt-5 pb-5  text-gray-1500 ">Order Review</h1>
         <div className={`grid lg:${gridForLargScreen} md:mx-4`}>
             <CardReview />
-            <CardReview/>
-            <CardReview />
         </div>
     </div>
   )

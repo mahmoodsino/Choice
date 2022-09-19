@@ -51,22 +51,21 @@ const BaseCard = ({
   const [allCartsInfo, setAllCartsInfo] = useRecoilState(AllCartsInfoAtom);
   const [productsState, setProductsState] = useRecoilState(ProductsAtom);
 
-
   const { push } = useRouter();
 
-
   const isDesaibled = () => {
-    let isFouned:boolean = false
+    let isFouned: boolean = false;
     for (const item of productsState) {
-      if(item.variation.available_quantity>0){
-        return isFouned=false
-      }else if(item.variation.available_quantity===0){
-        return isFouned=true
+      if (item.id === id) {
+        if (item.variation.available_quantity > 0) {
+          return (isFouned = false);
+        } else if (item.variation.available_quantity === 0) {
+          return (isFouned = true);
+        }
       }
     }
-    return isFouned
-  }
-
+    return isFouned;
+  };
 
   const handelMoveToDetails = async (id: number) => {
     push({
@@ -198,13 +197,13 @@ const BaseCard = ({
       (item) => item.variation && item.variation.id === id
     );
     return (
-      <div className=" space-x-2 flex items-center justify-between px-2 ">
+      <div className=" space-x-2 flex w-[104.28px] items-center justify-between px-2 ">
         <BaseButton
           //@ts-ignore
           onClick={() => handleRemoveFromCart(cartItems[indexcart].id)}
           className="rounded-full w-5 h-5 bg-yellow-950 flex items-center m-auto"
         >
-          <MinusIcon className="w-3 fill-black ml-1" />
+          <MinusIcon className="w-3 fill-black ml-1 mr-1" />
         </BaseButton>
         <span className="block w-[40px] text-center">
           {cartItems[indexcart].quantity}
@@ -219,7 +218,7 @@ const BaseCard = ({
               : false
           }
         >
-          <BlusIcon className="w-3 fill-black ml-1" />
+          <BlusIcon className="w-3 fill-black  ml-1 mr-1" />
         </BaseButton>
       </div>
     );
@@ -235,7 +234,7 @@ const BaseCard = ({
         <div>
           <div className="m-auto w-fit py-2 product-slider-img h-[190px] pt-8  bg-contain">
             {img ? (
-              img?.map((item,i) => {
+              img?.map((item, i) => {
                 if (item.is_default) {
                   return (
                     <div key={i}>
@@ -263,12 +262,12 @@ const BaseCard = ({
               $ {price ? price : "50.00"}
             </span>
           </div>
-          <div className="flex w-full  justify-around bg-[#F3F3F3] border  py-2">
+          <div className="flex w-full h-[43px]  justify-around bg-[#F3F3F3] border  py-2">
             {!loading ? (
               <div>
                 {cartItems.length === 0 ? (
                   <BaseButton
-                  disabled={isDesaibled() ? true : false}
+                    disabled={isDesaibled() ? true : false}
                     onClick={() =>
                       token.length > 1
                         ? handleAddToCart()
@@ -281,7 +280,7 @@ const BaseCard = ({
                   EditCArt(variationId)
                 ) : (
                   <BaseButton
-                  disabled={isDesaibled() ? true : false}
+                    disabled={isDesaibled() ? true : false}
                     onClick={() =>
                       token.length > 1
                         ? handleAddToCart()

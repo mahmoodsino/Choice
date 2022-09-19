@@ -25,3 +25,17 @@ export const orderBySchema = yup.object().shape({
     state:yup.string().required(),
     zipCode:yup.string().required()
   })
+
+  export const contactSchema = yup.object().shape({
+    name:yup.string().required(),
+    email:yup.string().email().required(),
+    message:yup.string().required()
+  })
+
+  export const sendMessageSchema = yup.object().shape({
+    name:yup.string().required(),
+    email:yup.string().email().required(),
+    message:yup.string().required(),
+    companyName:yup.string(),
+    subject:yup.string()
+  })

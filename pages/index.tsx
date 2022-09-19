@@ -1,13 +1,17 @@
 import type { NextPage } from 'next'
-import Head from 'next/head'
-import Image from 'next/image'
-import { HomeMainSectoion } from '../components'
-import styles from '../styles/Home.module.css'
+import { useRecoilState } from 'recoil'
+import { HomeMainSectoion, Notification } from '../components'
+import { TokenAtom } from '../helper'
 
 const Home: NextPage = () => {
+  const [token,setToken]=useRecoilState(TokenAtom)
+
   return (
     <div>
       <HomeMainSectoion />
+      {token.length>1 &&
+      <Notification />
+      }
     </div>
   )
 }
