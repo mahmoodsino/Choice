@@ -55,6 +55,8 @@ function SamplePrevArrow(props: any) {
 const FeaturedProducts = () => {
   const [featuredProduct, setFeatureProduct] = useState<ProductsType[]>([]);
   const [loading, setLoading] = useState(false);
+  console.log(featuredProduct);
+  
   const settings = {
     dots: false,
     infinite: true,
@@ -106,6 +108,7 @@ const FeaturedProducts = () => {
                     img={item.images}
                     price={item.variation.price}
                     variationId={item.variation.id}
+                    available_quantity={item.variation.available_quantity}
                   />
                 </div>
               );

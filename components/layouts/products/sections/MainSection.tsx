@@ -158,6 +158,7 @@ const MainSection = () => {
                       img={item.images}
                       price={item.variation.price}
                       variationId={item.variation.id}
+                      available_quantity={item.variation.available_quantity}
                     />
                   );
                 })}

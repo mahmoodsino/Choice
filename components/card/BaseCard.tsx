@@ -29,6 +29,7 @@ interface Props {
   variationId?: number;
   width?: string;
   smallWidth?: string;
+  available_quantity?:number
 }
 
 const BaseCard = ({
@@ -40,6 +41,8 @@ const BaseCard = ({
   variationId,
   width,
   smallWidth,
+  available_quantity
+
 }: Props) => {
   const [cartItems, setCartItems] = useRecoilState(CartItemsAtom);
   const [token, setToken] = useRecoilState(TokenAtom);
@@ -52,20 +55,6 @@ const BaseCard = ({
   const [productsState, setProductsState] = useRecoilState(ProductsAtom);
 
   const { push } = useRouter();
-
-  const isDesaibled = () => {
-    let isFouned: boolean = false;
-    for (const item of productsState) {
-      if (item.id === id) {
-        if (item.variation.available_quantity > 0) {
-          return (isFouned = false);
-        } else if (item.variation.available_quantity === 0) {
-          return (isFouned = true);
-        }
-      }
-    }
-    return isFouned;
-  };
 
   const handelMoveToDetails = async (id: number) => {
     push({
@@ -228,7 +217,7 @@ const BaseCard = ({
     <div
       className={`sm:w-[${
         smallWidth ? smallWidth : "100%"
-      }] lg:w-[${width}] h-fit  border  mt-2`}
+      }] lg:w-[${width}] h-fit  border  mt-2 ml-1`}
     >
       <div className="   ">
         <div>
@@ -267,7 +256,7 @@ const BaseCard = ({
               <div>
                 {cartItems.length === 0 ? (
                   <BaseButton
-                    disabled={isDesaibled() ? true : false}
+                    disabled={available_quantity=== 0 ? true : false}
                     onClick={() =>
                       token.length > 1
                         ? handleAddToCart()
@@ -280,7 +269,7 @@ const BaseCard = ({
                   EditCArt(variationId)
                 ) : (
                   <BaseButton
-                    disabled={isDesaibled() ? true : false}
+                    disabled={available_quantity===0 ? true : false}
                     onClick={() =>
                       token.length > 1
                         ? handleAddToCart()
