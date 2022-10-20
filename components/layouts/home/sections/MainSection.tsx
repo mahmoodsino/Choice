@@ -18,6 +18,7 @@ import Image from "next/image";
 import Offer from "./Offer";
 import { getHomeInfo, HomePageAtom } from "../../../../helper";
 import { useRecoilState } from "recoil";
+import {toast} from "react-toastify"
 
 const MainSection = () => {
   const [homePageState, setHomePageState] = useRecoilState(HomePageAtom);
@@ -26,7 +27,7 @@ const MainSection = () => {
     const getData = async () => {
       const res = await getHomeInfo();
       if (res == null) {
-        alert("some thing went wrong");
+        toast.error("some thing went wrong")
       } else setHomePageState(res.result);
     };
     getData();

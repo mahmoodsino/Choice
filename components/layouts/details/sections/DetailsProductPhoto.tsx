@@ -61,7 +61,7 @@ const DetailsProductPhoto = () => {
         <a className="product-slider-img">
           {detailsState.product?.images &&
               (
-              <Image
+              <img
                 width={75}
                 height={75}
                 src={detailsState.product.images[i]?.path}

@@ -10,12 +10,15 @@ import {
   CartItemsAtom,
   CouninueAsGuestModalAtom,
   deleteCart,
+  ErorrMessageAtom,
   FetchedItemsType,
   getCartItems,
   imagesType,
+  OpenMessageModalAtom,
   ProductsAtom,
   TokenAtom,
   updateCart,
+  variationType,
 } from "../../helper";
 import { BlusIcon, MinusIcon } from "../icons";
 import { Spinner } from "../spinner";
@@ -29,7 +32,9 @@ interface Props {
   variationId?: number;
   width?: string;
   smallWidth?: string;
-  available_quantity?:number
+  available_quantity?: number;
+  inStock: number;
+  tracking_type: number;
 }
 
 const BaseCard = ({
@@ -41,8 +46,9 @@ const BaseCard = ({
   variationId,
   width,
   smallWidth,
-  available_quantity
-
+  available_quantity,
+  inStock,
+  tracking_type,
 }: Props) => {
   const [cartItems, setCartItems] = useRecoilState(CartItemsAtom);
   const [token, setToken] = useRecoilState(TokenAtom);
@@ -53,6 +59,9 @@ const BaseCard = ({
   );
   const [allCartsInfo, setAllCartsInfo] = useRecoilState(AllCartsInfoAtom);
   const [productsState, setProductsState] = useRecoilState(ProductsAtom);
+  const [openMessageModal, setOpenMassegModal] =
+    useRecoilState(OpenMessageModalAtom);
+  const [errorMessage, setErorrMessage] = useRecoilState(ErorrMessageAtom);
 
   const { push } = useRouter();
 
@@ -107,18 +116,13 @@ const BaseCard = ({
       if (id && variationId) {
         const res = await addToCart(token, 1, id, variationId, 1, 1, 1);
         if (res === null) {
-          alert("some thing went wrong");
-        }
-        const response = await getCartItems(token);
-        setAllCartsInfo(response.result);
-        if (response === null) {
-          alert("some thing went wrong");
+          setErorrMessage("some thing went wrong");
+          setOpenMassegModal(true);
         } else {
-          setCartItems(response.result.items);
+          setCartItems(res.result.items);
+          setAllCartsInfo(res.result);
         }
-        if (res) {
-          setLoading(false);
-        }
+        setLoading(false);
       }
     }
     if (isItemInCarts >= 0) {
@@ -132,10 +136,15 @@ const BaseCard = ({
         if (id) {
           const res = await updateCart(token, id, newQuantity);
           if (res === null) {
-            alert("some thing went wrong");
+            setErorrMessage("some thing went wrong");
+            setOpenMassegModal(true);
+          }else if(res==400){
+            setErorrMessage("there is no avaliable quantity !");
+            setOpenMassegModal(true);
+          } else {
+            setCartItems(res.result.items);
+            setAllCartsInfo(res.result);
           }
-          const response = await getCartItems(token);
-          setAllCartsInfo(response.result);
         }
       }, 1000);
     }
@@ -162,20 +171,24 @@ const BaseCard = ({
       timerRef.current = setTimeout(async () => {
         if (id) {
           const res = await updateCart(token, id, itemQuantity);
-          if (res === null) {
-            alert("some thing went wrong");
+          if (res == null||400) {
+            setErorrMessage("some thing went wrong");
+            setOpenMassegModal(true);
+          } else {
+            setCartItems(res.result.items);
+            setAllCartsInfo(res.result);
           }
-          const response = await getCartItems(token);
-          setAllCartsInfo(response.result);
         }
       }, 1000);
     } else if (itemQuantity === 1) {
       if (id) {
         const res = await deleteCart(token, id);
-        const response = await getCartItems(token);
-        setAllCartsInfo(response.result);
         if (res === null) {
-          alert("some thing went wrong");
+          setErorrMessage("some thing went wrong");
+          setOpenMassegModal(true);
+        } else {
+          setCartItems(res.result.items);
+          setAllCartsInfo(res.result);
         }
       }
     }
@@ -185,6 +198,7 @@ const BaseCard = ({
     let indexcart = cartItems.findIndex(
       (item) => item.variation && item.variation.id === id
     );
+
     return (
       <div className=" space-x-2 flex w-[104.28px] items-center justify-between px-2 ">
         <BaseButton
@@ -197,20 +211,48 @@ const BaseCard = ({
         <span className="block w-[40px] text-center">
           {cartItems[indexcart].quantity}
         </span>
+        {tracking_type===1 && 
         <BaseButton
           onClick={() => handleAddToCart()}
           className="rounded-full w-5 h-5 bg-yellow-950 flex items-center m-auto"
-          disabled={
-            cartItems[indexcart].quantity ===
-            cartItems[indexcart].available_quantity
-              ? true
-              : false
-          }
         >
           <BlusIcon className="w-3 fill-black  ml-1 mr-1" />
         </BaseButton>
+        }
+        {tracking_type!=1 && 
+        <BaseButton
+        onClick={() => handleAddToCart()}
+        className="rounded-full w-5 h-5 bg-yellow-950 flex items-center m-auto"
+        disabled={
+          cartItems[indexcart].quantity ===
+          cartItems[indexcart].available_quantity
+            ? true
+            : false
+        }
+      >
+        <BlusIcon className="w-3 fill-black  ml-1 mr-1" />
+      </BaseButton>
+        }
       </div>
     );
+  };
+
+  const canAddToCart = () => {
+    let canAdd = true;
+    if (inStock < 1) {
+      canAdd = false;
+    } else if (inStock === 1) {
+      if (tracking_type === 1) {
+        canAdd = true;
+      } else if (tracking_type ==2 || tracking_type==3) {
+        if (available_quantity === 0) {
+          canAdd = false;
+        }else{
+          canAdd=true
+        }
+      }
+    }
+    return canAdd
   };
 
   return (
@@ -256,7 +298,7 @@ const BaseCard = ({
               <div>
                 {cartItems.length === 0 ? (
                   <BaseButton
-                    disabled={available_quantity=== 0 ? true : false}
+                    disabled={canAddToCart() ? true : false}
                     onClick={() =>
                       token.length > 1
                         ? handleAddToCart()
@@ -269,7 +311,7 @@ const BaseCard = ({
                   EditCArt(variationId)
                 ) : (
                   <BaseButton
-                    disabled={available_quantity===0 ? true : false}
+                    disabled={canAddToCart() ? false : true}
                     onClick={() =>
                       token.length > 1
                         ? handleAddToCart()

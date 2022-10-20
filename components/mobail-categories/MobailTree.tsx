@@ -2,7 +2,7 @@ import  { useState } from "react";
 import { v4 as uuidv4 } from 'uuid';
 import { useRouter } from "next/router";
 import { useRecoilState } from "recoil";
-import { categoriesType, OpenCategoryModalAtom, SelectedProductsCategoryAtom } from "../../helper";
+import { categoriesType, OpenCategoryModalAtom, QueryFiltersAtom} from "../../helper";
 import { RightArrowIcons } from "../icons";
 
 interface data {
@@ -44,20 +44,26 @@ const MobailTreeNode = ({ node,MobailselectedParentId,setMobailParentId }: node)
   const [openCategoryModal, setOpencategoryModal] = useRecoilState(
     OpenCategoryModalAtom
   );
-  const [selecterCategory,setSelectedCategory]=useRecoilState(SelectedProductsCategoryAtom)
+  const [queryFilter,setQueryFilter]=useRecoilState(QueryFiltersAtom)
  
 
   const hasChild = node.categories?.length>0 ? true : false;
   const push = useRouter().push
 
-
   const handelSearch = async (categoreyID: number) => {
+    setQueryFilter(prev => {
+      return(
+        {...prev,SelectedCategories:[categoreyID]}
+      )
+    })
     push({
       pathname: '/products',
-      query: { categorey: encodeURI(`${categoreyID}`) },
+      // query: { categorey:categoreyID},
   });
   setOpencategoryModal(false)
   };
+
+
   return (
     <li className=" relative ">
       <div className="">
@@ -67,7 +73,7 @@ const MobailTreeNode = ({ node,MobailselectedParentId,setMobailParentId }: node)
         <label  className="shopContainer flex items-center mt-0 mb-0 py-2">
             {node.name}
             <input
-            checked={selecterCategory.findIndex(categorey => categorey===node.id)>-1 ? true : false }
+            checked={queryFilter.SelectedCategories.findIndex(categorey => categorey===node.id)>-1 ? true : false }
               onChange={() => handelSearch(node.id)}
               className="checkbox"
               type="checkbox"

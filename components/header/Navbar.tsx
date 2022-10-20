@@ -2,7 +2,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import React from "react";
 import { useRecoilState } from "recoil";
-import { SearchAtom } from "../../helper";
+import { QueryFiltersAtom, SearchAtom } from "../../helper";
 import BaseButton from "../buttons/BaseButton";
 import { SearchIcon } from "../icons";
 import BaseInput from "../inputs/BaseInput";
@@ -20,14 +20,19 @@ export const routse = [
 const Navbar = () => {
   const [searchState, setSearchState] = useRecoilState(SearchAtom);
   const { pathname,push } = useRouter();
+  const [queryFilter,setQueryFilter]=useRecoilState(QueryFiltersAtom)
 
   const handelSearch = async () => {
+    setQueryFilter(prev => {
+      return(
+        {...prev,search:searchState}
+      )
+    })
     push({
-      pathname: "/products",
-      query: { search: encodeURI(searchState) },
+      pathname: "/shop",
+      // query: { search: encodeURI(searchState) },
     });
   };
-
 
 
   return (

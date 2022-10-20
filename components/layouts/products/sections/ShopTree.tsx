@@ -1,14 +1,15 @@
 import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { useRecoilState } from "recoil";
-import { categoriesType, SelectedProductsCategoryAtom } from "../../../../helper";
-import { ArrowIcon, RightArrowIcons } from "../../../icons";
+import { categoriesType, QueryFiltersAtom, } from "../../../../helper";
+import {  RightArrowIcons } from "../../../icons";
 
 interface data {
   data: categoriesType[] | categoriesType;
 
 }
 
+export let selCategory: number[] = [];
 
 
 const ShopTree = ({ data }: data) => {
@@ -59,17 +60,25 @@ const ShopTreeNode = ({
   ShopselectedParentId,
   setShopParentId,
 }: node) => {
-  const [selecterCategory,setSelectedCategory]=useRecoilState(SelectedProductsCategoryAtom)
+  const [queryFilter,setQueryFilter]=useRecoilState(QueryFiltersAtom)
 
   const hasChild = node.categories?.length > 0 ? true : false;
 
   const handelSearch = async (categoreyID: number) => {
-    const index = selecterCategory.findIndex((category) => category === categoreyID);
+    const index = queryFilter.SelectedCategories.findIndex(
+      (category) => category === categoreyID
+    );
     if (index < 0) {
-      setSelectedCategory(prev => [...prev,categoreyID])
+      selCategory = [...queryFilter.SelectedCategories, categoreyID];
     } else if (index >= 0) {
-      setSelectedCategory(prev => prev.filter(item => item!==categoreyID))
+      selCategory = selCategory.filter((item) => item !== categoreyID);
     }
+    setQueryFilter((prev) => {
+      return {
+        ...prev,
+        SelectedCategories: selCategory,
+      };
+    });
   };
 
 
@@ -82,7 +91,7 @@ const ShopTreeNode = ({
           <label  className="shopContainer flex items-center mt-0 mb-0 py-2">
             {node.name}
             <input
-            checked={selecterCategory.findIndex(categorey => categorey===node.id)>-1 ? true : false }
+            checked={queryFilter.SelectedCategories.findIndex(categorey => categorey===node.id)>-1 ? true : false }
               onChange={() => handelSearch(node.id)}
               className="checkbox"
               type="checkbox"

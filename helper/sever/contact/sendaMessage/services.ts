@@ -1,4 +1,5 @@
 import axios from "axios"
+import apiWorker from "../../axios"
 
 const root = process.env.NEXT_PUBLIC_ROOT
 
@@ -12,7 +13,7 @@ interface Params {
 
 const handelSendMessage = async (params:Params) => {
     try {
-        const res = await axios.post(`${root}/send-message`, {
+        const res = await apiWorker.post(`${root}/send-message`, {
             company_id: 1,
             name:params.name ,
             email: params.email,

@@ -1,18 +1,16 @@
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 import { useRecoilState } from "recoil";
 import {
   AttributesProductsAtom,
   BrandsAtom,
-  CurrentPageAtom,
   getProducts,
   handelFilterProduct,
   OrderByAtom,
   ProductsAtom,
   productsCategoreyAtom,
-  selectBrandAtom,
-  SelectedAttributeAtom,
-  SelectedProductsCategoryAtom,
+  QueryFiltersAtom,
   TokenAtom,
   totalPagesAtom,
 } from "../../../../helper";
@@ -36,29 +34,24 @@ const MainSection = () => {
   );
   const [brands, setBrands] = useRecoilState(BrandsAtom);
   const [attributes, setAttributes] = useRecoilState(AttributesProductsAtom);
-
-  const [selecterCategory, setSelectedCategory] = useRecoilState(
-    SelectedProductsCategoryAtom
-  );
-  const [selectBrand, setSelectBrand] = useRecoilState(selectBrandAtom);
-  const [selectedAttribute, setSelectedAttribute] = useRecoilState(
-    SelectedAttributeAtom
-  );
   const [showFillterProducts, setShowFillterProducts] = useRecoilState(
     showFillterProductAtom
   );
-
   const [totalPages, setTotalPages] = useRecoilState(totalPagesAtom);
-  const [currentPage, setCurrentPage] = useRecoilState(CurrentPageAtom);
+  const [queryFilter,setQueryFilter]=useRecoilState(QueryFiltersAtom)
 
   const route = useRouter().query;
 
   useEffect(() => {
     const leave = () => {
-      setSelectedCategory([]);
-      setSelectBrand([]);
-      setSelectedAttribute({});
-      setCurrentPage(1);
+      setQueryFilter({
+        SelectedBrands: [],
+        SelectedCategories: [],
+        page: 1,
+        SelectedAttribute: {} as { [key: number]: number[] },
+        search: "",
+        orderby: "OrderByNewest",
+      });
     };
     return () => {
       leave();
@@ -68,25 +61,22 @@ const MainSection = () => {
   useEffect(() => {
     const getData = async () => {
       const res = await handelFilterProduct();
-      const modifieOrderBy: string[] = [...res.result.order_by_clauses];
-      const result = modifieOrderBy.map((item, index) => ({
-        label: item,
-        value: index,
-      }));
-      setOrderByState(result);
-      setProductsCategory(res.result.categories);
-      setAttributes(res.result.attributes);
-      setBrands(res.result.brands);
+      if(res===null){
+        toast.error("some thing went wrong")
+      }else{
+        const modifieOrderBy: string[] = [...res.result.order_by_clauses];
+        const result = modifieOrderBy.map((item, index) => ({
+          label: item,
+          value: index,
+        }));
+        setOrderByState(result);
+        setProductsCategory(res.result.categories);
+        setAttributes(res.result.attributes);
+        setBrands(res.result.brands);
+      }
     };
     getData();
   }, []);
-
-  useEffect(() => {
-    if (typeof route.categorey !== "undefined") {
-      //@ts-ignore
-      setSelectedCategory((prev) => [...prev, +route.categorey]);
-    }
-  }, [route.categorey]);
 
   useEffect(() => {
     const getData = async () => {
@@ -94,31 +84,31 @@ const MainSection = () => {
       const res = await getProducts({
         token: token,
         //@ts-ignore
-        product_name: route.search,
-        categoryId: selecterCategory,
-        AttributeValues: selectedAttribute,
-        Brands: selectBrand,
-        page: currentPage,
+        product_name: queryFilter.search,
+        categoryId: queryFilter.SelectedCategories,
+        AttributeValues: queryFilter.SelectedAttribute,
+        Brands:queryFilter.SelectedBrands,
+        page: queryFilter.page,
+        orderBy:queryFilter.orderby
       });
-      setTotalPages(res.result.pages_count);
-
       if (res === null) {
-        alert("some thing went wrong");
+        toast.error("some thing went wrong");
       } else {
+        setTotalPages(res.result.pages_count);
         setProductsState(res.result.items);
         setLoading(false);
       }
     };
     getData();
   }, [
-    route.search,
-    selecterCategory,
-    selectBrand,
-    selectedAttribute,
-    currentPage,
+   queryFilter,
   ]);
 
-  const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
+  const paginate = (pageNumber: number) =>{
+    setQueryFilter((prev) => {
+      return { ...prev, page: pageNumber };
+    })
+  }
 
   return (
     <div className="2xl:container m-auto lg:px-[75px] md:px-[35px] sm:px-[px] pb-10">
@@ -159,6 +149,8 @@ const MainSection = () => {
                       price={item.variation.price}
                       variationId={item.variation.id}
                       available_quantity={item.variation.available_quantity}
+                      inStock={item.variation.in_stock}
+                    tracking_type={item.tracking_type}
                     />
                   );
                 })}

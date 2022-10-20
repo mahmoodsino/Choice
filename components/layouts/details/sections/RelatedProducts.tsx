@@ -26,6 +26,8 @@ const RelatedProducts = ({ products }: Props) => {
                 price={item.variation.price}
                 variationId={item.variation.id}
                 available_quantity={item.variation.available_quantity}
+                inStock={item.variation.in_stock}
+                tracking_type={item.tracking_type}
               />
             );
           })}

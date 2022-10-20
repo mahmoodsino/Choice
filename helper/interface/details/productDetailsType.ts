@@ -14,10 +14,12 @@ interface productDetailsType {
     images:imagesType[],
     name:string,
     seo_description:string,
-    seo_keywords:string[],
+    seo_keywords:string,
     seo_title:string,
     short_description:string,
-    slug:string
+    slug:string,
+    tracking_type:number
+
 }
 
 export default productDetailsType

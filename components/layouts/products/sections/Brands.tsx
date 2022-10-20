@@ -3,20 +3,32 @@ import Collapsible from "react-collapsible";
 import { ArrowIcon } from "../../../icons";
 import { BaseButton } from "../../../buttons";
 import { useRecoilState } from "recoil";
-import { BrandsAtom, selectBrandAtom } from "../../../../helper";
+import { BrandsAtom, QueryFiltersAtom} from "../../../../helper";
+
+let SleBran :number[] = []
 
 const Brands = () => {
   const [openBrands, setOpenBrands] = useState(true);
   const [brands, setBrands] = useRecoilState(BrandsAtom);
-  const [selectBrand, setSelectBrand] = useRecoilState(selectBrandAtom);
+  const [queryFilter,setQueryFilter]=useRecoilState(QueryFiltersAtom)
 
   const handeBrands =async (id: number) => {
-    const index = selectBrand.findIndex((brand) => brand === id);
+    const index = SleBran.findIndex((brand) => brand === id);
     if (index < 0) {
-      setSelectBrand(prev => [...prev,id])
+      SleBran=[...SleBran,id]
     } else if (index >= 0) {
-      setSelectBrand(prev => prev.filter(item => item!==id))
+      SleBran=SleBran.filter((item) => item !== id)
     }
+    
+
+    setQueryFilter(prev => {
+      return(
+        {
+          ...prev,SelectedBrands:SleBran
+        }
+      )
+    })
+
   };
   return (
     <div className={`w-[90%] mt-8 ${brands.length !==0 ? "" : "hidden"}`}>
@@ -45,7 +57,7 @@ const Brands = () => {
                   <input
                     onChange={() => handeBrands(brand.id)}
                     checked={
-                      selectBrand.findIndex((bran) => bran === brand.id) > -1
+                      queryFilter.SelectedBrands.findIndex((bran) => bran === brand.id) > -1
                         ? true
                         : false
                     }

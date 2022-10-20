@@ -7,7 +7,6 @@ import HomeTree from '../layouts/home/sections/HomeTree'
 
 const FixedCategories = () => {
   const [homePageState,setHomePageState]=useRecoilState(HomePageAtom)
-
   return (
     <div className='border w-[250px]'>
       <HomeTree data={homePageState.featured_categories} />

@@ -1,5 +1,6 @@
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 import { useRecoilState } from "recoil";
 import {
   DetailsAtom,
@@ -25,15 +26,19 @@ const MainSection = () => {
       setLoading(true);
       if (route.product) {
         const res = await getProductDetails(+route.product);
-        const response = await getSimilarProducts(+route.product);
-        if (res === null || response === null) {
-          alert("some thing went wrong");
+        if (res === null ) {
+          toast.error("some thing went wrong");
         } else {
           setDetailsState(res.result);
+        }
+        const response = await getSimilarProducts(+route.product);
+        if(response===null){
+          toast.error("some thing went wrong")
+        }else{
           setRelatedProducts(response.result);
-          setLoading(false);
         }
       }
+      setLoading(false);
     };
     getData();
   }, [route.product]);

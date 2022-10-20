@@ -1,6 +1,6 @@
 import React from "react";
 import { useRecoilState } from "recoil";
-import { CurrentPageAtom, totalPagesAtom } from "../../helper";
+import {  QueryFiltersAtom, totalPagesAtom } from "../../helper";
 import Pagination from "react-js-pagination";
 
 interface Props {
@@ -9,7 +9,7 @@ interface Props {
 
 const Paginations = ({ paginate }: Props) => {
   const [totalPages, setTotalPages] = useRecoilState(totalPagesAtom);
-  const [currentPage, setCurrentPage] = useRecoilState(CurrentPageAtom);
+  const [queryFilter,setQueryFilter]=useRecoilState(QueryFiltersAtom)
 
 
   return (
@@ -20,7 +20,7 @@ const Paginations = ({ paginate }: Props) => {
         activeClass="bg-blue-950 text-yellow-950"
         itemClassFirst="border  "
         itemClassPrev="border "
-        activePage={currentPage}
+        activePage={queryFilter.page}
         itemsCountPerPage={25}
         totalItemsCount={25 * totalPages}
         pageRangeDisplayed={5}

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Slider from "react-slick";
+import { toast } from "react-toastify";
 import { getFeaturedProducts, ProductsType } from "../../../../helper";
 import { BaseCard } from "../../../card";
 import { Spinner } from "../../../spinner";
@@ -55,7 +56,6 @@ function SamplePrevArrow(props: any) {
 const FeaturedProducts = () => {
   const [featuredProduct, setFeatureProduct] = useState<ProductsType[]>([]);
   const [loading, setLoading] = useState(false);
-  console.log(featuredProduct);
   
   const settings = {
     dots: false,
@@ -76,11 +76,11 @@ const FeaturedProducts = () => {
       setLoading(true);
       const res = await getFeaturedProducts();
       if (res === null) {
-        alert("some thing went wrong");
+        toast.error("some thing went wrong");
       } else {
         setFeatureProduct(res.result.items);
-        setLoading(false);
       }
+      setLoading(false);
     };
     getData();
   }, []);
@@ -109,6 +109,8 @@ const FeaturedProducts = () => {
                     price={item.variation.price}
                     variationId={item.variation.id}
                     available_quantity={item.variation.available_quantity}
+                    inStock={item.variation.in_stock}
+                    tracking_type={item.tracking_type}
                   />
                 </div>
               );

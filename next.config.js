@@ -7,7 +7,7 @@ const nextConfig = {
 module.exports = {
   reactStrictMode: true,
   images: {
-      domains: ["i.ebayimg.com"],
+      domains: ["i.ebayimg.com",""],
       formats: ["image/webp"],
   },
 };

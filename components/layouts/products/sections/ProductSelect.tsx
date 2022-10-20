@@ -6,13 +6,10 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { orderBySchema } from "../../../../helper/validation";
 import { useRecoilState } from "recoil";
 import {
-  CurrentPageAtom,
   getProducts,
   OrderByAtom,
   ProductsAtom,
-  selectBrandAtom,
-  SelectedAttributeAtom,
-  SelectedProductsCategoryAtom,
+  QueryFiltersAtom,
 } from "../../../../helper";
 import { useRouter } from "next/router";
 
@@ -26,15 +23,7 @@ interface IFormInputs {
 const ProductSelect = () => {
   const [orderByState, setOrderByState] = useRecoilState(OrderByAtom);
   const [productsState, setProductsState] = useRecoilState(ProductsAtom);
-  const [selecterCategory, setSelectedCategory] = useRecoilState(
-    SelectedProductsCategoryAtom
-  );
-  const [selectBrand, setSelectBrand] = useRecoilState(selectBrandAtom);
-  const [selectedAttribute, setSelectedAttribute] = useRecoilState(
-    SelectedAttributeAtom
-  );
-  const [currentPage, setCurrentPage] = useRecoilState(CurrentPageAtom);
-
+  const [queryFilter,setQueryFilter]=useRecoilState(QueryFiltersAtom)
   const customStyles: StylesConfig<optionType> = {
     option: (provided: ActionMeta, state: ActionMeta) => ({
       ...provided,
@@ -52,9 +41,6 @@ const ProductSelect = () => {
   };
   const {
     control,
-    register,
-    handleSubmit,
-    formState: { errors },
   } = useForm<IFormInputs>({
     resolver: yupResolver(orderBySchema),
   });
@@ -72,14 +58,20 @@ const ProductSelect = () => {
             ) => {
               const res = await getProducts({
                 orderBy: selectedOption?.label,
-                AttributeValues: selectedAttribute,
-                Brands: selectBrand,
-                categoryId: selecterCategory,
-                page: currentPage,
+                AttributeValues: queryFilter.SelectedAttribute,
+                Brands: queryFilter.SelectedBrands,
+                categoryId: queryFilter.SelectedCategories,
+                page: queryFilter.page,
                 //@ts-ignore
-                product_name: route.search,
+                product_name: queryFilter.search,
               });
-              setProductsState(res.result.items);
+              if(selectedOption?.label!=null){
+                setQueryFilter(prev => {
+                  return (
+                    {...prev,orderby: selectedOption?.label}
+                  )
+                })
+              }
             };
             return (
               <Select

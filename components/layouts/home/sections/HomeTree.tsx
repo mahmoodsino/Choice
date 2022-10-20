@@ -1,7 +1,8 @@
 import { useRouter } from "next/router";
 import { useState } from "react";
+import { useRecoilState } from "recoil";
 import { v4 as uuidv4 } from 'uuid';
-import { categoriesType } from "../../../../helper";
+import { categoriesType, QueryFiltersAtom } from "../../../../helper";
 import { BaseButton } from "../../../buttons";
 
 
@@ -43,13 +44,19 @@ interface node {
   setParentId: (value: number) => void;
 }
 const TreeNode = ({ node, selectedParentId, setParentId }: node) => {
+  const [queryFilter,setQueryFilter]=useRecoilState(QueryFiltersAtom)
 
   const hasChild = node.categories?.length > 0 ? true : false;
   const push = useRouter().push
   const handelSearch = async (categoreyID: number) => {
+    setQueryFilter(prev => {
+      return(
+        {...prev,SelectedCategories:[categoreyID]}
+      )
+    })
     push({
       pathname: '/products',
-      query: { categorey: encodeURI(`${categoreyID}`) },
+      // query: { categorey:categoreyID},
   });
   };
   return (

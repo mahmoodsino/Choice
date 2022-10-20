@@ -6,18 +6,19 @@ import { useRecoilState } from "recoil";
 import {
   AttributesProductsAtom,
   AttributesProductsType,
-  SelectedAttributeAtom,
+  QueryFiltersAtom,
 } from "../../../../helper";
+
+let seleAttribute: { [key: number]: number[] } = {} as {
+  [key: number]: number[];
+};
 
 const Attributes = () => {
   const [openAttributes, setOpenAttributes] = useState(true);
   const [attributes, setAttributes] = useRecoilState(AttributesProductsAtom);
   const [val, setVal] = useState<number>();
-  const [selectedAttribute, setSelectedAttribute] = useRecoilState(
-    SelectedAttributeAtom
-  );
+  const [queryFilter,setQueryFilter]=useRecoilState(QueryFiltersAtom)
 
-  console.log(selectedAttribute);
 
   const activeHandler = (attribute: AttributesProductsType) => {
     if (attribute.attribute_values.length > 0) {
@@ -29,32 +30,40 @@ const Attributes = () => {
   };
 
   const handelValues = (attributeId: number, attValueID: number) => {
-    const index = Object.keys(selectedAttribute).findIndex(
+    const index = Object.keys(seleAttribute).findIndex(
       (attribute) => +attribute === attributeId
     );
     if (index < 0) {
-      setSelectedAttribute({
-        ...selectedAttribute,
-        [attributeId]: [attValueID],
-      });
+      seleAttribute = { ...seleAttribute, [attributeId]: [attValueID] };
     } else if (index >= 0) {
-      Object.keys(selectedAttribute).map((key) => {
-        const values = [...selectedAttribute[+attributeId]];
+      Object.keys(seleAttribute).map((key) => {
+        const values = [...seleAttribute[+attributeId]];
 
         const valueIndex = values.findIndex((value) => value === attValueID);
         if (valueIndex < 0) {
           if (+key === attributeId) {
             values.push(attValueID);
-            setSelectedAttribute({ ...selectedAttribute, [key]: [...values] });
+            seleAttribute = { ...seleAttribute, [key]: [...values] };
           }
         } else if (valueIndex >= 0) {
           if (+key === attributeId) {
             values.splice(valueIndex, 1);
-            setSelectedAttribute({ ...selectedAttribute, [key]: [...values] });
+            seleAttribute = { ...seleAttribute, [key]: [...values] };
           }
         }
       });
     }
+
+    const keys = Object.keys(seleAttribute);
+    let newSelected: { [key: number]: number[] } = {};
+    keys.filter((key) => {
+      const value = seleAttribute[+key];
+      if (value.length !== 0) newSelected[+key] = value;
+    });
+    seleAttribute = newSelected;
+    setQueryFilter((prev) => {
+      return { ...prev, SelectedAttribute: seleAttribute };
+    });
   };
 
   return (

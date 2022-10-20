@@ -1,4 +1,4 @@
-import axios from "axios"
+import apiWorker from "../../axios"
 import { getConfig } from "../../getConfig"
 
 
@@ -7,14 +7,18 @@ const root =process.env.NEXT_PUBLIC_ROOT
 
 const updateCart = async (token: string,id:number,quantity:number) => {
     try {
-        const res = await axios.put(`${root}/carts/${id}`, {
+        const res = await apiWorker.put(`${root}/carts/${id}`, {
             quantity: quantity,
         }, getConfig(token)
         )
         return res.data
-    } catch (error) {
+    } catch (error:any) {
         console.log(error)
-        return null
+        if(error?.response.status==400){
+            return error?.response.status
+        }else{
+            return null
+        }
     }
 }
 
