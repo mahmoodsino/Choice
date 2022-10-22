@@ -1,37 +1,69 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Collapsible from "react-collapsible";
 import { ArrowIcon } from "../../../icons";
 import { BaseButton } from "../../../buttons";
 import { useRecoilState } from "recoil";
-import { BrandsAtom, QueryFiltersAtom} from "../../../../helper";
+import { BrandsAtom, QueryFiltersAtom } from "../../../../helper";
+import { useRouter } from "next/router";
 
-let SleBran :number[] = []
+let SleBran: number[] = [];
 
 const Brands = () => {
   const [openBrands, setOpenBrands] = useState(true);
   const [brands, setBrands] = useRecoilState(BrandsAtom);
-  const [queryFilter,setQueryFilter]=useRecoilState(QueryFiltersAtom)
+  const [queryFilter, setQueryFilter] = useRecoilState(QueryFiltersAtom);
+  const { replace, query } = useRouter();
+  
 
-  const handeBrands =async (id: number) => {
+
+  useEffect(() => {
+    if(typeof(query.brand)!==undefined){
+      //@ts-ignore
+      const q= query?.brand?.split("-")
+      q?.map((item:string) => {
+        let index:number=SleBran.findIndex(find => ( find===(+item)))  
+        if(index<0&&+item!=0){
+          SleBran=[...SleBran,+item]
+        }      
+      })
+      
+    }
+    setQueryFilter((prev) => {
+      return {
+        ...prev,
+        SelectedBrands: SleBran,
+      };
+    });
+  },[query.brand])
+
+  const handeBrands = async (id: number) => {
     const index = SleBran.findIndex((brand) => brand === id);
     if (index < 0) {
-      SleBran=[...SleBran,id]
+      SleBran = [...SleBran, id];
     } else if (index >= 0) {
-      SleBran=SleBran.filter((item) => item !== id)
+      SleBran = SleBran.filter((item) => item !== id);
     }
-    
 
-    setQueryFilter(prev => {
-      return(
-        {
-          ...prev,SelectedBrands:SleBran
-        }
-      )
-    })
+    let queryBrand = SleBran.map((item) => item).join("-");
+    replace(
+      {
+        query: { ...query, brand: queryBrand },
+      },
+      undefined,
+      {
+        scroll: false,
+      }
+    );
 
+    setQueryFilter((prev) => {
+      return {
+        ...prev,
+        SelectedBrands: SleBran,
+      };
+    });
   };
   return (
-    <div className={`w-[90%] mt-8 ${brands.length !==0 ? "" : "hidden"}`}>
+    <div className={`w-[90%] mt-8 ${brands.length !== 0 ? "" : "hidden"}`}>
       <Collapsible
         open={openBrands}
         trigger={
@@ -57,7 +89,9 @@ const Brands = () => {
                   <input
                     onChange={() => handeBrands(brand.id)}
                     checked={
-                      queryFilter.SelectedBrands.findIndex((bran) => bran === brand.id) > -1
+                      queryFilter.SelectedBrands.findIndex(
+                        (bran) => bran === brand.id
+                      ) > -1
                         ? true
                         : false
                     }

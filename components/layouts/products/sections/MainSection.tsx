@@ -41,7 +41,30 @@ const MainSection = () => {
   const [queryFilter,setQueryFilter]=useRecoilState(QueryFiltersAtom)
   const timerRef = useRef() as MutableRefObject<NodeJS.Timeout>;
 
-  const route = useRouter().query;
+  const {replace,query} = useRouter()
+
+
+  useEffect(() => {
+    if(typeof(query.page) !== "undefined"){
+      setQueryFilter(prev => {
+        return(
+          //@ts-ignore
+          {...prev,page:+(query.page)}
+        )
+      })
+    }
+  },[query.page])
+
+  useEffect(() => {
+    if(typeof(query.search)!=="undefined"){
+      setQueryFilter(prev => {
+        return(
+          {...prev ,search:query.search}
+        )
+      })
+    }
+
+  },[query.search])
 
   useEffect(() => {
     const leave = () => {
@@ -109,6 +132,12 @@ const MainSection = () => {
   ]);
 
   const paginate = (pageNumber: number) =>{
+    replace(
+      {query: { ...query, page:pageNumber }},
+      undefined,
+      {scroll: true,}
+    );
+
     setQueryFilter((prev) => {
       return { ...prev, page: pageNumber };
     })

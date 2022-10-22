@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { useRecoilState } from "recoil";
 import { categoriesType, QueryFiltersAtom, } from "../../../../helper";
 import {  RightArrowIcons } from "../../../icons";
+import { useRouter } from "next/router";
 
 interface data {
   data: categoriesType[] | categoriesType;
@@ -14,6 +15,29 @@ export let selCategory: number[] = [];
 
 const ShopTree = ({ data }: data) => {
   const [ShopselectedParentId, setShopParentId] = useState(-1);
+  const { replace, query } = useRouter();
+  const [queryFilter, setQueryFilter] = useRecoilState(QueryFiltersAtom);
+
+
+  useEffect(() => {
+    if(typeof(query.category) !=="undefined"){
+      //@ts-ignore
+      const q = query?.category?.split("-")
+      q.map((item:string) =>{
+        let index:number=selCategory.findIndex(find => ( find===(+item)))  
+        if(index<0 && +item!=0){
+          selCategory=[...selCategory,+item]
+        }
+      })
+    }
+    setQueryFilter((prev) => {
+      return {
+        ...prev,
+        SelectedCategories: selCategory,
+      };
+    });
+  },[query.category])
+
   if (Array.isArray(data)) {
     return (
       <div className=" max-h-96 overflow-y-auto">
@@ -61,8 +85,13 @@ const ShopTreeNode = ({
   setShopParentId,
 }: node) => {
   const [queryFilter,setQueryFilter]=useRecoilState(QueryFiltersAtom)
+  const {replace,query} = useRouter()
 
   const hasChild = node.categories?.length > 0 ? true : false;
+
+
+ 
+  
 
   const handelSearch = async (categoreyID: number) => {
     const index = queryFilter.SelectedCategories.findIndex(
@@ -73,6 +102,17 @@ const ShopTreeNode = ({
     } else if (index >= 0) {
       selCategory = selCategory.filter((item) => item !== categoreyID);
     }
+
+    let QueryCategory = selCategory.map(item => item).join("-")
+     replace({
+      query: { ...query, category: QueryCategory }
+      
+    },
+    undefined,{
+      scroll:false
+    }
+    );
+
     setQueryFilter((prev) => {
       return {
         ...prev,

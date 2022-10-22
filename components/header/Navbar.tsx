@@ -19,8 +19,9 @@ export const routse = [
 
 const Navbar = () => {
   const [searchState, setSearchState] = useRecoilState(SearchAtom);
-  const { pathname,push } = useRouter();
+  const { pathname,push,replace,query } = useRouter();
   const [queryFilter,setQueryFilter]=useRecoilState(QueryFiltersAtom)
+  
 
   const handelSearch = async () => {
     setQueryFilter(prev => {
@@ -28,10 +29,18 @@ const Navbar = () => {
         {...prev,search:searchState}
       )
     })
-    push({
-      pathname: "/shop",
-      // query: { search: encodeURI(searchState) },
-    });
+    if(pathname==="/products"){
+      replace(
+        {query: { ...query, search:searchState }},
+        undefined,
+        {scroll: true,}
+      );
+    }else{
+      push({
+        query:{search:searchState},
+        pathname:"/products"
+      })
+    }
   };
 
 

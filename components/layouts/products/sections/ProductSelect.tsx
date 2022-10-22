@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 //@ts-ignore
 import Select, { StylesConfig, ActionMeta } from "react-select";
 import { useForm, Controller } from "react-hook-form";
@@ -24,6 +24,22 @@ const ProductSelect = () => {
   const [orderByState, setOrderByState] = useRecoilState(OrderByAtom);
   const [productsState, setProductsState] = useRecoilState(ProductsAtom);
   const [queryFilter,setQueryFilter]=useRecoilState(QueryFiltersAtom)
+  const {replace,query}= useRouter()
+
+  useEffect(() => {
+    if(typeof(query.orderby)==="string"){
+      //@ts-ignore
+      setQueryFilter(prev => {
+        return (
+          {...prev,orderby: query.orderby}
+        )
+      })
+    }
+
+  },[query.orderby])
+
+
+
   const customStyles: StylesConfig<optionType> = {
     option: (provided: ActionMeta, state: ActionMeta) => ({
       ...provided,
@@ -66,6 +82,16 @@ const ProductSelect = () => {
                 product_name: queryFilter.search,
               });
               if(selectedOption?.label!=null){
+                replace(
+                  {
+                    query: { ...query, orderby: selectedOption?.label },
+                  },
+                  undefined,
+                  {
+                    scroll: false,
+                  }
+                );
+
                 setQueryFilter(prev => {
                   return (
                     {...prev,orderby: selectedOption?.label}

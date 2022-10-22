@@ -53,7 +53,6 @@ const Attributes = () => {
         }
       });
     }
-
     const keys = Object.keys(seleAttribute);
     let newSelected: { [key: number]: number[] } = {};
     keys.filter((key) => {
@@ -61,6 +60,13 @@ const Attributes = () => {
       if (value.length !== 0) newSelected[+key] = value;
     });
     seleAttribute = newSelected;
+
+    const aa = JSON.stringify(seleAttribute)
+    console.log(aa.replace('[',""));
+    
+    
+    
+
     setQueryFilter((prev) => {
       return { ...prev, SelectedAttribute: seleAttribute };
     });
