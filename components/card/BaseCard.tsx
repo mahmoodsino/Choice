@@ -118,6 +118,9 @@ const BaseCard = ({
         if (res === null) {
           setErorrMessage("some thing went wrong");
           setOpenMassegModal(true);
+        }else if(res==400){
+          setErorrMessage("this product is not available now !");
+          setOpenMassegModal(true);
         } else {
           setCartItems(res.result.items);
           setAllCartsInfo(res.result);
@@ -138,7 +141,7 @@ const BaseCard = ({
           if (res === null) {
             setErorrMessage("some thing went wrong");
             setOpenMassegModal(true);
-          }else if(res==400){
+          } else if (res == 400) {
             setErorrMessage("there is no avaliable quantity !");
             setOpenMassegModal(true);
           } else {
@@ -171,7 +174,7 @@ const BaseCard = ({
       timerRef.current = setTimeout(async () => {
         if (id) {
           const res = await updateCart(token, id, itemQuantity);
-          if (res == null||400) {
+          if (res == null || 400) {
             setErorrMessage("some thing went wrong");
             setOpenMassegModal(true);
           } else {
@@ -211,28 +214,28 @@ const BaseCard = ({
         <span className="block w-[40px] text-center">
           {cartItems[indexcart].quantity}
         </span>
-        {tracking_type===1 && 
-        <BaseButton
-          onClick={() => handleAddToCart()}
-          className="rounded-full w-5 h-5 bg-yellow-950 flex items-center m-auto"
-        >
-          <BlusIcon className="w-3 fill-black  ml-1 mr-1" />
-        </BaseButton>
-        }
-        {tracking_type!=1 && 
-        <BaseButton
-        onClick={() => handleAddToCart()}
-        className="rounded-full w-5 h-5 bg-yellow-950 flex items-center m-auto"
-        disabled={
-          cartItems[indexcart].quantity ===
-          cartItems[indexcart].available_quantity
-            ? true
-            : false
-        }
-      >
-        <BlusIcon className="w-3 fill-black  ml-1 mr-1" />
-      </BaseButton>
-        }
+        {tracking_type === 1 && (
+          <BaseButton
+            onClick={() => handleAddToCart()}
+            className="rounded-full w-5 h-5 bg-yellow-950 flex items-center m-auto"
+          >
+            <BlusIcon className="w-3 fill-black  ml-1 mr-1" />
+          </BaseButton>
+        )}
+        {tracking_type != 1 && (
+          <BaseButton
+            onClick={() => handleAddToCart()}
+            className="rounded-full w-5 h-5 bg-yellow-950 flex items-center m-auto"
+            disabled={
+              cartItems[indexcart].quantity ===
+              cartItems[indexcart].available_quantity
+                ? true
+                : false
+            }
+          >
+            <BlusIcon className="w-3 fill-black  ml-1 mr-1" />
+          </BaseButton>
+        )}
       </div>
     );
   };
@@ -244,15 +247,15 @@ const BaseCard = ({
     } else if (inStock === 1) {
       if (tracking_type === 1) {
         canAdd = true;
-      } else if (tracking_type ==2 || tracking_type==3) {
+      } else if (tracking_type == 2 || tracking_type == 3) {
         if (available_quantity === 0) {
           canAdd = false;
-        }else{
-          canAdd=true
+        } else {
+          canAdd = true;
         }
       }
     }
-    return canAdd
+    return canAdd;
   };
 
   return (
@@ -298,7 +301,7 @@ const BaseCard = ({
               <div>
                 {cartItems.length === 0 ? (
                   <BaseButton
-                    disabled={canAddToCart() ? true : false}
+                    disabled={canAddToCart() ? false : true}
                     onClick={() =>
                       token.length > 1
                         ? handleAddToCart()

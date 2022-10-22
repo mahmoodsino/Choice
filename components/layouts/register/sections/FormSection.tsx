@@ -4,7 +4,7 @@ import { BaseInput } from "../../../inputs";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { registerSchema } from "../../../../helper/validation";
-import { handelRegister, TokenAtom, YouHaveItemsModalAtom } from "../../../../helper";
+import { ErorrMessageAtom, handelRegister, OpenMessageModalAtom, TokenAtom, YouHaveItemsModalAtom } from "../../../../helper";
 import { useRecoilState } from "recoil";
 import { useRouter } from "next/router";
 import { YouHaveItemInCartModal } from "../../../you-have-item-modal";
@@ -26,6 +26,9 @@ const FormSection = () => {
     YouHaveItemsModalAtom
   );
   const [loading,setLoading]=useState(false)
+  const [openMessageModal, setOpenMassegModal] =
+    useRecoilState(OpenMessageModalAtom);
+  const [errorMessage, setErorrMessage] = useRecoilState(ErorrMessageAtom);
 
 
   const {
@@ -39,11 +42,10 @@ const FormSection = () => {
   const submitForm = async (data: IFormInputs) => {
     setLoading(true)
     const res = await handelRegister(data.firstName,data.lastName,data.email,data.password,token)
-    console.log(res);
-    
-    if(res.message!=="Congratulation, you get your first  points"){
-      alert(res.response.data.message)
-      setLoading(false)
+    if (res ===null) {
+      setErorrMessage("the given data was invaled");
+      setOpenMassegModal(true)
+      setLoading(false);
     }else{
       localStorage.setItem("token", res.result.token);
       localStorage.setItem("id", res.result.user.id);

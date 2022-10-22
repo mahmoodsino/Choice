@@ -1,4 +1,3 @@
-import axios from "axios"
 import apiWorker from "../axios"
 import { getConfig } from "../getConfig"
 const root = process.env.NEXT_PUBLIC_ROOT
@@ -13,7 +12,6 @@ const handelCreateOrder = async (token: string,shipping_method:string, address_i
         return res.data
     } catch (error) {
         console.log(error)
-        alert("some thing went wrong")
         return null
     }
 }

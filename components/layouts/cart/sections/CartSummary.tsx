@@ -5,10 +5,12 @@ import { useRecoilState } from "recoil";
 import { AllCartsInfoAtom, CartItemsAtom } from "../../../../helper";
 import { BaseButton } from "../../../buttons";
 import { CheckoutIcon } from "../../../icons";
+import { CartLoading } from "./CartItemTable";
 
 const CartSummary = () => {
   const [allCartsInfo, setAllCartsInfo] = useRecoilState(AllCartsInfoAtom);
   const [cartItems, setCartItems] = useRecoilState(CartItemsAtom);
+  const [loading, setLoading] = useRecoilState(CartLoading);
 
   const checkQuantity = () => {
     let isFound = true;
@@ -29,7 +31,7 @@ const CartSummary = () => {
   const { push } = useRouter();
 
   return (
-    <div className="lg:w-[25%] whitespace-nowrap">
+    <div className={`lg:w-[25%] whitespace-nowrap ${loading && "pointer-events-none"}`}>
       <span className="text-[22px] py-2 font-bold border-t border-b block text-gray-1400">
         Cart Summary
       </span>

@@ -1,5 +1,6 @@
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 import { useRecoilState } from "recoil";
 import {
   getOrderCreatedOrder,
@@ -28,10 +29,12 @@ const MainSection = () => {
       setLoading(true);
       if (router.order) {
         const res = await getOrderCreatedOrder(token, +router.order);
-        setOrderDetails(res.result);
-        if (res) {
-          setLoading(false);
+        if(res===null){
+          toast.error("some thing went wrong")
+        }else{
+          setOrderDetails(res.result);
         }
+          setLoading(false);
       }
     };
     getData();

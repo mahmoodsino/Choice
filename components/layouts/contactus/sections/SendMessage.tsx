@@ -5,6 +5,7 @@ import { handelSendMessage, sendMessageSchema } from "../../../../helper";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Spinner } from "../../../spinner";
+import { toast } from "react-toastify";
 
 interface IFormInputs {
   name: string;
@@ -36,10 +37,10 @@ const SendMessage = () => {
     });
     if (res === null) {
       setLoading(false);
-      alert("some thing went wrong");
+      toast.error("some thing went wrong");
     } else {
       setLoading(false);
-      alert(res.message);
+      toast.success(res.message);
     }
   };
 

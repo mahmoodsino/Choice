@@ -19,8 +19,13 @@ apiWorker.interceptors.response.use(
     return response;
   },
   function (error) {
-    console.log(error,"kjsbakhvgsak");
-    
+    if (error.response.status == 401) {
+      localStorage.removeItem("email")
+      localStorage.removeItem("type")
+      localStorage.removeItem("id")
+      localStorage.removeItem("token")
+      window.location.reload();
+    }    
     return Promise.reject(error);
   }
 );

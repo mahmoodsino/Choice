@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { toast } from 'react-toastify'
 import { useRecoilState } from 'recoil'
 import { getOrders, TokenAtom, TrackOrderAtom } from '../../../../helper'
 import { Spinner } from '../../../spinner'
@@ -13,11 +14,10 @@ const MainSection = () => {
     const getData= async ()=>{
       setLoading(true)
       const res = await getOrders(token)
-      
-      setOrdersState(res.result)
-
-      if(res){
-        setLoading(false)
+      if(res===null){
+        toast.error("some thing went wrong")
+      }else{
+        setOrdersState(res.result)
       }
     }
     getData()

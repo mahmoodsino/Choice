@@ -1,9 +1,12 @@
 import Link from "next/link";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
-import { CouninueAsGuestModalAtom, DetailsType, handelRegisterAsGuest, TokenAtom } from "../../helper";
+import { CouninueAsGuestModalAtom, DetailsType, ErorrMessageAtom, handelRegisterAsGuest, OpenMessageModalAtom, TokenAtom } from "../../helper";
 import { BaseButton } from "../buttons";
 import { CloseIcon } from "../icons";
+import choicePhoto from "../../public/assets/images/choicePhoto.png";
+import Image from "next/image";
+import { Spinner } from "../spinner";
 
 
 interface Props {
@@ -16,14 +19,22 @@ const ContinueAsGuest = ({addToCart}:Props) => {
     CouninueAsGuestModalAtom
   );
   const [token, setToken] = useRecoilState(TokenAtom);
-
-  
+  const [openMessageModal, setOpenMassegModal] =
+  useRecoilState(OpenMessageModalAtom);
+const [errorMessage, setErorrMessage] = useRecoilState(ErorrMessageAtom);
+  const [loading,setLoading]=useState(false)
 
 
 
   const handelGuest = async () => {
+    setLoading(true)
     const res = await handelRegisterAsGuest()
-    if(res.result.token){
+    if(res===null){
+      setContinueAsGuestModal(false)
+      setErorrMessage("some thing went wrong!")
+      setOpenMassegModal(true)
+    }
+    else{
       localStorage.setItem("token", res.result.token.access_token);
       localStorage.setItem("id", res.result.user.id);
       localStorage.setItem("email", res.result.user.email);
@@ -33,6 +44,7 @@ const ContinueAsGuest = ({addToCart}:Props) => {
       window.location.reload()
       
     }
+    setLoading(false)
 }
 
   return (
@@ -40,28 +52,60 @@ const ContinueAsGuest = ({addToCart}:Props) => {
       <>
         <div
           className={`${
-            ContinueAsGuestModal ? "top-0 " : "-top-[200%]"
-          } inset-0 sm:w-[95%] bg-white md:w-[60%] rounded-xl lg:w-[40%] w-[50vw] h-fit left-0 right-0 top-0 bottom-0 mx-auto my-auto shadow-lg z-50 fixed transition-all duration-300 ease-in-out`}
+            ContinueAsGuestModal ? "top-0 " : "-top-[200%] invisible"
+          } inset-0 sm:w-[95%] bg-white md:w-[50%] rounded-xl lg:w-[40%] w-[50vw] h-fit left-0 right-0 top-0 bottom-0 mx-auto my-auto shadow-lg z-[10000] fixed transition-all duration-300 ease-in-out`}
         >
-          <div className=" sm:px-5 md:px-16 py-10">
-            <div className="flex items-center justify-between">
-                <h1 className="text-red-950 text-lg font-semibold">Do you have account ?</h1>
-                <div onClick={() => setContinueAsGuestModal(false)} className="w-fit ">
-                    <CloseIcon className="w-5 cursor-pointer" />
-                </div>
-            </div>
-            <div className="flex justify-between mt-5">
-                <Link href="/login" >
-                    <a className="px-4 py-2 rounded-md text-green-950 border border-green-950">Login</a>
-                </Link>
-                <Link href="/register"><a className="px-4 py-2 border border-black rounded-md">Register</a></Link>
-                <BaseButton onClick={() =>( handelGuest())} className="px-4 py-2 border border-black rounded-md" title="Countinue as guest" />
+          <div className=" pb-10 py-5">
+            <div className="flex items-center justify-between px-4 pr-10">
+              <div className="w-[25%] mr-10">
 
+              <Image src={choicePhoto} />
+              </div>
+              <div
+                onClick={() => setContinueAsGuestModal(false)}
+                className="w-fit "
+              >
+                <CloseIcon className="w-5 cursor-pointer" />
+              </div>
+            </div>
+            <span className="font-semibold block mt-5  px-10">Please Login to your account.</span>
+            <div className=" mt-3 grid grid-cols-2 gap-3 px-10">
+              <Link href="/login">
+                <a
+                  onClick={() => setContinueAsGuestModal(false)}
+                  className="block px-2 font-semibold py-2 bg-gray-100 text-green-950 hover:-translate-y-1 duration-300 ease-in-out"
+                >
+                  Login
+                </a>
+              </Link>
+              <Link href="/register">
+                <a
+                  onClick={() => setContinueAsGuestModal(false)}
+                  className="block px-2  text-green-1000 font-semibold py-2 bg-gray-100 hover:-translate-y-1 duration-300 ease-in-out "
+                >
+                  Register
+                </a>
+              </Link>
+            </div>
+            <div className="text-center mt-5">
+              <span className="befor">OR</span>
+            </div>
+            <div className="px-10">
+            {!loading ? 
+            <BaseButton
+              onClick={() => handelGuest()}
+              className="block px-2 font-semibold mt-2  py-2 w-full bg-gray-100 hover:-translate-y-1 duration-300 ease-in-out "
+            >
+              Countinue as a guest
+            </BaseButton> : 
+            <Spinner className="w-12 " />
+            
+          }
             </div>
           </div>
         </div>
         {ContinueAsGuestModal ? (
-          <div className="opacity-25 fixed inset-0 z-40 bg-black  "></div>
+          <div className="opacity-25 fixed inset-0 z-50 bg-black  "></div>
         ) : null}
       </>
     </div>

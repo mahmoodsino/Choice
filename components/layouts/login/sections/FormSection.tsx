@@ -7,7 +7,9 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useRecoilState } from "recoil";
 import {
+  ErorrMessageAtom,
   handelLogin,
+  OpenMessageModalAtom,
   TokenAtom,
   YouHaveItemsModalAtom,
 } from "../../../../helper";
@@ -28,7 +30,9 @@ const FormSection = () => {
     YouHaveItemsModalAtom
   );
   const [loading, setLoading] = useState(false);
-
+  const [openMessageModal, setOpenMassegModal] =
+  useRecoilState(OpenMessageModalAtom);
+const [errorMessage, setErorrMessage] = useRecoilState(ErorrMessageAtom);
   const { push } = useRouter();
 
   const {
@@ -43,8 +47,9 @@ const FormSection = () => {
     setLoading(true)
     const res = await handelLogin(data.password, data.email, token);
     if (!res.ok) {
-      alert(res?.message);
-      setLoading(false)
+      setErorrMessage(res?.message);
+      setOpenMassegModal(true);
+      setLoading(false);
     } else {
       if (res?.token) {
         localStorage.setItem("token", res.token);

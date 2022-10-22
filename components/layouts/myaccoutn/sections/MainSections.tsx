@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { toast } from 'react-toastify'
 import { useRecoilState } from 'recoil'
 import { getUserInfo, TokenAtom, UserInfoAtom } from '../../../../helper'
 import { Spinner } from '../../../spinner'
@@ -16,7 +17,7 @@ console.log(userInfo);
       setLoading(true)
       const res = await getUserInfo(token)
       if(res===null){
-        alert("some thing went wrong")
+        toast.error("some thing went wrong")
       }else{
         setUserInfo(res.data)
         setLoading(false)

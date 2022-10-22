@@ -3,6 +3,7 @@ import { useRecoilState } from "recoil";
 import { CartItemsAtom, FetchedItemsType } from "../../../../helper";
 import { BaseButton } from "../../../buttons";
 import { BlusIcon, MinusIcon, TrashIcon } from "../../../icons";
+import { CartLoading } from "./CartItemTable";
 
 interface Props {
   handleAddToCart: (clickedItem: FetchedItemsType) => void;
@@ -14,10 +15,13 @@ const CartItemsResponse = ({
   handleRemoveFromCart,
 }: Props) => {
   const [cartItems, setCartItems] = useRecoilState(CartItemsAtom);
+  const [loading, setLoading] = useRecoilState(CartLoading);
 
   return (
-    <div className="mt-5 lg:hidden sm:block">
-      {cartItems.map((item,i) => {
+    <div
+      className={`mt-5 lg:hidden sm:block ${loading && "pointer-events-none"}`}
+    >
+      {cartItems.map((item, i) => {
         return (
           <div key={i} className="border px-5">
             <div className="flex justify-end mt-2">
@@ -52,15 +56,30 @@ const CartItemsResponse = ({
                   <MinusIcon className="w-3 fill-black ml-1" />
                 </BaseButton>
                 <span>{item.quantity}</span>
-                <BaseButton
-                  onClick={() => handleAddToCart(item)}
-                  className="rounded-full w-5 h-5 bg-yellow-950 flex items-center m-auto"
-                  disabled={
-                    item.quantity === item.available_quantity ? true : false
-                  }
-                >
-                  <BlusIcon className="w-3 fill-black ml-1" />
-                </BaseButton>
+                {item.in_stock === 1 &&
+                          item.product?.tracking_type === 1 && (
+                            <BaseButton
+                              onClick={() => handleAddToCart(item)}
+                              className="rounded-full w-5 h-5 bg-yellow-950 flex items-center m-auto"
+                            >
+                              <BlusIcon className="w-3 fill-black  ml-1 mr-1" />
+                            </BaseButton>
+                          )}
+                        {item.in_stock === 1 &&
+                          (item.product?.tracking_type === 2 ||
+                            item.product?.tracking_type === 3) && (
+                            <BaseButton
+                              onClick={() => handleAddToCart(item)}
+                              className="rounded-full w-5 h-5 bg-yellow-950 flex items-center m-auto"
+                              disabled={
+                                item.actual_quantity === item.available_quantity
+                                  ? true
+                                  : false
+                              }
+                            >
+                              <BlusIcon className="w-3 fill-black  ml-1 mr-1" />
+                            </BaseButton>
+                          )}
               </div>
             </div>
             <div className="flex md:justify-between sm:justify-center items-center py-5 font-semibold">

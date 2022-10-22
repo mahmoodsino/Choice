@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { contactSchema, handelSendMessage } from "../../helper";
 import { Spinner } from "../spinner";
+import { toast } from "react-toastify";
 
 interface IFormInputs {
   name: string;
@@ -27,10 +28,10 @@ const FotterContact = () => {
     const res = await handelSendMessage({email:data.email,message:data.message,name:data.name})
     if(res===null){
       setLoading(false)
-      alert("some thing went wrong")
+      toast("some thing went wrong")
     }else{
       setLoading(false)
-      alert(res.message)
+      toast.success(res.message)
     }
   }
 

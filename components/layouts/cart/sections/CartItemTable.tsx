@@ -1,9 +1,12 @@
 import React, { MutableRefObject, useRef } from "react";
-import { useRecoilState } from "recoil";
+import { atom, useRecoilState } from "recoil";
 import {
+  AllCartsInfoAtom,
   CartItemsAtom,
   deleteCart,
+  ErorrMessageAtom,
   FetchedItemsType,
+  OpenMessageModalAtom,
   TokenAtom,
   updateCart,
 } from "../../../../helper";
@@ -11,12 +14,20 @@ import BaseButton from "../../../buttons/BaseButton";
 import { BlusIcon, MinusIcon, TrashIcon } from "../../../icons";
 import CartItemsResponse from "./CartItemsResponse";
 
+export const CartLoading = atom({
+  key: "CartLoading",
+  default: false,
+});
+
 const CartItemTable = () => {
   const [cartItems, setCartItems] = useRecoilState(CartItemsAtom);
   const timerRef = useRef() as MutableRefObject<NodeJS.Timeout>;
   const [token, setToken] = useRecoilState(TokenAtom);
-
-  
+  const [allCartsInfo, setAllCartsInfo] = useRecoilState(AllCartsInfoAtom);
+  const [openMessageModal, setOpenMassegModal] =
+    useRecoilState(OpenMessageModalAtom);
+  const [errorMessage, setErorrMessage] = useRecoilState(ErorrMessageAtom);
+  const [loading, setLoading] = useRecoilState(CartLoading);
 
   const handleAddToCart = async (clickedItem: FetchedItemsType) => {
     setCartItems((prev) => {
@@ -24,7 +35,12 @@ const CartItemTable = () => {
       if (isItemInCarts) {
         return prev.map((item) =>
           item.id === clickedItem.id
-            ? { ...item, quantity: item.quantity + 1 }
+            ? {
+                ...item,
+                quantity: item.quantity + 1,
+                //@ts-ignore
+                actual_quantity: item.actual_quantity + 1,
+              }
             : item
         );
       }
@@ -52,11 +68,22 @@ const CartItemTable = () => {
 
       clearTimeout(timerRef.current);
       timerRef.current = setTimeout(async () => {
+        setLoading(true);
         if (id) {
           const res = await updateCart(token, id, newQuantity);
-          console.log(res);
+          if (res === null) {
+            setErorrMessage("some thing went wrong");
+            setOpenMassegModal(true);
+          } else if (res == 400) {
+            setErorrMessage("this product is not available now !");
+            setOpenMassegModal(true);
+          } else {
+            setCartItems(res.result.items);
+            setAllCartsInfo(res.result);
+          }
         }
-      }, 1000);
+        setLoading(false);
+      }, 700);
     }
   };
 
@@ -68,10 +95,26 @@ const CartItemTable = () => {
           if (reomve) return ack;
           if (
             item.available_quantity &&
-            item.quantity > item.available_quantity
+            //@ts-ignore
+            item.actual_quantity > item.available_quantity
           )
-            return [...ack, { ...item, quantity: item.available_quantity - 1 }];
-          return [...ack, { ...item, quantity: item.quantity - 1 }];
+            return [
+              ...ack,
+              {
+                ...item,
+                quantity: item.available_quantity,
+                actual_quantity: item.available_quantity,
+              },
+            ];
+          return [
+            ...ack,
+            {
+              ...item,
+              quantity: item.quantity - 1,
+              //@ts-ignore
+              actual_quantity: item.actual_quantity - 1,
+            },
+          ];
         } else {
           return [...ack, item];
         }
@@ -86,7 +129,16 @@ const CartItemTable = () => {
       itemQuantity = availableQuantity;
       clearTimeout(timerRef.current);
       timerRef.current = setTimeout(async () => {
+        setLoading(true);
         const res = await updateCart(token, id, itemQuantity);
+        if (res === null) {
+          setErorrMessage("some thing went wrong");
+          setOpenMassegModal(true);
+        } else {
+          setAllCartsInfo(res.result);
+          setCartItems(res.result.items);
+        }
+        setLoading(false);
       }, 1000);
     }
     if (itemQuantity > 1 && !reomve) {
@@ -94,15 +146,33 @@ const CartItemTable = () => {
       clearTimeout(timerRef.current);
 
       timerRef.current = setTimeout(async () => {
+        setLoading(true);
         const res = await updateCart(token, id, itemQuantity);
-      }, 1000);
+        if (res === null) {
+          setErorrMessage("some thing went wrong");
+          setOpenMassegModal(true);
+        } else {
+          setAllCartsInfo(res.result);
+          setCartItems(res.result.items);
+        }
+        setLoading(false);
+      }, 700);
     } else if (itemQuantity === 1 || reomve) {
+      setLoading(true);
       const res = await deleteCart(token, id);
+      if (res === null) {
+        setErorrMessage("some thing went wrong");
+        setOpenMassegModal(true);
+      } else {
+        setAllCartsInfo(res.result);
+        setCartItems(res.result.items);
+      }
+      setLoading(false);
     }
   };
 
   return (
-    <div>
+    <div className={`${loading && "pointer-events-none"}`}>
       <div className=" py-10 lg:block sm:hidden">
         <table className="w-full">
           <thead className="">
@@ -116,12 +186,31 @@ const CartItemTable = () => {
           <tbody className="">
             {cartItems.map((item) => {
               return (
-                <tr key={item.id} className={`border-b text-left ${
-                  item.available_quantity &&
-                  (item.quantity > item.available_quantity ||item.available_quantity===0)
-                    ? "bg-red-100"
-                    : "bg-white"
-                }`}>
+                <tr
+                  key={item.id}
+                  className={`border-b text-left  ${
+                    //@ts-ignore
+                    item.in_stock < 1
+                      ? "bg-red-100"
+                      : item.in_stock === 1 &&
+                        item.product?.tracking_type === 1 &&
+                        "bg-white"
+                  } ${
+                    item.in_stock === 1 &&
+                    item.product?.tracking_type === 2 &&
+                    //@ts-ignore
+                    item.actual_quantity > item.available_quantity
+                      ? "bg-red-100"
+                      : "bg-white"
+                  }   ${
+                    item.in_stock === 1 &&
+                    item.product?.tracking_type === 3 &&
+                    //@ts-ignore
+                    item.actual_quantity > item.available_quantity
+                      ? "bg-red-100"
+                      : "bg-white"
+                  }`}
+                >
                   <td className=" p-2 w-[25%] ">
                     <div className="flex flex-row items-center space-x-5 ">
                       <BaseButton
@@ -133,12 +222,17 @@ const CartItemTable = () => {
                         <TrashIcon className="w-5 fill-red-950 m-auto mt-0.5" />
                       </BaseButton>
                       <div className=" border product-slider-img">
-                        <img className="w-20 h-20" src={item.product?.image.path} />
+                        <img
+                          className="w-20 h-20"
+                          src={item.product?.image.path}
+                        />
                       </div>
                       <div>
                         {item.variation?.attributes.map((att) => {
                           return (
-                            <span key={att.id} className="block text-sm">{att.name}</span>
+                            <span key={att.id} className="block text-sm">
+                              {att.name}
+                            </span>
                           );
                         })}
                       </div>
@@ -158,21 +252,34 @@ const CartItemTable = () => {
                         >
                           <MinusIcon className="w-3 fill-black ml-1 mr-1" />
                         </BaseButton>
-                        <span className="block w-[30px] text-center">{item.quantity}</span>
-                        <BaseButton
-                          onClick={() => handleAddToCart(item)}
-                          className="rounded-full w-5 h-5 bg-yellow-950 flex items-center m-auto"
-                          disabled={
-                            item.quantity === item.available_quantity ? true : false
-                          }
-                        >
-                          <BlusIcon className="w-3 fill-black  ml-1 mr-1" />
-                        </BaseButton>
+                        <span className="block w-[55px] text-center">
+                          {item.quantity}
+                        </span>
+                        {item.in_stock === 1 &&
+                          item.product?.tracking_type === 1 && (
+                            <BaseButton
+                              onClick={() => handleAddToCart(item)}
+                              className="rounded-full w-5 h-5 bg-yellow-950 flex items-center m-auto"
+                            >
+                              <BlusIcon className="w-3 fill-black  ml-1 mr-1" />
+                            </BaseButton>
+                          )}
+                        {item.in_stock === 1 &&
+                          (item.product?.tracking_type === 2 ||
+                            item.product?.tracking_type === 3) && (
+                            <BaseButton
+                              onClick={() => handleAddToCart(item)}
+                              className="rounded-full w-5 h-5 bg-yellow-950 flex items-center m-auto"
+                              disabled={
+                                item.actual_quantity === item.available_quantity
+                                  ? true
+                                  : false
+                              }
+                            >
+                              <BlusIcon className="w-3 fill-black  ml-1 mr-1" />
+                            </BaseButton>
+                          )}
                       </div>
-                    </div>
-                    <div className="h-5 ml-8 mt-3 text-red-950 text-xs">
-                      <span>{item.available_quantity}</span>
-                      <span> in stock</span>
                     </div>
                   </td>
                   <td className="p-2 w-[25%]">
@@ -184,7 +291,10 @@ const CartItemTable = () => {
           </tbody>
         </table>
       </div>
-      <CartItemsResponse handleAddToCart={handleAddToCart} handleRemoveFromCart={handleRemoveFromCart} />
+      <CartItemsResponse
+        handleAddToCart={handleAddToCart}
+        handleRemoveFromCart={handleRemoveFromCart}
+      />
     </div>
   );
 };

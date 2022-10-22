@@ -13,13 +13,23 @@ const Dropdown = () => {
 
   const LogoutHandel = async () => {
     const res = await handelLogout(token);
-    localStorage.removeItem("token");
+    if(res===null){
+      localStorage.removeItem("token");
     localStorage.removeItem("type");
     localStorage.removeItem("email");
     localStorage.removeItem("id");
     localStorage.removeItem("last_name");
     localStorage.removeItem("first_name");
     window.location.reload();
+    }else{
+      localStorage.removeItem("token");
+      localStorage.removeItem("type");
+      localStorage.removeItem("email");
+      localStorage.removeItem("id");
+      localStorage.removeItem("last_name");
+      localStorage.removeItem("first_name");
+      window.location.reload();
+    }
   };
 
   let userType;

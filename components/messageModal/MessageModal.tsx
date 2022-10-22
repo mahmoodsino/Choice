@@ -94,9 +94,8 @@ const MessageModal = ({ message }: Props) => {
                 </g>
               </svg>
             </div>
-            <span className="text-gray-1150 font-bold text-lg uppercase">
+            <span className="text-gray-1400 font-bold text-lg uppercase">
             oh snap !!
-
             </span>
           </div>
           <div className="sm:px-5 md:px-7 pb-5">
@@ -106,7 +105,7 @@ const MessageModal = ({ message }: Props) => {
           <div className="px-8 py-3 flex justify-end bg-gray-1000/20">
             <BaseButton
               onClick={() => setOpenMassegModal(false)}
-              className="px-3 py-0.5 border uppercase font-bold bg-green-950 text-white rounded-full "
+              className="px-3 py-0.5 border uppercase font-bold bg-yellow-950 text-white rounded-full "
               title="ok"
             />
           </div>

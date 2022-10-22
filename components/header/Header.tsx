@@ -14,20 +14,33 @@ import { useRecoilState } from "recoil";
 import {
   ActiveDropDownAtom,
   AllCartsInfoAtom,
+  CouninueAsGuestModalAtom,
+  TokenAtom,
 } from "../../helper";
 import { Dropdown } from "../dropdown";
+import { useRouter } from "next/router";
 
 const Header = () => {
   const [activeDropDown, setActiveDropDown] =
     useRecoilState(ActiveDropDownAtom);
 
   const [allCartsInfo, setAllCartsInfo] = useRecoilState(AllCartsInfoAtom);
+  const [ContinueAsGuestModal, setContinueAsGuestModal] = useRecoilState(
+    CouninueAsGuestModalAtom
+  );
+  const [token,setToken]=useRecoilState(TokenAtom)
+
+  const{push}=useRouter()
 
   let userType;
 
   if (typeof window !== "undefined") {
     userType = localStorage.getItem("type" || "");
   }
+
+  const handelGoToCart = () => {
+    push("/cart");
+  };
 
   return (
     <div className="2xl:container m-auto md:block sm:hidden ">
@@ -76,8 +89,11 @@ const Header = () => {
             </a>
           </Link>
 
-          <Link href="/cart">
-            <a className="flex space-x-2 pl-3">
+            <BaseButton onClick={() =>
+                  token.length > 1
+                    ? handelGoToCart()
+                    : setContinueAsGuestModal(true)
+                } className="flex space-x-2 pl-3">
               <BasketIcon className="w-7 fill-blue-950 inline-block" />
               <div>
                 <span className="block text-sm text-blue-950 font-bold">
@@ -88,8 +104,7 @@ const Header = () => {
                   {allCartsInfo.total_price}
                 </span>
               </div>
-            </a>
-          </Link>
+            </BaseButton>
         </div>
       </div>
     </div>

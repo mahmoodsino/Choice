@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import React, { useEffect, useState } from "react";
+import React, { MutableRefObject, useEffect, useRef, useState } from "react";
 import { toast } from "react-toastify";
 import { useRecoilState } from "recoil";
 import {
@@ -39,6 +39,7 @@ const MainSection = () => {
   );
   const [totalPages, setTotalPages] = useRecoilState(totalPagesAtom);
   const [queryFilter,setQueryFilter]=useRecoilState(QueryFiltersAtom)
+  const timerRef = useRef() as MutableRefObject<NodeJS.Timeout>;
 
   const route = useRouter().query;
 
@@ -99,7 +100,10 @@ const MainSection = () => {
         setLoading(false);
       }
     };
-    getData();
+    clearTimeout(timerRef.current);
+    timerRef.current = setTimeout(() => {
+      getData();
+    }, 1000);
   }, [
    queryFilter,
   ]);
@@ -112,7 +116,6 @@ const MainSection = () => {
 
   return (
     <div className="2xl:container m-auto lg:px-[75px] md:px-[35px] sm:px-[px] pb-10">
-      {!loading ? (
         <div>
           <div className="flex justify-between  mt-10 sm:ml-3 md:ml-0">
             <span className="font-medium block ">Products</span>
@@ -136,6 +139,7 @@ const MainSection = () => {
                 className="px-4 ml-3 py-1 sm:block lg:hidden text-white font-semibold rounded-full bg-blue-950"
                 title="Fillters"
               />
+              {!loading ? 
               <div className="grid md:grid-cols-3 sm:grid-cols-2 lg:grid-cols-4  mt-7 sm:gap-1 lg:gap-4">
                 {productsState.map((item) => {
                   return (
@@ -154,16 +158,16 @@ const MainSection = () => {
                     />
                   );
                 })}
+              </div> : 
+              <div>
+                <Spinner className="w-32" />
               </div>
+              
+            }
               <Pagination paginate={paginate} />
             </div>
           </div>
         </div>
-      ) : (
-        <div className="flex justify-center">
-          <Spinner className="w-72" />
-        </div>
-      )}
       <FillterProductsMobile />
     </div>
   );

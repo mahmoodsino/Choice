@@ -4,8 +4,8 @@ import { MutableRefObject, ReactNode, useEffect, useRef } from "react";
 import {RecoilRoot, useRecoilState} from "recoil"
 import { ContinueAsGuest, FixedNavbar, Fotter, Header, MessageModal, MobaiHeader, MobailCategoryModal, MobileSidbar, Navbar } from "../components";
 import { ActiveDropDownAtom, AllCartsInfoAtom, CartItemsAtom, ErorrMessageAtom, getCartItems, showCategoriesAtom, TokenAtom } from "../helper";
-import { toast } from "react-toastify";
-
+import {toast, ToastContainer} from "react-toastify"
+import 'react-toastify/dist/ReactToastify.css';
 
 interface Props {
   children: ReactNode;
@@ -68,6 +68,8 @@ function MyApp({ Component, pageProps }: AppProps) {
           <MobileSidbar />
             <Component {...pageProps} />
         </App>
+        <ToastContainer />
+
             <Fotter/>
       </RecoilRoot>
     </div>

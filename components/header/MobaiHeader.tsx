@@ -6,10 +6,11 @@ import { goingUpAtom } from "./FixedNavbar";
 import choicePhoto from "../../public/assets/images/choicePhoto.png";
 import Image from "next/image";
 import { BaseInput } from "../inputs";
-import { ActiveDropDownAtom, SearchAtom, ShowSidbarAtom } from "../../helper";
+import { ActiveDropDownAtom, CouninueAsGuestModalAtom, SearchAtom, ShowSidbarAtom, TokenAtom } from "../../helper";
 import { Dropdown } from "../dropdown";
 import Link from "next/link";
 import LoginIcon from "../icons/LoginIcon";
+import { useRouter } from "next/router";
 
 const MobaiHeader = () => {
   const [goingUp, setGoingUp] = useRecoilState(goingUpAtom);
@@ -17,12 +18,21 @@ const MobaiHeader = () => {
   const [activeDropDown, setActiveDropDown] =
     useRecoilState(ActiveDropDownAtom);
   const [showSidbarState, setShowSidbarState] = useRecoilState(ShowSidbarAtom);
+  const [ContinueAsGuestModal, setContinueAsGuestModal] = useRecoilState(
+    CouninueAsGuestModalAtom
+  );
+  const [token,setToken]=useRecoilState(TokenAtom)
+  const {push}=useRouter()
 
   let userType;
 
   if (typeof window !== "undefined") {
     userType = localStorage.getItem("type" || "");
   }
+
+  const handelGoToCart = () => {
+    push("/cart");
+  };
 
   return (
     <div
@@ -79,8 +89,11 @@ const MobaiHeader = () => {
           ) : null}
         </div>
         <div className="relative ">
-          <Link href="/cart">
-            <a className="flex space-x-2 pl-3 whitespace-nowrap">
+            <BaseButton onClick={() =>
+                  token.length > 1
+                    ? handelGoToCart()
+                    : setContinueAsGuestModal(true)
+                } className="flex space-x-2 pl-3 whitespace-nowrap">
               <div className="absolute px-0.5 right-0  bg-yellow-950 rounded-full text-xs text-white font-extrabold">
                 0
               </div>
@@ -88,8 +101,7 @@ const MobaiHeader = () => {
                 <BasketIcon className="w-6 fill-white inline-block" />
                 <span className="text-[10px] text-white">$(0.00)</span>
               </div>
-            </a>
-          </Link>
+            </BaseButton>
         </div>
       </div>
     </div>

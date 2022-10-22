@@ -51,6 +51,7 @@ const DetailsCard = () => {
     const [openMessageModal, setOpenMassegModal] =
     useRecoilState(OpenMessageModalAtom);
   const [errorMessage, setErorrMessage] = useRecoilState(ErorrMessageAtom);
+  
   const handleAddToCart = async (clickedItem: DetailsType) => {
     setLocalCart((prev) => {
       const isItemInCarts = prev.find(

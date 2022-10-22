@@ -1,10 +1,10 @@
 import { CartProductType, ProductsType } from "../../type"
 import { variationsDetailsType } from "../details"
-import { variationType } from "../products"
 
 interface FetchedItemsType {
     type:number
     id?:number,
+    actual_quantity?:number,
     available_quantity?:number,
     product_id:number,
     variation_id:number,
@@ -14,6 +14,7 @@ interface FetchedItemsType {
     product?:CartProductType,
     price?:number,
     variation?:variationsDetailsType
-    title?:string
+    title?:string,
+    in_stock?:number
 }
 export default FetchedItemsType
