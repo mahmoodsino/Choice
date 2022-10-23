@@ -1,6 +1,9 @@
-import React from 'react'
+import React, { useEffect, useState } from "react";
 import Slider from "react-slick";
+import { toast } from "react-toastify";
+import { getBestSeller, ProductsType } from "../../../../helper";
 import { BaseCard } from "../../../card";
+import { Spinner } from "../../../spinner";
 
 function SampleNextArrow(props: any) {
   const { className, style, onClick } = props;
@@ -10,7 +13,7 @@ function SampleNextArrow(props: any) {
       onClick={onClick}
     >
       <svg
-      className="absolute w-5 top-1 left-1"
+        className="absolute w-5 top-1 left-1"
         viewBox="0 0 18 18"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
@@ -22,8 +25,6 @@ function SampleNextArrow(props: any) {
           fill="black"
         />
       </svg>
-
-     
     </div>
   );
 }
@@ -53,38 +54,75 @@ function SamplePrevArrow(props: any) {
 }
 
 const BestSeller = () => {
-    const settings = {
-        dots: false,
-        infinite: true,
-        speed: 500,
-        autoplay: false,
-        // slidesToShow: 4,
-        rows: 1,
-        autoplaySpeed: 2000,
-        slidesToScroll: 1,
-        nextArrow: <SampleNextArrow />,
-        prevArrow: <SamplePrevArrow />,
-        variableWidth: true,
-      };
-      return (
-        <div className="mt-10">
-          <div className="mb-5">
-            <span className="px-5  py-1.5 text-sm font-bold bg-yellow-950">
-            BEST SELLER
-            </span>
-            <div className="w-full mt-0.5 border border-b"></div>
-          </div>
-          <div className="">
-            <Slider {...settings}>
-              <BaseCard />
-              <BaseCard />
-              <BaseCard />
-              <BaseCard />
-              <BaseCard />
-            </Slider>
-          </div>
-        </div>
-      );
-}
+  const [bestSeller, setBestSeller] = useState<ProductsType[]>([]);
+  const [loading, setLoading] = useState(false);
 
-export default BestSeller
+  const settings = {
+    dots: false,
+    infinite: true,
+    speed: 500,
+    autoplay: false,
+    // slidesToShow: 4,
+    rows: 1,
+    autoplaySpeed: 2000,
+    slidesToScroll: 1,
+    nextArrow: <SampleNextArrow />,
+    prevArrow: <SamplePrevArrow />,
+    variableWidth: true,
+  };
+
+  useEffect(() => {
+    const getData = async () => {
+      setLoading(true);
+      const res = await getBestSeller();
+      if (res === null) {
+        toast.error("some thing went wrong");
+      } else {
+        setBestSeller(res.result.items);
+      }
+      setLoading(false);
+    };
+    getData();
+  }, []);
+  return (
+    <div className="mt-10">
+      <div className="mb-5">
+        <span className="px-5  py-1.5 text-sm font-bold bg-yellow-950">
+          BEST SELLER
+        </span>
+        <div className="w-full mt-0.5 border border-b"></div>
+      </div>
+      {!loading ? (
+        <div className="">
+          <Slider {...settings}>
+            {bestSeller.map((item) => {
+              return (
+                <div key={item.id} className="ml-3">
+                  <BaseCard
+                    width="230px"
+                    smallWidth="200px"
+                    description={item.short_description}
+                    id={item.id}
+                    name={item.name}
+                    img={item.images}
+                    price={item.variation.price}
+                    variationId={item.variation.id}
+                    available_quantity={item.variation.available_quantity}
+                    inStock={item.variation.in_stock}
+                    tracking_type={item.tracking_type}
+                  />
+                </div>
+              );
+            })}
+          </Slider>
+        </div>
+      ) : (
+        <div className="flex justify-center">
+          <Spinner className="w-40" />
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default BestSeller;

@@ -10,6 +10,7 @@ const FiltersQueryAtom = atom<QueryFiltersType>({
       SelectedAttribute: {} as { [key: number]: number[] },
       search: "",
       orderby: "OrderByNewest",
+      promotion:0
     },
   });
 

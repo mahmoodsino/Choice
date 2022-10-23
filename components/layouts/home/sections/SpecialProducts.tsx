@@ -1,6 +1,9 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Slider from "react-slick";
+import { toast } from "react-toastify";
+import { getSpecialProducts, ProductsType } from "../../../../helper";
 import { BaseCard } from "../../../card";
+import { Spinner } from "../../../spinner";
 
 function SampleNextArrow(props: any) {
   const { className, style, onClick } = props;
@@ -53,6 +56,8 @@ function SamplePrevArrow(props: any) {
 }
 
 const SpecialProducts = () => {
+  const [spcialProducts, setSpecialProducts] = useState<ProductsType[]>([]);
+  const [loading, setLoading] = useState(false);
   const settings = {
     dots: false,
     infinite: true,
@@ -66,6 +71,23 @@ const SpecialProducts = () => {
     prevArrow: <SamplePrevArrow />,
     variableWidth: true,
   };
+
+
+  useEffect(() => {
+    const getData = async () => {
+      setLoading(true);
+      const res = await getSpecialProducts();
+      if (res === null) {
+        toast.error("some thing went wrong");
+      } else {
+        setSpecialProducts(res.result.items);
+      }
+      setLoading(false);
+    };
+    getData();
+  }, []);
+
+
   return (
     <div className="mt-10">
       <div className="mb-5">
@@ -74,15 +96,35 @@ const SpecialProducts = () => {
         </span>
         <div className="w-full mt-0.5 border border-b"></div>
       </div>
-      <div className="">
-        <Slider {...settings}>
-          <BaseCard />
-          <BaseCard />
-          <BaseCard />
-          <BaseCard />
-          <BaseCard />
-        </Slider>
-      </div>
+      {!loading ? (
+        <div className="">
+          <Slider {...settings}>
+            {spcialProducts.map((item) => {
+              return (
+                <div key={item.id} className="ml-3">
+                  <BaseCard
+                    width="230px"
+                    smallWidth="200px"
+                    description={item.short_description}
+                    id={item.id}
+                    name={item.name}
+                    img={item.images}
+                    price={item.variation.price}
+                    variationId={item.variation.id}
+                    available_quantity={item.variation.available_quantity}
+                    inStock={item.variation.in_stock}
+                    tracking_type={item.tracking_type}
+                  />
+                </div>
+              );
+            })}
+          </Slider>
+        </div>
+      ) : (
+        <div className="flex justify-center">
+          <Spinner className="w-40" />
+        </div>
+      )}
     </div>
   );
 };

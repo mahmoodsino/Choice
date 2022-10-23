@@ -11,11 +11,12 @@ interface Params {
   Brands?:number[]
   AttributeValues?:{ [key: number]: number[] }
   page?:number
+  promotion?:number
 }
 
 const getProducts = async (params: Params) => {
   try {
-    const res = await apiWorker.get(`${root}/products?${params.orderBy ? params.orderBy : "OrderByNewest"}&page_size=25`, {
+    const res = await apiWorker.get(`${root}/products?${params.orderBy ? params.orderBy : "OrderByNewest"}&page_size=25&${params.promotion&& params.promotion>0 && `promotion=${params.promotion}`}`, {
       headers: {
         "branch-id": 1,
         "company-id": 1,
@@ -26,7 +27,7 @@ const getProducts = async (params: Params) => {
         text: params.product_name,
         Brand:params.Brands,
         AttributeValues : JSON.stringify(params.AttributeValues),
-        page:params.page
+        page:params.page,
         
       }
     })

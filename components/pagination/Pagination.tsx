@@ -1,6 +1,6 @@
 import React from "react";
 import { useRecoilState } from "recoil";
-import {  QueryFiltersAtom, totalPagesAtom } from "../../helper";
+import { QueryFiltersAtom, totalPagesAtom } from "../../helper";
 import Pagination from "react-js-pagination";
 
 interface Props {
@@ -9,14 +9,13 @@ interface Props {
 
 const Paginations = ({ paginate }: Props) => {
   const [totalPages, setTotalPages] = useRecoilState(totalPagesAtom);
-  const [queryFilter,setQueryFilter]=useRecoilState(QueryFiltersAtom)
-
+  const [queryFilter, setQueryFilter] = useRecoilState(QueryFiltersAtom);
 
   return (
     <div className="bg-[#FAFAFB]   mt-10  ">
       <Pagination
         innerClass="flex space-x-5 justify-center text-xl "
-        itemClass="  cursor-pointer md:py-4 md:px-4 sm:py-1 sm:px-1 border hover:bg-blue-950 hover:text-yellow-950 sm:text-sm  duration-300 "
+        itemClass="  cursor-pointer md:py-3 md:px-4 sm:py-1 sm:px-1 border hover:bg-blue-950 hover:text-yellow-950 sm:text-sm  duration-300 "
         activeClass="bg-blue-950 text-yellow-950"
         itemClassFirst="border  "
         itemClassPrev="border "

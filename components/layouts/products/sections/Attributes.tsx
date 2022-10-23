@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Collapsible from "react-collapsible";
 import { ArrowIcon, RightArrowIcons } from "../../../icons";
 import { BaseButton } from "../../../buttons";
@@ -8,17 +8,39 @@ import {
   AttributesProductsType,
   QueryFiltersAtom,
 } from "../../../../helper";
+import { useRouter } from "next/router";
 
 let seleAttribute: { [key: number]: number[] } = {} as {
   [key: number]: number[];
 };
+let toCheck: number[] = [];
 
 const Attributes = () => {
   const [openAttributes, setOpenAttributes] = useState(true);
   const [attributes, setAttributes] = useRecoilState(AttributesProductsAtom);
   const [val, setVal] = useState<number>();
-  const [queryFilter,setQueryFilter]=useRecoilState(QueryFiltersAtom)
+  const [queryFilter, setQueryFilter] = useRecoilState(QueryFiltersAtom);
+  const { replace, query } = useRouter();
 
+  useEffect(() => {
+    let value: number[] = [];
+    if (typeof query.attribute !== "undefined") {
+      //@ts-ignore
+      const att = query?.attribute?.split("_");
+      att.map((item: string) => {
+        value = [];
+        const aa = item.split("-");
+        const bb = aa[1]?.split("*");
+        bb?.map((item) => {
+          value = [...value, +item];
+          seleAttribute = { ...seleAttribute, [+aa[0]]: [...value] };
+        });
+      });
+    }
+    setQueryFilter((prev) => {
+      return { ...prev, SelectedAttribute: seleAttribute };
+    });
+  }, [query.attribute]);
 
   const activeHandler = (attribute: AttributesProductsType) => {
     if (attribute.attribute_values.length > 0) {
@@ -61,19 +83,42 @@ const Attributes = () => {
     });
     seleAttribute = newSelected;
 
-    const aa = JSON.stringify(seleAttribute)
-    console.log(aa.replace('[',""));
-    
-    
-    
+    // const aa = JSON.stringify(seleAttribute)
+    let aa: string = "";
+    Object.keys(seleAttribute).map((key) => {
+      const value = seleAttribute[+key];
+      aa = aa + key + "-";
+      value.map((val, i) => {
+        if (value.length - 1 === i) {
+          aa = aa + val;
+        } else {
+          aa = aa + val + "*";
+        }
+      });
+      aa = aa + "_";
+    });
+
+    replace({ query: { ...query, attribute: aa } }, undefined, {
+      scroll: false,
+    });
 
     setQueryFilter((prev) => {
       return { ...prev, SelectedAttribute: seleAttribute };
     });
   };
 
+  useEffect(() => {
+    toCheck = [];
+    Object.keys(queryFilter.SelectedAttribute).map((key) => {
+      const value = queryFilter.SelectedAttribute[+key];
+      value.map((val) => {
+        toCheck = [...toCheck, val];
+      });
+    });
+  }, [queryFilter.SelectedAttribute]);
+
   return (
-    <div className={`w-[90%] mt-8 ${attributes.length !==0 ? "" : "hidden"}`}>
+    <div className={`w-[90%] mt-8 ${attributes.length !== 0 ? "" : "hidden"}`}>
       <Collapsible
         open={openAttributes}
         trigger={
@@ -118,6 +163,13 @@ const Attributes = () => {
                               <input
                                 onChange={() =>
                                   handelValues(attribute.id, att_value.id)
+                                }
+                                checked={
+                                  toCheck.findIndex(
+                                    (bran) => bran === att_value.id
+                                  ) > -1
+                                    ? true
+                                    : false
                                 }
                                 className="checkbox"
                                 type="checkbox"

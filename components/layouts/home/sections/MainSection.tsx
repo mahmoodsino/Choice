@@ -16,22 +16,17 @@ import Information from "./Information";
 import BrandsCarosal from "./BrandsCarosal";
 import Image from "next/image";
 import Offer from "./Offer";
-import { getHomeInfo, HomePageAtom } from "../../../../helper";
+import { getHomeInfo, getPromotions, HomePageAtom, PromotionsAtom } from "../../../../helper";
 import { useRecoilState } from "recoil";
 import {toast} from "react-toastify"
 
 const MainSection = () => {
-  const [homePageState, setHomePageState] = useRecoilState(HomePageAtom);
 
-  useEffect(() => {
-    const getData = async () => {
-      const res = await getHomeInfo();
-      if (res == null) {
-        toast.error("some thing went wrong")
-      } else setHomePageState(res.result);
-    };
-    getData();
-  }, []);
+
+
+  
+
+
 
   return (
     <div className="pb-20">

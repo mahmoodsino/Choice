@@ -6,6 +6,7 @@ type QyeryFilterType = {
     SelectedAttribute: { [key: number]: number[] };
     search: string | string[] | undefined;
     orderby: string;
+    promotion:number
 }
 
 export default QyeryFilterType

@@ -104,13 +104,8 @@ const ShopTreeNode = ({
     }
 
     let QueryCategory = selCategory.map(item => item).join("-")
-     replace({
-      query: { ...query, category: QueryCategory }
-      
-    },
-    undefined,{
-      scroll:false
-    }
+     replace({query: { ...query, category: QueryCategory }},
+    undefined,{scroll:false}
     );
 
     setQueryFilter((prev) => {

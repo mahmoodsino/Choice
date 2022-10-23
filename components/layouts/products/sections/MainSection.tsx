@@ -10,6 +10,7 @@ import {
   OrderByAtom,
   ProductsAtom,
   productsCategoreyAtom,
+  PromotionsProductsAtom,
   QueryFiltersAtom,
   TokenAtom,
   totalPagesAtom,
@@ -40,6 +41,7 @@ const MainSection = () => {
   const [totalPages, setTotalPages] = useRecoilState(totalPagesAtom);
   const [queryFilter,setQueryFilter]=useRecoilState(QueryFiltersAtom)
   const timerRef = useRef() as MutableRefObject<NodeJS.Timeout>;
+  const [promotionsProducts,setPromotionsProducts]=useRecoilState(PromotionsProductsAtom)
 
   const {replace,query} = useRouter()
 
@@ -75,6 +77,7 @@ const MainSection = () => {
         SelectedAttribute: {} as { [key: number]: number[] },
         search: "",
         orderby: "OrderByNewest",
+        promotion:0
       });
     };
     return () => {
@@ -97,6 +100,7 @@ const MainSection = () => {
         setProductsCategory(res.result.categories);
         setAttributes(res.result.attributes);
         setBrands(res.result.brands);
+        setPromotionsProducts(res.result.promotions)
       }
     };
     getData();
@@ -113,7 +117,9 @@ const MainSection = () => {
         AttributeValues: queryFilter.SelectedAttribute,
         Brands:queryFilter.SelectedBrands,
         page: queryFilter.page,
-        orderBy:queryFilter.orderby
+        orderBy:queryFilter.orderby,
+        promotion:queryFilter.promotion
+        
       });
       if (res === null) {
         toast.error("some thing went wrong");

@@ -46,13 +46,8 @@ const Brands = () => {
 
     let queryBrand = SleBran.map((item) => item).join("-");
     replace(
-      {
-        query: { ...query, brand: queryBrand },
-      },
-      undefined,
-      {
-        scroll: false,
-      }
+      {query: { ...query, brand: queryBrand },},
+      undefined,{scroll: false,}
     );
 
     setQueryFilter((prev) => {

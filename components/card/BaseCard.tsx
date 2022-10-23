@@ -287,13 +287,13 @@ const BaseCard = ({
           </div>
           <div className="mx-2">
             <span className="block font-bold line-clamp sm:w-[150px] lg:w-[210px]">
-              {name ? name : "LubriMatic"}
+              {name }
             </span>
             <span className="block font-medium line-clamp">
-              {description ? description : "White Lithium Grease"}{" "}
+              {description ? description : "White Lithium Grease"}
             </span>
             <span className="text-gray-1050 text-lg font-semibold">
-              $ {price ? price : "50.00"}
+              $ {price}
             </span>
           </div>
           <div className="flex w-full h-[43px]  justify-around bg-[#F3F3F3] border  py-2">
