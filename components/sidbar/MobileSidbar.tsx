@@ -40,25 +40,25 @@ const MobileSidbar = () => {
       >
         <Link href="/">
           <a className="flex items-center space-x-5">
-            <HomeIcon className="w-5 inline-block fill-blue-950" />
+            {/* <HomeIcon className="w-5 inline-block fill-blue-950" /> */}
             <span className="text-lg block mt-1">Home</span>
           </a>
         </Link>
         <Link href="/products">
           <a className="flex items-center space-x-5">
-            <BagIcon className="w-5 fill-blue-950" />
+            {/* <BagIcon className="w-5 fill-blue-950" /> */}
             <span className="text-lg mt-1 block">PRODUCTS</span>
           </a>
         </Link>
         <Link href="/aboutus">
           <a className="flex  space-x-5">
-            <PeopleIcon className="w-5 fill-blue-950" />
+            {/* <PeopleIcon className="w-5 fill-blue-950" /> */}
             <span className="block text-lg mt-1 ">ABOUT US</span>
           </a>
         </Link>
         <Link href="/contactus">
           <a className="flex space-x-6 items-center ml-1">
-            <PhoneIcon className="w-3 fill-blue-950 -rotate-45" />
+            {/* <PhoneIcon className="w-3 fill-blue-950 -rotate-45" /> */}
             <span className="block mt-1 text-lg">CONTACT US</span>
           </a>
         </Link>
@@ -72,7 +72,7 @@ const MobileSidbar = () => {
           onClick={() => setOpencategoryModal(true)}
           className="flex  space-x-5"
         >
-          <TagIcon className="w-5 fill-blue-950" />
+          {/* <TagIcon className="w-5 fill-blue-950" /> */}
           <span className="text-lg block">Category</span>
         </BaseButton>
       </div>

@@ -6,7 +6,7 @@ import { goingUpAtom } from "./FixedNavbar";
 import choicePhoto from "../../public/assets/images/choicePhoto.png";
 import Image from "next/image";
 import { BaseInput } from "../inputs";
-import { ActiveDropDownAtom, CouninueAsGuestModalAtom, SearchAtom, ShowSidbarAtom, TokenAtom } from "../../helper";
+import { ActiveDropDownAtom, AllCartsInfoAtom, CouninueAsGuestModalAtom, SearchAtom, ShowSidbarAtom, TokenAtom } from "../../helper";
 import { Dropdown } from "../dropdown";
 import Link from "next/link";
 import LoginIcon from "../icons/LoginIcon";
@@ -22,6 +22,8 @@ const MobaiHeader = () => {
     CouninueAsGuestModalAtom
   );
   const [token,setToken]=useRecoilState(TokenAtom)
+  const [allCartsInfo, setAllCartsInfo] = useRecoilState(AllCartsInfoAtom);
+
   const {push}=useRouter()
 
   let userType;
@@ -95,11 +97,11 @@ const MobaiHeader = () => {
                     : setContinueAsGuestModal(true)
                 } className="flex space-x-2 pl-3 whitespace-nowrap">
               <div className="absolute px-0.5 right-0  bg-yellow-950 rounded-full text-xs text-white font-extrabold">
-                0
+                {allCartsInfo.items.length}
               </div>
               <div className="flex flex-col items-center">
                 <BasketIcon className="w-6 fill-white inline-block" />
-                <span className="text-[10px] text-white">$(0.00)</span>
+                <span className="text-[10px] text-white">$({allCartsInfo.total_price.toFixed(2)})</span>
               </div>
             </BaseButton>
         </div>

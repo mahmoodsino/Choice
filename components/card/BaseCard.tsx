@@ -296,7 +296,7 @@ const BaseCard = ({
               $ {price}
             </span>
           </div>
-          <div className="flex w-full h-[43px]  justify-around bg-[#F3F3F3] border  py-2">
+          <div className="flex md:flex-row sm:flex-col items-center sm:py-1 sm:space-y-1 md:space-y-0  w-full md:h-[43px]  justify-around bg-[#F3F3F3] border  py-2">
             {!loading ? (
               <div>
                 {cartItems.length === 0 ? (

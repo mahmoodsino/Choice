@@ -69,9 +69,9 @@ const MainSection = () => {
                   background:
                     "linear-gradient(90deg, rgba(229, 229, 229, 0.12) 1.56%, #EBEBEB 100%)",
                 }}
-                className=" py-2 px-2 flex mt-10 " 
+                className=" py-2 md:px-2 flex mt-10 " 
               >
-                <div className="w-[150px] h-[150px]">
+                <div className="md:w-[150px] md:h-[150px]">
 
                 <Image  src={TOOLS1} alt="" />
                 </div>

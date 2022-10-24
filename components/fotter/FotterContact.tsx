@@ -37,7 +37,7 @@ const FotterContact = () => {
 
   return (
     <div>
-      <form onSubmit={handleSubmit(submit)} className=" w-[100%]  ">
+      <form onSubmit={handleSubmit(submit)} className=" sm:w-fit md:w-[100%]  ">
         <div className=" space-y-3 ">
           <BaseInput
             name="name"
