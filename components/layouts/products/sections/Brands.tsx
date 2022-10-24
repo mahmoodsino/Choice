@@ -7,6 +7,7 @@ import { BrandsAtom, QueryFiltersAtom } from "../../../../helper";
 import { useRouter } from "next/router";
 
 let SleBran: number[] = [];
+export let selCategory: number[] = [];
 
 const Brands = () => {
   const [openBrands, setOpenBrands] = useState(true);
@@ -35,6 +36,25 @@ const Brands = () => {
       };
     });
   },[query.brand])
+
+    useEffect(() => {
+    if(typeof(query.category) !=="undefined"){
+      //@ts-ignore
+      const q = query?.category?.split("-")
+      q.map((item:string) =>{
+        let index:number=selCategory.findIndex(find => ( find===(+item)))  
+        if(index<0 && +item!=0){
+          selCategory=[...selCategory,+item]
+        }
+      })
+    }
+    setQueryFilter((prev) => {
+      return {
+        ...prev,
+        SelectedCategories: selCategory,
+      };
+    });
+  },[query.category])
 
   const handeBrands = async (id: number) => {
     const index = SleBran.findIndex((brand) => brand === id);

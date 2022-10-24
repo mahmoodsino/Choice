@@ -33,7 +33,7 @@ const Latest = () => {
             description={item.short_description}
             price={item.variation.price}
             id={item.id}
-            image={item.images[0].path}
+            image={item.images[0]?.path}
             variationId={item.variation.id}
           />
         );

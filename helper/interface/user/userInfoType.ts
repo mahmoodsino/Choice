@@ -1,4 +1,8 @@
+import { adderssType } from "../address-info"
+
 interface userInfoType {
+    address:adderssType
+    company_name:string
     id: number,
     type: string,
     email: string,

@@ -10,12 +10,13 @@ const [token,setToken]=useRecoilState(TokenAtom)
 const [userInfo,setUserInfo]=useRecoilState(UserInfoAtom)
 const [loading,setLoading]=useState(false)
 
-console.log(userInfo);
 
   useEffect(() => {
     const getData = async () =>{
       setLoading(true)
       const res = await getUserInfo(token)
+      console.log(res);
+      
       if(res===null){
         toast.error("some thing went wrong")
       }else{

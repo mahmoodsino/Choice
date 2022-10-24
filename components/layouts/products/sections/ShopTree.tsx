@@ -15,28 +15,7 @@ export let selCategory: number[] = [];
 
 const ShopTree = ({ data }: data) => {
   const [ShopselectedParentId, setShopParentId] = useState(-1);
-  const { replace, query } = useRouter();
-  const [queryFilter, setQueryFilter] = useRecoilState(QueryFiltersAtom);
 
-
-  useEffect(() => {
-    if(typeof(query.category) !=="undefined"){
-      //@ts-ignore
-      const q = query?.category?.split("-")
-      q.map((item:string) =>{
-        let index:number=selCategory.findIndex(find => ( find===(+item)))  
-        if(index<0 && +item!=0){
-          selCategory=[...selCategory,+item]
-        }
-      })
-    }
-    setQueryFilter((prev) => {
-      return {
-        ...prev,
-        SelectedCategories: selCategory,
-      };
-    });
-  },[query.category])
 
   if (Array.isArray(data)) {
     return (
@@ -74,9 +53,7 @@ interface node {
   node: categoriesType;
   ShopselectedParentId: number;
   setShopParentId: (value: number) => void;
-
 }
-
 
 
 const ShopTreeNode = ({
@@ -88,10 +65,6 @@ const ShopTreeNode = ({
   const {replace,query} = useRouter()
 
   const hasChild = node.categories?.length > 0 ? true : false;
-
-
- 
-  
 
   const handelSearch = async (categoreyID: number) => {
     const index = queryFilter.SelectedCategories.findIndex(
@@ -107,7 +80,6 @@ const ShopTreeNode = ({
      replace({query: { ...query, category: QueryCategory }},
     undefined,{scroll:false}
     );
-
     setQueryFilter((prev) => {
       return {
         ...prev,
@@ -115,13 +87,9 @@ const ShopTreeNode = ({
       };
     });
   };
-
-
   return (
     <li className=" relative ">
       <div className="">
-        
-
         <div className=" flex justify-between  text-sm tracking-[0.03em] cursor-pointer bg-gray-1350 px-3 border-t border-b border-t-white pr-3">
           <label  className="shopContainer flex items-center mt-0 mb-0 py-2">
             {node.name}

@@ -3,15 +3,17 @@ import type { AppProps } from "next/app";
 import { MutableRefObject, ReactNode, useEffect, useRef } from "react";
 import {RecoilRoot, useRecoilState} from "recoil"
 import { ContinueAsGuest, FixedNavbar, Fotter, Header, MessageModal, MobaiHeader, MobailCategoryModal, MobileSidbar, Navbar } from "../components";
-import { ActiveDropDownAtom, AllCartsInfoAtom, CartItemsAtom, ErorrMessageAtom, getCartItems, getHomeInfo, getPromotions, HomePageAtom, PromotionsAtom, showCategoriesAtom, TokenAtom } from "../helper";
+import { ActiveDropDownAtom, AllCartsInfoAtom, CartItemsAtom, CountriesAtom, countryType, ErorrMessageAtom, getCartItems, getHomeInfo, getPromotions, HomePageAtom, PromotionsAtom, showCategoriesAtom, TokenAtom } from "../helper";
 import {toast, ToastContainer} from "react-toastify"
 import 'react-toastify/dist/ReactToastify.css';
+import { getCountries } from "../helper/sever/address-info";
 
 interface Props {
   children: ReactNode;
 }
 
 
+let modifCountries: countryType[] = [];
 
 const App = ({ children }: Props) => {
   const [activeDropDown, setActiveDropDown] =
@@ -23,6 +25,7 @@ const App = ({ children }: Props) => {
     const [errorMessage,setErorrMessage]=useRecoilState(ErorrMessageAtom)
     const [homePageState, setHomePageState] = useRecoilState(HomePageAtom);
   const [promotions,setPromotions]=useRecoilState(PromotionsAtom)
+  const [contries,setCountries]=useRecoilState(CountriesAtom)
 
     if (typeof window !== "undefined") {
       setToken(localStorage.getItem("token") || "");
@@ -65,6 +68,31 @@ const App = ({ children }: Props) => {
       }
       getDate()
     },[])
+
+    useEffect(() => {
+      const getdata = async () => {
+        const res = await getCountries();
+        if(res === null){
+          toast.error("some thing went wrong")
+        }else{
+          let modifiedResponse = res.result;
+          modifiedResponse.map((item: { id: number; name: string }) => {
+            let countreyValue = item.id.toString();
+    
+            let countreyLabel = item.name;
+            let newCountriesStructur = {
+              label: countreyLabel,
+              value: countreyValue,
+            };
+            if (modifCountries.length < 250) {
+              modifCountries.push(newCountriesStructur);
+            }
+          });
+          setCountries(modifCountries);
+        }
+      };
+      getdata();
+    }, []);
 
 
   return (
