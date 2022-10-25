@@ -1,10 +1,13 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Slider from "react-slick";
 import { GradientElement } from '../elements';
 import penray from "../../../../public/assets/images/penray.png"
+import { getBrands, homeBrandType } from '../../../../helper';
+import { toast } from 'react-toastify';
 
 
 const BrandsCarosal = () => {
+  const [brands,setBrands]=useState<homeBrandType[]>([])
     const settings = {
         dots: false,
         infinite: true,
@@ -16,18 +19,31 @@ const BrandsCarosal = () => {
         slidesToScroll: 1,
         variableWidth: true,
       };
+
+      useEffect(() => {
+        const getData = async () => {
+          const res = await getBrands()
+          if(res===null){
+            toast.error("some thing went wrong")
+          }else{
+            setBrands(res.result.brands)
+          }
+        }
+        getData()
+      },[])
+
+      console.log(brands);
+      
+
   return (
     <div>
 
       <Slider {...settings}>
-        <GradientElement image={penray} />
-        <GradientElement image={penray} />
-        <GradientElement image={penray} />
-        <GradientElement image={penray} />
-        <GradientElement image={penray} />
-        <GradientElement image={penray} />
-        <GradientElement image={penray} />
-        <GradientElement image={penray} />
+        {brands.map(brand => {
+          return(
+            <GradientElement image={brand.img} id={brand.id}  />
+          )
+        })}
       </Slider>
       
     </div>

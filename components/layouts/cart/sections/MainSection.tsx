@@ -9,6 +9,7 @@ import {
   TokenAtom,
 } from "../../../../helper";
 import { Spinner } from "../../../spinner";
+import AddAddressModal from "./AddAddressModal";
 import CartItemTable from "./CartItemTable";
 import CartSummary from "./CartSummary";
 
@@ -64,6 +65,7 @@ const MainSection = () => {
           <Spinner className="w-72" />
         </div>
       )}
+      <AddAddressModal/>
     </div>
   );
 };

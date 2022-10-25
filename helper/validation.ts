@@ -42,3 +42,22 @@ export const sendMessageSchema = yup.object().shape({
   companyName: yup.string(),
   subject: yup.string()
 })
+
+
+export const addressBookSchema = yup.object().shape({
+  addressName: yup.string().required(),
+  address: yup.string().required(),
+  countries: yup.string().required(),
+  zipPostalCode: yup.number().positive().integer(),
+  houseBuildingNo: yup.number().positive().integer(),
+  cities: yup.string().nullable(),
+  states:yup.string(),
+  cityId:yup.string()
+})
+
+
+
+export const loginCheckSchema = yup.object().shape({
+  email: yup.string().email().required(),
+  password: yup.string().min(6).max(15).required(),
+})

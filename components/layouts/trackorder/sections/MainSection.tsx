@@ -19,6 +19,7 @@ const MainSection = () => {
       }else{
         setOrdersState(res.result)
       }
+      setLoading(false)
     }
     getData()
   },[])

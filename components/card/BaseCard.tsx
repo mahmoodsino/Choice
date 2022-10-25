@@ -286,7 +286,7 @@ const BaseCard = ({
             )}
           </div>
           <div className="mx-2">
-            <span className="block font-bold line-clamp sm:w-[150px] lg:w-[210px]">
+            <span title={name} className="block font-bold line-clamp sm:w-[150px] lg:w-[210px]">
               {name }
             </span>
             <span className="block font-medium line-clamp">
