@@ -65,7 +65,7 @@ const BaseCard = ({
 
   const { push } = useRouter();
 
-  const handelMoveToDetails = async (id: number) => {
+  const handelMoveToDetails = async () => {
     push({
       pathname: "/details",
       query: { product: encodeURI(`${id}`) },
@@ -266,7 +266,7 @@ const BaseCard = ({
     >
       <div className="   ">
         <div>
-          <div onClick={() => handelMoveToDetails(id)} className="">
+          <div onClick={() => handelMoveToDetails()} className="">
 
           <div className="m-auto w-fit py-2 product-slider-img h-[190px] pt-8  bg-contain">
             {img ? (
@@ -334,7 +334,7 @@ const BaseCard = ({
               </div>
             )}
             <BaseButton
-              onClick={() => id && handelMoveToDetails(id)}
+              onClick={() => id && handelMoveToDetails()}
               className="px-3 py-1 text-xs font-semibold bg-gray-1200 text-white rounded-full sm:hidden md:block "
               title="VIEW"
             />
