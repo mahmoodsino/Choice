@@ -39,9 +39,9 @@ const BrandsCarosal = () => {
     <div>
 
       <Slider {...settings}>
-        {brands.map(brand => {
+        {brands.map((brand,i) => {
           return(
-            <GradientElement image={brand.img} id={brand.id}  />
+            <GradientElement key={i} image={brand.img} id={brand.id}  />
           )
         })}
       </Slider>

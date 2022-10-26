@@ -69,20 +69,20 @@ const MainSection = () => {
   };
 
   return (
-    <div className="px-[75px] 2xl:container m-auto py-10">
-      <div className="grid grid-cols-2">
-        <div className=" border-r">
+    <div className="lg:px-[75px] md:px-10 sm:px-3 2xl:container m-auto py-10">
+      <div className="grid md:grid-cols-2">
+        <div className=" md:border-r">
           <Link href="/cart">
             <a className="text-lg underline">Back to My Cart</a>
           </Link>
           <span className="text-gray-1500 text-xl mt-10 font-semibold block">
             Returning Customer
           </span>
-          <div className="w-[60%] mt-5">
+          <div className="md:w-[60%] mt-5">
             <FormSection />
           </div>
         </div>
-        <div className="space-y-7 px-10 mt-20">
+        <div className="space-y-7 md:px-10 mt-20">
           <span className="block font-semibold text-xl text-gray-1500">
             Checkout as Guest
           </span>
