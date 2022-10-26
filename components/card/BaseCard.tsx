@@ -266,6 +266,8 @@ const BaseCard = ({
     >
       <div className="   ">
         <div>
+          <div onClick={() => handelMoveToDetails(id)} className="">
+
           <div className="m-auto w-fit py-2 product-slider-img h-[190px] pt-8  bg-contain">
             {img ? (
               img?.map((item, i) => {
@@ -295,6 +297,7 @@ const BaseCard = ({
             <span className="text-gray-1050 text-lg font-semibold">
               $ {price}
             </span>
+          </div>
           </div>
           <div className="flex md:flex-row sm:flex-col items-center sm:py-1 sm:space-y-1 md:space-y-0  w-full md:h-[43px]  justify-around bg-[#F3F3F3] border  py-2">
             {!loading ? (
@@ -332,7 +335,7 @@ const BaseCard = ({
             )}
             <BaseButton
               onClick={() => id && handelMoveToDetails(id)}
-              className="px-3 py-1 text-xs font-semibold bg-gray-1200 text-white rounded-full "
+              className="px-3 py-1 text-xs font-semibold bg-gray-1200 text-white rounded-full sm:hidden md:block "
               title="VIEW"
             />
           </div>

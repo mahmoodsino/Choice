@@ -61,3 +61,15 @@ export const loginCheckSchema = yup.object().shape({
   email: yup.string().email().required(),
   password: yup.string().min(6).max(15).required(),
 })
+
+
+export const checkoutSchema = yup.object().shape({
+  firstName:yup.string().required(),
+  lastName:yup.string().required(),
+  email:yup.string().email().required(),
+  country:yup.string().required(),
+  city:yup.string().nullable(),
+  cityId:yup.string().nullable(),
+  state:yup.string().nullable(),
+  postalCodel:yup.number().required()
+})

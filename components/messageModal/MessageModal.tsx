@@ -99,7 +99,7 @@ const MessageModal = ({ message }: Props) => {
             </span>
           </div>
           <div className="sm:px-5 md:px-7 pb-5">
-            <span className="text-gray-1250 font-bold capitalize">{message}</span>
+            <span className="text-black font-bold capitalize">{message}</span>
 
           </div>
           <div className="px-8 py-3 flex justify-end bg-gray-1000/20">

@@ -51,7 +51,7 @@ const Navbar = () => {
           {routse.map(route => {
             return(
               <Link key={v4()} href={route.path}>
-            <a className={`text-white  lg:border-r md:pr-2 lg:pr-4 whitespace-nowrap ${pathname.slice(1) !== route.path.slice(1) ? "" : "font-bold"}`}>{route.name}</a>
+            <a onClick={()=> route.path==="/products" && (window.location.href=(route.path))} className={`text-white  lg:border-r md:pr-2 lg:pr-4 whitespace-nowrap ${pathname.slice(1) !== route.path.slice(1) ? "" : "font-bold"}`}>{route.name}</a>
           </Link>
             )
           })}

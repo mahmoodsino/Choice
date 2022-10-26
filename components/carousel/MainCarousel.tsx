@@ -42,7 +42,7 @@ class Carousel extends Component {
                 <span className="text-blue-950 mt-2 font-bold block">STYLUS AND COMFORTABLE</span>
                 <span className="mt-5 block text-gray-950 font-semibold">NEW CATALOGUE DESIGN</span>
                 <div className="mt-10">
-                    <Link href="/shop" >
+                    <Link href="/products" >
                       <a className="uppercase  text-lg font-bold  bg-blue-950 text-white px-3 py-2 rounded-full leading-5 tracking-[0.11em]">
                       shop now
                       </a>
@@ -70,7 +70,7 @@ class Carousel extends Component {
                 <span className="text-blue-950 mt-2 font-bold block">STYLUS AND COMFORTABLE</span>
                 <span className="mt-5 block text-gray-950 font-semibold">NEW CATALOGUE DESIGN</span>
                 <div className="mt-10">
-                <Link href="/shop" >
+                <Link href="/products" >
                       <a className="uppercase  text-lg font-bold  bg-blue-950 text-white px-3 py-2 rounded-full leading-5 tracking-[0.11em]">
                       shop now
                       </a>

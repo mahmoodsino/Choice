@@ -43,7 +43,7 @@ const MainSection = () => {
   const timerRef = useRef() as MutableRefObject<NodeJS.Timeout>;
   const [promotionsProducts,setPromotionsProducts]=useRecoilState(PromotionsProductsAtom)
 
-  const {replace,query} = useRouter()
+  const {replace,query,push} = useRouter()
 
 
   useEffect(() => {
@@ -69,7 +69,9 @@ const MainSection = () => {
   },[query.search])
 
   useEffect(() => {
+    
     const leave = () => {
+      console.log("vndlk");
       setQueryFilter({
         SelectedBrands: [],
         SelectedCategories: [],
@@ -79,10 +81,10 @@ const MainSection = () => {
         orderby: "OrderByNewest",
         promotion:0
       });
+      
     };
-    return () => {
-      leave();
-    };
+    return () => leave();
+    
   }, []);
 
   useEffect(() => {

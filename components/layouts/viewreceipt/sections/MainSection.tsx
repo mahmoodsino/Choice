@@ -20,7 +20,6 @@ const MainSection = () => {
   const [token, setToken] = useRecoilState(TokenAtom);
   const [orderDetails, setOrderDetails] = useRecoilState(OrderDetailsAtom);
   const [loading, setLoading] = useState(false);
-  const [paymentProvidorId, setPaymenProvidorId] = useState<number>();
 
   const router = useRouter().query;
 

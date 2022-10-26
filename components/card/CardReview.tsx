@@ -28,7 +28,7 @@ const CardReview = () => {
               </div>
             </div>
             <div>
-              <h1 className="md:text-xl font-medium text-gray-1500">$ {item.price}</h1>
+              <h1 className="md:text-xl font-medium text-gray-1500 whitespace-nowrap">$ {item.price}</h1>
             </div>
           </div>
         );

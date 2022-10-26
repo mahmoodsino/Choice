@@ -56,7 +56,7 @@ const Header = () => {
           </div>
         </div>
         <div className="flex relative">
-          {userType === "user" ? (
+          {userType === "user" || userType ==="guest" ? (
             <BaseButton
               onClick={() => setActiveDropDown(!activeDropDown)}
               className=" flex space-x-2 items-center border-l py-2 px-6"
