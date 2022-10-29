@@ -74,7 +74,7 @@ const App = ({ children }: Props) => {
     if (token.length > 1) {
       getData();
     }
-  }, []);
+  }, [token]);
 
   useEffect(() => {
     const getData = async () => {
