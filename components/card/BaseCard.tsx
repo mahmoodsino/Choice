@@ -174,7 +174,10 @@ const BaseCard = ({
       timerRef.current = setTimeout(async () => {
         if (id) {
           const res = await updateCart(token, id, itemQuantity);
-          if (res == null || 400) {
+          if (res == null ) {
+            setErorrMessage("some thing went wrong");
+            setOpenMassegModal(true);
+          }else if (res===400){
             setErorrMessage("some thing went wrong");
             setOpenMassegModal(true);
           } else {
