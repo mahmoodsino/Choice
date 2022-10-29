@@ -443,19 +443,20 @@ const DetailsCard = () => {
         if (res === null) {
           setErorrMessage("some thing went wrong");
           setOpenMassegModal(true);
+          setLoading(false);
         }else if(res==400){
           setErorrMessage("you cant add any more of this product");
           setOpenMassegModal(true);
+          setLoading(false);
         } else {
           setAllCartsInfo(res.result);
           setCartItems(res.result.items);
           setMoveToCartPageModalState(true);
+          setLoading(false);
         }
       }
     });
-    setTimeout(() => {
-      setLoading(false);
-    }, 500)
+      
   };
   return (
     <div>
