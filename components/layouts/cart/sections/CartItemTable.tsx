@@ -231,7 +231,7 @@ const CartItemTable = () => {
                         {item.variation?.attributes.map((att) => {
                           return (
                             <span key={att.id} className="block text-sm">
-                              {att.name}
+                              {att?.attribute_values?.name}
                             </span>
                           );
                         })}

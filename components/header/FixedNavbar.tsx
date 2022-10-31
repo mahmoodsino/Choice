@@ -160,8 +160,8 @@ const FixedNavbar = () => {
                     Shopping Cart
                   </span>
                   <span className="block text-xs text-gray-1050">
-                    {allCartsInfo.items.length} item(s)- $
-                    {allCartsInfo.total_price}
+                    {allCartsInfo?.items?.length} item(s)- $
+                    {allCartsInfo?.total_price}
                   </span>
                 </div>
               </a>

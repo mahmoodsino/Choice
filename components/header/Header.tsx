@@ -57,6 +57,7 @@ const Header = () => {
         </div>
         <div className="flex relative">
           {userType === "user" || userType ==="guest" ? (
+            <div className="flex">
             <BaseButton
               onClick={() => setActiveDropDown(!activeDropDown)}
               className=" flex space-x-2 items-center border-l py-2 px-6"
@@ -64,6 +65,16 @@ const Header = () => {
               <AccountIcon className="w-5 fill-gray-950" />
               <span className="text-sm text-gray-950 ">My Account</span>
             </BaseButton>
+            <Link href="/login">
+              <a className="flex  items-center space-x-2 border-l">
+                <LoginIcon className="fill-gray-950 w-8 py-2 pl-2" />
+                <span className="text-sm text-gray-950">Login</span>
+              </a>
+            </Link>
+
+            </div>
+
+            
           ) : (
             <Link href="/login">
               <a className="flex  items-center space-x-2 border-l">
@@ -100,8 +111,8 @@ const Header = () => {
                   Shopping Cart
                 </span>
                 <span className="block text-xs text-gray-1050">
-                  {allCartsInfo.items.length} item(s)- $
-                  {allCartsInfo.total_price}
+                  {allCartsInfo?.items?.length} item(s)- $
+                  {allCartsInfo?.total_price}
                 </span>
               </div>
             </BaseButton>
