@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
-import { useRecoilState } from "recoil";
+import { atom, useRecoilState } from "recoil";
 import { categoriesType, QueryFiltersAtom, } from "../../../../helper";
 import {  RightArrowIcons } from "../../../icons";
 import { useRouter } from "next/router";
@@ -10,8 +10,10 @@ interface data {
 
 }
 
-export let selCategory: number[] = [];
-
+export const selCategoryAtom =atom<number[]>({
+  key:"selCategoryAtom",
+  default:[]
+})
 
 const ShopTree = ({ data }: data) => {
   const [ShopselectedParentId, setShopParentId] = useState(-1);
@@ -63,6 +65,8 @@ const ShopTreeNode = ({
 }: node) => {
   const [queryFilter,setQueryFilter]=useRecoilState(QueryFiltersAtom)
   const {replace,query} = useRouter()
+  const [selCategory,setSelCategory]=useRecoilState(selCategoryAtom)
+
 
   const hasChild = node.categories?.length > 0 ? true : false;
 
@@ -71,9 +75,14 @@ const ShopTreeNode = ({
       (category) => category === categoreyID
     );
     if (index < 0) {
-      selCategory = [...queryFilter.SelectedCategories, categoreyID];
+      setSelCategory(prev => {
+        return(
+          [...prev, categoreyID]
+        )
+      })
     } else if (index >= 0) {
-      selCategory = selCategory.filter((item) => item !== categoreyID);
+      const selCate = selCategory.filter((item) => item !== categoreyID);
+      setSelCategory(selCate)
     }
 
     let QueryCategory = selCategory.map(item => item).join("-")
