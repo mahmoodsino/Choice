@@ -67,7 +67,6 @@ const ShopTreeNode = ({
   const hasChild = node.categories?.length > 0 ? true : false;
 
   const handelSearch = async (categoreyID: number) => {
-    selCategory=[]
     const index = queryFilter.SelectedCategories.findIndex(
       (category) => category === categoreyID
     );
