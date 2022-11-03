@@ -38,10 +38,10 @@ const Brands = () => {
   },[query.brand])
 
     useEffect(() => {
-    if(typeof(query.category) !=="undefined"){
+    if(typeof(query.category) !==undefined){
       //@ts-ignore
       const q = query?.category?.split("-")
-      q.map((item:string) =>{
+      q?.map((item:string) =>{
         let index:number=selCategory.findIndex(find => ( find===(+item)))  
         if(index<0 && +item!=0){
           selCategory=[...selCategory,+item]
