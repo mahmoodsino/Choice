@@ -7,7 +7,7 @@ import { BrandsAtom, QueryFiltersAtom } from "../../../../helper";
 import { useRouter } from "next/router";
 
 let SleBran: number[] = [];
-export let selCategory: number[] = [];
+let selCategory: number[] = [];
 
 const Brands = () => {
   const [openBrands, setOpenBrands] = useState(true);

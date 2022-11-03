@@ -10,7 +10,7 @@ interface data {
 
 }
 
-export let selCategory: number[] = [];
+let selCategory: number[] = [];
 
 
 const ShopTree = ({ data }: data) => {
@@ -67,14 +67,14 @@ const ShopTreeNode = ({
   const hasChild = node.categories?.length > 0 ? true : false;
 
   const handelSearch = async (categoreyID: number) => {
-    const index = queryFilter.SelectedCategories.findIndex(
+    selCategory=queryFilter.SelectedCategories
+    const index = selCategory.findIndex(
       (category) => category === categoreyID
     );
     if (index < 0) {
-      selCategory = [...queryFilter.SelectedCategories, categoreyID];
+      selCategory = [...selCategory, categoreyID];
     } else if (index >= 0) {
-      const selCa = queryFilter.SelectedCategories.filter((item) => item !== categoreyID);
-      selCategory=[...selCa]
+      selCategory =selCategory.filter((item) => item !== categoreyID);
     }
 
     let QueryCategory = selCategory.map(item => item).join("-")
