@@ -7,7 +7,6 @@ import { BrandsAtom, QueryFiltersAtom } from "../../../../helper";
 import { useRouter } from "next/router";
 
 let SleBran: number[] = [];
-let selCategory: number[] = [];
 
 const Brands = () => {
   const [openBrands, setOpenBrands] = useState(true);
@@ -38,6 +37,7 @@ const Brands = () => {
   },[query.brand])
 
     useEffect(() => {
+      let selCategory : number[] =queryFilter.SelectedCategories
       if(typeof(query.category)!==undefined){
         //@ts-ignore
         const q= query?.category?.split("-")
