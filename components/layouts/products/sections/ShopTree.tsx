@@ -67,14 +67,15 @@ const ShopTreeNode = ({
   const hasChild = node.categories?.length > 0 ? true : false;
 
   const handelSearch = async (categoreyID: number) => {
-    selCategory=queryFilter.SelectedCategories
-    const index = selCategory.findIndex(
+    selCategory=[]
+    const index = queryFilter.SelectedCategories.findIndex(
       (category) => category === categoreyID
     );
     if (index < 0) {
-      selCategory = [...selCategory, categoreyID];
+      selCategory = [...queryFilter.SelectedCategories, categoreyID];
     } else if (index >= 0) {
-      selCategory =selCategory.filter((item) => item !== categoreyID);
+      const selCa = queryFilter.SelectedCategories.filter((item) => item !== categoreyID);
+      selCategory=[...selCa]
     }
 
     let QueryCategory = selCategory.map(item => item).join("-")
