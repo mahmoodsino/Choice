@@ -10,7 +10,7 @@ interface data {
 
 }
 
-let selCategory: number[] = [];
+export let selCategory: number[] = [];
 
 
 const ShopTree = ({ data }: data) => {
@@ -73,8 +73,7 @@ const ShopTreeNode = ({
     if (index < 0) {
       selCategory = [...queryFilter.SelectedCategories, categoreyID];
     } else if (index >= 0) {
-      const selCa = queryFilter.SelectedCategories.filter((item) => item !== categoreyID);
-      selCategory=[...selCa]
+      selCategory = selCategory.filter((item) => item !== categoreyID);
     }
 
     let QueryCategory = selCategory.map(item => item).join("-")
