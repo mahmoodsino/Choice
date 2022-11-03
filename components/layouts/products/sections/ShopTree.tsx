@@ -73,7 +73,8 @@ const ShopTreeNode = ({
     if (index < 0) {
       selCategory = [...queryFilter.SelectedCategories, categoreyID];
     } else if (index >= 0) {
-      selCategory = selCategory.filter((item) => item !== categoreyID);
+      const selCa = queryFilter.SelectedCategories.filter((item) => item !== categoreyID);
+      selCategory=[...selCa]
     }
 
     let QueryCategory = selCategory.map(item => item).join("-")
