@@ -5,16 +5,15 @@ import { BaseButton } from "../../../buttons";
 import { useRecoilState } from "recoil";
 import { BrandsAtom, QueryFiltersAtom } from "../../../../helper";
 import { useRouter } from "next/router";
-import { selCategoryAtom } from "./ShopTree";
 
 let SleBran: number[] = [];
+export let selCategory: number[] = [];
 
 const Brands = () => {
   const [openBrands, setOpenBrands] = useState(true);
   const [brands, setBrands] = useRecoilState(BrandsAtom);
   const [queryFilter, setQueryFilter] = useRecoilState(QueryFiltersAtom);
   const { replace, query } = useRouter();
-  const [selCategory,setSelCategory]=useRecoilState(selCategoryAtom)
   
 
 
@@ -45,11 +44,7 @@ const Brands = () => {
         q?.map((item:string) => {
           let index:number=selCategory.findIndex(find => ( find===(+item)))  
           if(index<0&&+item!=0){
-            setSelCategory(prev => {
-              return(
-                [...prev,+item]
-              )
-            })
+            selCategory=[...selCategory,+item]
           }      
         })
         
