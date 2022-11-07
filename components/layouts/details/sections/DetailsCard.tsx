@@ -253,11 +253,7 @@ const DetailsCard = () => {
     setAttributeNames(newNames);
   }, [detailsState]);
 
-  const handelAttribute = (value: { id: number; parent_id: number }) => {
-    let num: { id: number; parent: number } = { id: -1, parent: -1 };
-    num = { id: value.id, parent: value.parent_id };
-    setAttributesToSetVAriation(num);
-  };
+
 
   useEffect(() => {
     let attributValueID: number[] = [];
@@ -346,7 +342,14 @@ const DetailsCard = () => {
     });
   }, [newArrayOFArray, variationsState, attributeToSetVAriation]);
 
-  useEffect(() => {
+
+  const handelAttribute = (value: { id: number; parent_id: number }) => {
+    let num: { id: number; parent: number } = { id: -1, parent: -1 };
+    num = { id: value.id, parent: value.parent_id };
+    setAttributesToSetVAriation(num);
+
+
+
     let count = selectedAttributes.length;
     let countArray = 0;
     let checked: number[] = [];
@@ -354,7 +357,7 @@ const DetailsCard = () => {
 
     for (let i = 0; i < attributeValueNumbers?.length; i++) {
       const array: number[] = attributeValueNumbers[i];
-      index = array.findIndex((value) => value === attributeToSetVAriation?.id);
+      index = array.findIndex((value) => value === num?.id);
       if (index > -1) {
         break;
       }
@@ -362,7 +365,7 @@ const DetailsCard = () => {
     selectedAttributes.map((item, i) => {
       if (index === i) {
         //@ts-ignore
-        checked.push(attributeToSetVAriation?.id);
+        checked.push(num?.id);
       } else if (index !== i) {
         checked.push(item);
       }
@@ -402,11 +405,11 @@ const DetailsCard = () => {
     }
     if (countArray < count) {
       detailsState.variations.map((variation) => {
-        if (attributeToSetVAriation?.id) {
+        if (num?.id) {
           variation.attributes?.map((attribute) => {
             if (
-              attribute.id === attributeToSetVAriation.parent &&
-              attribute.attribute_values.id === attributeToSetVAriation.id
+              attribute.id === num.parent &&
+              attribute.attribute_values.id === num.id
             ) {
               setVariationsState(variation);
             }
@@ -414,7 +417,11 @@ const DetailsCard = () => {
         }
       });
     }
-  }, [attributeToSetVAriation]);
+  };
+
+  // useEffect(() => {
+    
+  // }, [attributeToSetVAriation]);
 
   const getbg = (id: number) => {
     let isfound = false;

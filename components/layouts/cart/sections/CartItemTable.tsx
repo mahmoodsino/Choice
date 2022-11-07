@@ -158,6 +158,7 @@ const CartItemTable = () => {
         setLoading(false);
       }, 700);
     } else if (itemQuantity === 1 || reomve) {
+      clearTimeout(timerRef.current);
       setLoading(true);
       const res = await deleteCart(token, id);
       if (res === null) {

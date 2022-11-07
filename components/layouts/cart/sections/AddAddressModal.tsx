@@ -84,7 +84,6 @@ const AddAddressModal = () => {
             data.houseBuildingNo,
             token
           );
-          console.log(res);
           
           if(res===null){
               toast.error("some thing went wrong")

@@ -187,6 +187,7 @@ const BaseCard = ({
         }
       }, 1000);
     } else if (itemQuantity === 1) {
+      clearTimeout(timerRef.current);
       if (id) {
         const res = await deleteCart(token, id);
         if (res === null) {
