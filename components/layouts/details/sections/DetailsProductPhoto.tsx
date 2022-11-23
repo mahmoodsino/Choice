@@ -52,7 +52,7 @@ function SamplePrevArrow(props: any) {
   );
 }
 
-const DetailsProductPhoto = () => {
+const  DetailsProductPhoto = () => {
   const [detailsState, setDetailsState] = useRecoilState(DetailsAtom);
 
   const settings = {

@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { atom, useRecoilState } from "recoil";
@@ -73,9 +74,12 @@ const TreeNode = ({ node, selectedParentId, setParentId }: node) => {
         )}
       >
        
-        <BaseButton onClick={() => handelSearch(node.id)} className={`block w-full text-left hover:bg-yellow-950/25 px-2 py-3 text-xs border-b text-gray-1200 ${selectedParentId===node.id && "bg-yellow-950/25"}`}>
+        <Link href={`/products?category=${node.id}`}  >
+          <a className={`block w-full text-left hover:bg-yellow-950/25 px-2 py-3 text-xs border-b text-gray-1200 ${selectedParentId===node.id && "bg-yellow-950/25"}`} >
           {node.name}
-        </BaseButton>
+            
+          </a>
+        </Link>
         {hasChild && selectedParentId === node.id && (
           <div className=" bg-white ">
             <ul className={` absolute  text-black bg-white  w-64  text-left  border border-t-2 border-t-yellow-950  -top-[2px] left-[95.5%]  z-50`}>

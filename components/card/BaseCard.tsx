@@ -22,6 +22,7 @@ import {
 } from "../../helper";
 import { BlusIcon, MinusIcon } from "../icons";
 import { Spinner } from "../spinner";
+import Link from "next/link";
 
 interface Props {
   img?: imagesType[];
@@ -118,7 +119,7 @@ const BaseCard = ({
         if (res === null) {
           setErorrMessage("some thing went wrong");
           setOpenMassegModal(true);
-        }else if(res==400){
+        } else if (res == 400) {
           setErorrMessage("this product is not available now !");
           setOpenMassegModal(true);
         } else {
@@ -174,10 +175,10 @@ const BaseCard = ({
       timerRef.current = setTimeout(async () => {
         if (id) {
           const res = await updateCart(token, id, itemQuantity);
-          if (res == null ) {
+          if (res == null) {
             setErorrMessage("some thing went wrong");
             setOpenMassegModal(true);
-          }else if (res===400){
+          } else if (res === 400) {
             setErorrMessage("some thing went wrong");
             setOpenMassegModal(true);
           } else {
@@ -270,38 +271,44 @@ const BaseCard = ({
     >
       <div className="   ">
         <div>
-          <div onClick={() => handelMoveToDetails()} className="">
-
-          <div className="m-auto w-fit py-2 product-slider-img h-[190px] pt-8  bg-contain">
-            {img ? (
-              img?.map((item, i) => {
-                if (item.is_default) {
-                  return (
-                    <div key={i}>
-                      <img
-                        src={item.path}
-                        className="bg-cover w-40 h-32 "
-                        alt=""
-                      />
-                    </div>
-                  );
-                }
-              })
-            ) : (
-              <Image width={110} height={121} src={no_image} />
-            )}
-          </div>
-          <div className="mx-2">
-            <span title={name} className="block font-bold line-clamp sm:w-[150px] lg:w-[210px]">
-              {name }
-            </span>
-            <span className="block font-medium line-clamp">
-              {description ? description : "White Lithium Grease"}
-            </span>
-            <span className="text-gray-1050 text-lg font-semibold">
-              $ {price}
-            </span>
-          </div>
+          <div className="">
+            <div className="m-auto w-fit py-2 product-slider-img h-[190px] pt-8  bg-contain">
+              {img ? (
+                img?.map((item, i) => {
+                  if (item.is_default) {
+                    return (
+                      <div key={i}>
+                        <img
+                          src={item.path}
+                          className="bg-cover w-40 h-32 "
+                          alt=""
+                        />
+                      </div>
+                    );
+                  }
+                })
+              ) : (
+                <Image width={110} height={121} src={no_image} />
+              )}
+            </div>
+            <div className="mx-2">
+              <Link href={`/details?product=${id}`}>
+                <a>
+                  <span
+                    title={name}
+                    className="block font-bold line-clamp sm:w-[150px] lg:w-[210px]"
+                  >
+                    {name}
+                  </span>
+                </a>
+              </Link>
+              <span className="block font-medium line-clamp">
+                {description ? description : "White Lithium Grease"}
+              </span>
+              <span className="text-gray-1050 text-lg font-semibold">
+                $ {price}
+              </span>
+            </div>
           </div>
           <div className="flex md:flex-row sm:flex-col items-center sm:py-1 sm:space-y-1 md:space-y-0  w-full md:h-[43px]  justify-around bg-[#F3F3F3] border  py-2">
             {!loading ? (
@@ -337,11 +344,11 @@ const BaseCard = ({
                 <Spinner className="w-[26px]" />
               </div>
             )}
-            <BaseButton
-              onClick={() => id && handelMoveToDetails()}
-              className="px-3 py-1 text-xs font-semibold bg-gray-1200 text-white rounded-full sm:hidden md:block "
-              title="VIEW"
-            />
+            <Link href={`/details?product=${id}`}>
+              <a className="px-3 py-1 text-xs font-semibold bg-gray-1200 text-white rounded-full sm:hidden md:block ">
+                VIEW
+              </a>
+            </Link>
           </div>
         </div>
       </div>
