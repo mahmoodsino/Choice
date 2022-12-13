@@ -12,7 +12,7 @@ import { v4 } from 'uuid'
 export const routse = [
   { path: "/", name: "Home" },
   { path: "/products", name: "PRODUCTS" },
-  { path: "/brand", name: "BRAND NAME" },
+  // { path: "/brand", name: "BRAND NAME" },
   { path: "/aboutus", name: "ABOUT US" },
   { path: "/contactus", name: "CONTACT US" },
 ];

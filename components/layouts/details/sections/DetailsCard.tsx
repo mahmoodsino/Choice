@@ -8,7 +8,6 @@ import {
   DetailsAtom,
   DetailsType,
   ErorrMessageAtom,
-  getCartItems,
   itemsType,
   LocalCartAtom,
   OpenMessageModalAtom,
@@ -18,9 +17,9 @@ import {
 import BaseButton from "../../../buttons/BaseButton";
 import { BlusIcon, CartIcon, MinusIcon } from "../../../icons";
 //@ts-ignore
-import Select, { StylesConfig, ActionMeta } from "react-select";
 import { MoveToCartPageModalAtom } from "./MoveToCartPageModal";
 import { Spinner } from "../../../spinner";
+import { useRouter } from "next/router";
 
 const DetailsCard = () => {
   const [detailsState, setDetailsState] = useRecoilState(DetailsAtom);
@@ -51,6 +50,8 @@ const DetailsCard = () => {
     const [openMessageModal, setOpenMassegModal] =
     useRecoilState(OpenMessageModalAtom);
   const [errorMessage, setErorrMessage] = useRecoilState(ErorrMessageAtom);
+  const {push} = useRouter()
+  const [buyLoad,setBuyLoad] = useState(false)
   
   const handleAddToCart = async (clickedItem: DetailsType) => {
     setLocalCart((prev) => {
@@ -463,8 +464,40 @@ const DetailsCard = () => {
         }
       }
     });
-      
   };
+
+
+  const handelBuyNow = async () => {
+    localCart.map(async (item) => {
+      setBuyLoad(true);
+      if (item.variation_id) {
+        const res = await addToCart(
+          token,
+          1,
+          item.product_id,
+          item.variation_id,
+          1,
+          1,
+          item.quantity
+        );
+        if (res === null) {
+          setErorrMessage("some thing went wrong");
+          setOpenMassegModal(true);
+          setBuyLoad(false)
+        }else if(res==400){
+          setErorrMessage("you cant add any more of this product");
+          setOpenMassegModal(true);
+          setBuyLoad(false)
+        } else {
+          setAllCartsInfo(res.result);
+          setCartItems(res.result.items);
+          setBuyLoad(false)
+          push("/cart")
+        }
+      }
+    });
+  }
+
   return (
     <div>
       <span className="text-3xl font-medium block ">
@@ -567,10 +600,33 @@ const DetailsCard = () => {
               <Spinner className="w-16 " />
             </div>
           )}
+          {!buyLoad ? 
           <BaseButton
-            className="px-7 py-1.5 whitespace-nowrap  bg-yellow-950 rounded-full"
+          disabled={
+            variationsState.in_stock === 0
+              ? true
+              : detailsState.product?.tracking_type === 1
+              ? false
+              : detailsState.product?.tracking_type === 2 &&
+              variationsState.available_quantity === 0
+              ? true
+              : detailsState.product?.tracking_type === 3 &&
+              variationsState.available_quantity === 0
+              ? true
+              : false
+          }
+          onClick={() =>
+            token.length > 1
+              ? handelBuyNow()
+              : setContinueAsGuestModal(true)
+          }
+            className="px-7 py-1.5 whitespace-nowrap  bg-yellow-950 rounded-full disabled:cursor-not-allowed"
             title="Buy Now"
-          />
+          /> : 
+          <div className=" inline-block justify-center items-center h-24 mt-9">
+              <Spinner className="w-16 " />
+            </div>
+        }
         </div>
       </div>
     </div>

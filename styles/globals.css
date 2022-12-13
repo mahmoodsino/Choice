@@ -13,7 +13,7 @@
 
 
 .product-slider-img img {
-  object-fit: contain;
+  object-fit: cover;
 }
 
 ::-webkit-scrollbar {

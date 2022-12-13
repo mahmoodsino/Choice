@@ -39,37 +39,34 @@ const MainSection = () => {
     showFillterProductAtom
   );
   const [totalPages, setTotalPages] = useRecoilState(totalPagesAtom);
-  const [queryFilter,setQueryFilter]=useRecoilState(QueryFiltersAtom)
+  const [queryFilter, setQueryFilter] = useRecoilState(QueryFiltersAtom);
   const timerRef = useRef() as MutableRefObject<NodeJS.Timeout>;
-  const [promotionsProducts,setPromotionsProducts]=useRecoilState(PromotionsProductsAtom)
+  const [promotionsProducts, setPromotionsProducts] = useRecoilState(
+    PromotionsProductsAtom
+  );
 
-  const {replace,query,push} = useRouter()
-
+  const { replace, query, push } = useRouter();
 
   useEffect(() => {
-    if(typeof(query.page) !== "undefined"){
-      setQueryFilter(prev => {
-        return(
+    if (typeof query.page !== "undefined") {
+      setQueryFilter((prev) => {
+        return (
           //@ts-ignore
-          {...prev,page:+(query.page)}
-        )
-      })
+          { ...prev, page: +query.page }
+        );
+      });
     }
-  },[query.page])
+  }, [query.page]);
 
   useEffect(() => {
-    if(typeof(query.search)!=="undefined"){
-      setQueryFilter(prev => {
-        return(
-          {...prev ,search:query.search}
-        )
-      })
+    if (typeof query.search !== "undefined") {
+      setQueryFilter((prev) => {
+        return { ...prev, search: query.search };
+      });
     }
-
-  },[query.search])
+  }, [query.search]);
 
   useEffect(() => {
-    
     const leave = () => {
       console.log("vndlk");
       setQueryFilter({
@@ -79,20 +76,18 @@ const MainSection = () => {
         SelectedAttribute: {} as { [key: number]: number[] },
         search: "",
         orderby: "OrderByNewest",
-        promotion:0
+        promotion: 0,
       });
-      
     };
     return () => leave();
-    
   }, []);
 
   useEffect(() => {
     const getData = async () => {
       const res = await handelFilterProduct();
-      if(res===null){
-        toast.error("some thing went wrong")
-      }else{
+      if (res === null) {
+        toast.error("some thing went wrong");
+      } else {
         const modifieOrderBy: string[] = [...res.result.order_by_clauses];
         const result = modifieOrderBy.map((item, index) => ({
           label: item,
@@ -102,7 +97,7 @@ const MainSection = () => {
         setProductsCategory(res.result.categories);
         setAttributes(res.result.attributes);
         setBrands(res.result.brands);
-        setPromotionsProducts(res.result.promotions)
+        setPromotionsProducts(res.result.promotions);
       }
     };
     getData();
@@ -117,11 +112,10 @@ const MainSection = () => {
         product_name: queryFilter.search,
         categoryId: queryFilter.SelectedCategories,
         AttributeValues: queryFilter.SelectedAttribute,
-        Brands:queryFilter.SelectedBrands,
+        Brands: queryFilter.SelectedBrands,
         page: queryFilter.page,
-        orderBy:queryFilter.orderby,
-        promotion:queryFilter.promotion
-        
+        orderBy: queryFilter.orderby,
+        promotion: queryFilter.promotion,
       });
       if (res === null) {
         toast.error("some thing went wrong");
@@ -134,49 +128,45 @@ const MainSection = () => {
     clearTimeout(timerRef.current);
     timerRef.current = setTimeout(() => {
       getData();
-    }, 1000);
-  }, [
-   queryFilter,
-  ]);
+    }, 700);
+  }, [queryFilter]);
 
-  const paginate = (pageNumber: number) =>{
-    replace(
-      {query: { ...query, page:pageNumber }},
-      undefined,
-      {scroll: true,}
-    );
+  const paginate = (pageNumber: number) => {
+    replace({ query: { ...query, page: pageNumber } }, undefined, {
+      scroll: true,
+    });
 
     setQueryFilter((prev) => {
       return { ...prev, page: pageNumber };
-    })
-  }
+    });
+  };
 
   return (
     <div className="2xl:container m-auto lg:px-[75px] md:px-[35px] sm:px-[px] pb-10">
-        <div>
-          <div className="flex justify-between  mt-10 sm:ml-3 md:ml-0">
-            <span className="font-medium block ">Products</span>
-            <div className="border h-0 mt-3.5 sm:hidden lg:block border-yellow-950 w-[93%]"></div>
+      <div>
+        <div className="flex justify-between  mt-10 sm:ml-3 md:ml-0">
+          <span className="font-medium block ">Products</span>
+          <div className="border h-0 mt-3.5 sm:hidden lg:block border-yellow-950 w-[93%]"></div>
+        </div>
+        <div className="grid lg:grid-cols-4  md:ml-0 ">
+          <div className="col-span-1 mt- ml-3 sm:hidden lg:block">
+            <Fillters />
           </div>
-          <div className="grid lg:grid-cols-4  md:ml-0 ">
-            <div className="col-span-1 mt- ml-3 sm:hidden lg:block">
-              <Fillters />
-            </div>
-            <div className="col-span-3 mt-5 ">
-              <div className="flex justify-between ml-3 items-center ">
-                <span className="text-lg font-semibold whitespace-nowrap">
-                  124 Results
-                </span>
-                <div className="md:w-[30%] sm:w-[50%]">
-                  <ProductSelect />
-                </div>
+          <div className="col-span-3 mt-5 ">
+            <div className="flex justify-between ml-3 items-center ">
+              <span className="text-lg font-semibold whitespace-nowrap">
+                {productsState?.length * totalPages} Results
+              </span>
+              <div className="md:w-[30%] sm:w-[50%]">
+                <ProductSelect />
               </div>
-              <BaseButton
-                onClick={() => setShowFillterProducts(true)}
-                className="px-4 ml-3 py-1 sm:block lg:hidden text-white font-semibold rounded-full bg-blue-950"
-                title="Fillters"
-              />
-              {!loading ? 
+            </div>
+            <BaseButton
+              onClick={() => setShowFillterProducts(true)}
+              className="px-4 ml-3 py-1 sm:block lg:hidden text-white font-semibold rounded-full bg-blue-950"
+              title="Fillters"
+            />
+            {!loading ? (
               <div className="grid md:grid-cols-3 sm:grid-cols-2 lg:grid-cols-4  mt-7 sm:gap-1 lg:gap-4">
                 {productsState.map((item) => {
                   return (
@@ -191,20 +181,25 @@ const MainSection = () => {
                       variationId={item.variation.id}
                       available_quantity={item.variation.available_quantity}
                       inStock={item.variation.in_stock}
-                    tracking_type={item.tracking_type}
+                      tracking_type={item.tracking_type}
                     />
                   );
                 })}
-              </div> : 
+              </div>
+            ) : (
               <div>
                 <Spinner className="w-32" />
               </div>
-              
-            }
-              <Pagination paginate={paginate} />
-            </div>
+            )}
+            {productsState.length == 0 && !loading && (
+              <h4 className="text-center text-lg font-bold text-red-950 ">
+                no products Available
+              </h4>
+            )}
+            {totalPages > 1 && <Pagination paginate={paginate} />}
           </div>
         </div>
+      </div>
       <FillterProductsMobile />
     </div>
   );

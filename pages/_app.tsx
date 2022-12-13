@@ -31,12 +31,9 @@ import {
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { getCountries } from "../helper/sever/address-info";
-import { loadStripe } from "@stripe/stripe-js";
-import { Elements } from "@stripe/react-stripe-js";
 
 
 // @ts-ignore
-const stripePromise = loadStripe(process.env.NEXT_PUBLIC_PUBLISH_KEY);
 
 interface Props {
   children: ReactNode;
@@ -135,7 +132,7 @@ const App = ({ children }: Props) => {
       <ContinueAsGuest />
       <MobailCategoryModal />
       <MessageModal message={errorMessage} />
-      <Elements stripe={stripePromise}>{children}</Elements>
+      {children}
     </div>
   );
 };

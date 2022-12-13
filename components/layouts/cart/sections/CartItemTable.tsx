@@ -225,7 +225,7 @@ const CartItemTable = () => {
                       <div className=" border product-slider-img">
                         <img
                           className="w-20 h-20"
-                          src={item.product?.image?.path}
+                          src={item.product?.image?.path ? item.product?.image?.path :"/alternative.png"}
                         />
                       </div>
                       <div>

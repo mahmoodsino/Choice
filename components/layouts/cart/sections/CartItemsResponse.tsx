@@ -39,7 +39,7 @@ const CartItemsResponse = ({
                 {item.product?.name}
               </span>
               <div className=" border product-slider-img">
-                <img className="w-20 h-20" src={item.product?.image?.path} />
+                <img className="w-20 h-20" src={item.product?.image?.path ? item.product?.image?.path :"/alternative.png"} />
               </div>
             </div>
             <div className="flex md:justify-between sm:justify-center font-semibold py-5 border-b">

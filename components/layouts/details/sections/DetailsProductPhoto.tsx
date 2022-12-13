@@ -1,14 +1,12 @@
-import Image from "next/image";
 import Slider from "react-slick";
 import { useRecoilState } from "recoil";
 import { DetailsAtom } from "../../../../helper";
-import no_image from "../../../../public/assets/images/no_image.jpg";
 
 function SampleNextArrow(props: any) {
-  const { className, style, onClick } = props;
+  const {onClick } = props;
   return (
     <div
-      className={`text-black absolute right-0 top-[118%]  bg-[#f3f3f3]   h-10 w-10   text-center cursor-pointer  z-20 `}
+      className={`text-black absolute right-0 top-[100%]  bg-[#f3f3f3] h-10 w-10 text-center cursor-pointer z-20 `}
       onClick={onClick}
     >
       <svg
@@ -29,10 +27,10 @@ function SampleNextArrow(props: any) {
 }
 
 function SamplePrevArrow(props: any) {
-  const { className, style, onClick } = props;
+  const {onClick} = props;
   return (
     <div
-      className={`text-black absolute top-[118%] left-0 bg-[#f3f3f3]      h-10 w-10   text-center  cursor-pointer   z-20    `}
+      className={`text-black absolute top-[100%] left-0 bg-[#f3f3f3] h-10 w-10 text-center cursor-pointer z-20`}
       onClick={onClick}
     >
       <svg
@@ -54,16 +52,14 @@ function SamplePrevArrow(props: any) {
 
 const  DetailsProductPhoto = () => {
   const [detailsState, setDetailsState] = useRecoilState(DetailsAtom);
-
   const settings = {
     customPaging: function (i: number) {
       return (
-        <a className="product-slider-img">
+        <a  className="product-slider-img  ">
           {detailsState.product?.images &&
               (
               <img
-                width={75}
-                height={75}
+              className="h-full w-full"
                 src={detailsState.product.images[i]?.path}
               />
             )}
@@ -97,7 +93,7 @@ const  DetailsProductPhoto = () => {
             );
           }) :
           <div className="md:ml-36 lg:ml-24">
-            <Image width={400} height={400} src={no_image} />
+            <img width={400} height={400} src="/alternative.png" alt="" />
           </div>
           }
       </Slider>

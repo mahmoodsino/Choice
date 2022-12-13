@@ -1,7 +1,6 @@
 import Image from "next/image";
 import { useRecoilState } from "recoil";
 import { OrderDetailsAtom } from "../../helper";
-import no_image from "../../public/assets/images/no_image.jpg";
 
 const CardReview = () => {
   const [orderDetails, setOrderDetails] = useRecoilState(OrderDetailsAtom);
@@ -17,7 +16,7 @@ const CardReview = () => {
                 <div className="border w-20 h-20 ml-2 product-slider-img">
                   {item.product?.image?.id ? 
                 <img className="w-20 h-20 product-slider-img" src={item.product?.image?.path} alt="" />  :
-                <Image src={no_image} alt="" />
+                <img src="/alternative.png" alt="" />
                 }
                 </div>
                 <div className="flex flex-col md:text-sm w-64 space-y-2.5 sm:text-[13px] text-[#262626] ml-2">

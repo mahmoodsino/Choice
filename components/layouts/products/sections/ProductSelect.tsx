@@ -8,7 +8,6 @@ import { useRecoilState } from "recoil";
 import {
   getProducts,
   OrderByAtom,
-  ProductsAtom,
   QueryFiltersAtom,
 } from "../../../../helper";
 import { useRouter } from "next/router";
@@ -22,7 +21,6 @@ interface IFormInputs {
 }
 const ProductSelect = () => {
   const [orderByState, setOrderByState] = useRecoilState(OrderByAtom);
-  const [productsState, setProductsState] = useRecoilState(ProductsAtom);
   const [queryFilter,setQueryFilter]=useRecoilState(QueryFiltersAtom)
   const {replace,query}= useRouter()
 

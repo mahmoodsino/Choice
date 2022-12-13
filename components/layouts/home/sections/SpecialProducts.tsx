@@ -62,7 +62,7 @@ const SpecialProducts = () => {
     dots: false,
     infinite: true,
     speed: 500,
-    autoplay: false,
+    autoplay: true,
     // slidesToShow: 4,
     rows: 1,
     autoplaySpeed: 2000,
@@ -104,7 +104,7 @@ const SpecialProducts = () => {
                 <div key={item.id} className="ml-3">
                   <BaseCard
                     width="230px"
-                    smallWidth="200px"
+                    smallWidth="250px"
                     description={item.short_description}
                     id={item.id}
                     name={item.name}

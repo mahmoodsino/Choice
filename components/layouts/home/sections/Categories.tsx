@@ -17,7 +17,7 @@ const Categories = () => {
           </div>
             <div className="relative">
               <div className="h-[350px] overflow-y-scroll overflow-x-hidden ">
-                    <HomeTree data={homePageState.featured_categories} />
+                    <HomeTree data={homePageState.all_categories} />
               </div>
             </div>
         </div>

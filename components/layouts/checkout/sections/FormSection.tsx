@@ -8,7 +8,6 @@ import {
   CardExpiryElement,
   CardCvcElement,
 } from "@stripe/react-stripe-js";
-import axios from "axios";
 import { Controller, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import {
@@ -17,6 +16,8 @@ import {
   CountriesAtom,
   countryType,
   ErorrMessageAtom,
+  handelComletePay,
+  handelOrderPay,
   OpenMessageModalAtom,
   StateAtom,
   TokenAtom,
@@ -30,6 +31,12 @@ import {
 import Select, { ActionMeta, StylesConfig } from "react-select";
 import { toast } from "react-toastify";
 import { Spinner } from "../../../spinner";
+import { useRouter } from "next/router";
+import {
+  PaymentProvidorAtom,
+  paymentProvidorIdAtom,
+  publicKeyAtom,
+} from "../../../../helper/state/payment";
 
 interface IFormInputs {
   firstName: string;
@@ -54,6 +61,15 @@ const FormSection = () => {
   const [openMessageModal, setOpenMassegModal] =
     useRecoilState(OpenMessageModalAtom);
   const [errorMessage, setErorrMessage] = useRecoilState(ErorrMessageAtom);
+  const [paymentProvidorState, setPaymentProvidorState] =
+    useRecoilState(PaymentProvidorAtom);
+  const [paymentProvidorId, setPaymenProvidorId] = useRecoilState(
+    paymentProvidorIdAtom
+  );
+  const [publicKey, setPublicKey] = useRecoilState(publicKeyAtom);
+  const [clientSecret, setClientSecret] = useState<string>();
+
+  const router = useRouter().query;
 
   const cardElementOptions = {
     iconStyle: "solid",
@@ -99,8 +115,11 @@ const FormSection = () => {
 
   const stripe = useStripe();
   const elements = useElements();
+  
+  
 
   const handelPay = async (data: IFormInputs) => {
+    let secrit: string = "";
     setPayLoading(true);
     const billingDetails = {
       name: `${data.firstName} ${data.lastName}`,
@@ -112,29 +131,53 @@ const FormSection = () => {
         // country:`${data.country}`
       },
     };
-    const { data: clintSecrit } = await axios.post("/api/payment_intents", {
-      amount: 5 * 100,
-    });
-    const cardElement = elements?.getElement(CardNumberElement);
-    const paymentMethodReq = await stripe?.createPaymentMethod({
-      type: "card",
-      //@ts-ignore
-      card: cardElement,
-      billing_details: billingDetails,
-    });
+    if (router.savedOrder && !router.paymentTransaction) {
+      const res = await handelOrderPay(
+        token,
+        Number(router.savedOrder),
+        paymentProvidorId
+      );
+      if (res === null) {
+        toast.error("fail");
+      } else {
+        secrit = res.result.client_result.client_secret;
+        setClientSecret(res.result.client_result.client_secret);
+      }
+    }
+    if (router.savedOrder && router.paymentTransaction && paymentProvidorId) {
+      const res = await handelComletePay(
+        token,
+        Number(router.paymentTransaction)
+      );
+      if (res === null) {
+        toast.error("fail");
+      } else {
+        secrit = res.result.client_result.client_secret;
+        setClientSecret(res.result.client_result.client_secret);
+      }
+    }
+    if (secrit) {
+      const cardElement = elements?.getElement(CardNumberElement);
+      const paymentMethodReq = await stripe?.createPaymentMethod({
+        type: "card",
+        //@ts-ignore
+        card: cardElement,
+        billing_details: billingDetails,
+      });
 
-    const confirmCardPayment = await stripe?.confirmCardPayment(clintSecrit, {
-      payment_method: paymentMethodReq?.paymentMethod?.id,
-    });
-    if (confirmCardPayment?.error) {
-      //@ts-ignore
-      setErorrMessage(confirmCardPayment?.error?.message);
-      setOpenMassegModal(true);
+      const confirmCardPayment = await stripe?.confirmCardPayment(secrit, {
+        payment_method: paymentMethodReq?.paymentMethod?.id,
+      });
+      if (confirmCardPayment?.error) {
+        //@ts-ignore
+        setErorrMessage(confirmCardPayment?.error?.message);
+        setOpenMassegModal(true);
+      }
+      if (confirmCardPayment?.paymentIntent) {
+        toast.success(confirmCardPayment.paymentIntent.status);
+      }
+      setPayLoading(false);
     }
-    if (confirmCardPayment?.paymentIntent) {
-      toast.success(confirmCardPayment.paymentIntent.status);
-    }
-    setPayLoading(false);
   };
 
   return (
@@ -373,8 +416,9 @@ const FormSection = () => {
             <label className="text-sm font-medium px-2">Card Number</label>
             <div className="border py-3 px-2 border-[#AEAEAE]">
               <CardNumberElement
-              //@ts-ignore
-              options={cardElementOptions} />
+                //@ts-ignore
+                options={cardElementOptions}
+              />
             </div>
           </div>
           <div className="">

@@ -6,11 +6,8 @@ import {
   AccountIcon,
   ArrowIcon,
   BasketIcon,
-  SearchIcon,
-  WriteIcon,
 } from "../icons";
 import choicePhoto from "../../public/assets/images/choicePhoto.png";
-import { BaseInput } from "../inputs";
 import { BaseButton } from "../buttons";
 import {
   ActiveDropDownAtom,
@@ -18,7 +15,6 @@ import {
   SearchAtom,
   showCategoriesAtom,
 } from "../../helper";
-import { routse } from "./Navbar";
 import { useRouter } from "next/router";
 import { Dropdown } from "../dropdown";
 import LoginIcon from "../icons/LoginIcon";
@@ -99,7 +95,7 @@ const FixedNavbar = () => {
                 ) : null}
               </div>
 
-              <Link href="/brand">
+              {/* <Link href="/brand">
                 <a
                   className={`text-blue-950 lg:px-4 md:px-2 ${
                     pathname === "/brand" ? "font-bold" : "font-medium"
@@ -107,7 +103,7 @@ const FixedNavbar = () => {
                 >
                   BRAND NAME
                 </a>
-              </Link>
+              </Link> */}
               <Link href="/aboutus">
                 <a
                   className={`text-blue-950 lg:px-4 md:px-2 ${

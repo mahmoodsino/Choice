@@ -2,13 +2,13 @@
     width: 80px;
     height: 80px; 
     top: 90px;
-    border: 1px solid white;
+    border: 1px solid z;
     background-color: white;
     overflow: hidden;
   }
   
   .slick-dots.slick-thumb li.slick-active {
-    border: 1px solid black;
+    border: 3px solid black;
     width: 80px;
   }
   
@@ -17,7 +17,7 @@
       width: 60px;
       height: 60px; 
       top: 70px;
-      border: 1px solid white;
+      border: 3px solid white;
       background-color: white;
       overflow: hidden;
     }
@@ -37,7 +37,7 @@
       overflow: hidden;
     }
     .slick-dots.slick-thumb li.slick-active {
-      border: 1px solid black;
+      border: 3px solid black;
       width: 30px;
     }
   }

@@ -1,7 +1,5 @@
-import Image from "next/image";
 import React, { MutableRefObject, useRef, useState } from "react";
 import BaseButton from "../buttons/BaseButton";
-import no_image from "../../public/assets/images/no_image.jpg";
 import { useRouter } from "next/router";
 import { useRecoilState } from "recoil";
 import {
@@ -12,13 +10,11 @@ import {
   deleteCart,
   ErorrMessageAtom,
   FetchedItemsType,
-  getCartItems,
   imagesType,
   OpenMessageModalAtom,
   ProductsAtom,
   TokenAtom,
   updateCart,
-  variationType,
 } from "../../helper";
 import { BlusIcon, MinusIcon } from "../icons";
 import { Spinner } from "../spinner";
@@ -273,7 +269,7 @@ const BaseCard = ({
         <div>
           <div className="">
             <div className="m-auto w-fit py-2 product-slider-img h-[190px] pt-8  bg-contain">
-              {img ? (
+              {img?.length!==0 ? (
                 img?.map((item, i) => {
                   if (item.is_default) {
                     return (
@@ -288,7 +284,7 @@ const BaseCard = ({
                   }
                 })
               ) : (
-                <Image width={110} height={121} src={no_image} />
+                <img className="w-40 h-32" src="/alternative.png" /> 
               )}
             </div>
             <div className="mx-2">
@@ -302,7 +298,7 @@ const BaseCard = ({
                   </span>
                 </a>
               </Link>
-              <span className="block font-medium line-clamp">
+              <span className="block font-medium line-clamp w-[180px]">
                 {description ? description : "White Lithium Grease"}
               </span>
               <span className="text-gray-1050 text-lg font-semibold">
