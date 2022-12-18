@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { useRouter } from "next/router";
 import React from "react";
 import BaseButton from "../../../buttons/BaseButton";
 
@@ -32,11 +31,11 @@ const LatestElement = ({
               alt=""
             />
           </div>
-          <div className="text-gray-1200 whitespace-nowrap">
-            <span className="block font-semibold line-clamp w-[150px]">
-              {name}{" "}
+          <div className="text-gray-1200 ">
+            <span title={name} className="block font-medium line-clamp w-[120px]">
+              {name}
             </span>
-            <span className="block font-semibold line-clamp w-[150px]">
+            <span title={description} className="block font-medium line-clamp w-[120px]">
               {description}
             </span>
             <span className="text-black font-bold block">${price}</span>
@@ -47,5 +46,4 @@ const LatestElement = ({
     </Link>
   );
 };
-
 export default LatestElement;

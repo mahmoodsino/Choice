@@ -161,7 +161,7 @@ const MainSection = () => {
               title="Fillters"
             />
             {!loading ? (
-              <div className="grid md:grid-cols-3 sm:grid-cols-2 lg:grid-cols-4  mt-7 sm:gap-1 lg:gap-4">
+              <div className="grid md:grid-cols-3 sm:grid-cols-2 lg:grid-cols-4  mt-7 sm:gap-1 lg:gap-2">
                 {productsState.map((item) => {
                   return (
                     <BaseCard

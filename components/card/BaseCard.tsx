@@ -277,7 +277,7 @@ const BaseCard = ({
                 <a>
                   <span
                     title={name}
-                    className="block font-bold line-clamp sm:w-[150px] lg:w-[210px]"
+                    className="block font-bold line-clamp sm:w-[150px] lg:w-[200px]"
                   >
                     {name}
                   </span>
