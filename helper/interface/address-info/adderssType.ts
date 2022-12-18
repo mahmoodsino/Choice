@@ -3,6 +3,7 @@ interface adderssType {
     city_id:number
     city_name:string
     country_id:number
+    country_name:string
     id:number
     is_default:false
     name:string

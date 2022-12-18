@@ -148,7 +148,7 @@ const DetailsCard = () => {
         indexcart = localCart.findIndex((item) => item.variation_id === id);
         if (indexcart >= 0) {
           return (
-            <div className="flex mt-5 items-center">
+            <div className="flex  items-center">
               <div className="border space-x-5 flex items-center justify-between px-2 py-1">
                 <BaseButton
                   //@ts-ignore
@@ -186,7 +186,7 @@ const DetailsCard = () => {
           indexcart = localCart.findIndex((item) => item.variation_id === id);
           if (indexcart >= 0) {
             return (
-              <div className="flex mt-5 items-center">
+              <div className="flex  items-center">
                 <div className="border space-x-5 flex items-center justify-between px-2 py-1">
                   <BaseButton
                     onClick={() =>
@@ -518,7 +518,7 @@ const DetailsCard = () => {
           <span className="text-gray-1400 text-sm">Accessories</span>
         </div>
       </div>
-      <div className="mt-5 border-b-2 space-y-2 pb-10 w-[70%] ">
+      <div className="mt-5 border-b-2 space-y-2 pb-10 w-[100%] ">
         {Object.keys(attributeNames).map((key, i) => {
           const values = attributeNames[key];
           return (

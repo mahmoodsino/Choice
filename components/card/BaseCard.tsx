@@ -277,13 +277,13 @@ const BaseCard = ({
                 <a>
                   <span
                     title={name}
-                    className="block font-bold line-clamp sm:w-[150px] lg:w-[200px]"
+                    className="block font-bold line-clamp sm:w-[120px] md:w-[199px] lg:w-[150px]"
                   >
                     {name}
                   </span>
                 </a>
               </Link>
-              <span className="block font-medium line-clamp w-[180px]">
+              <span className="block font-medium line-clamp sm:w-[120px] md:w-[199px] lg:w-[150]">
                 {description ? description : "White Lithium Grease"}
               </span>
               <span className="text-gray-1050 text-lg font-semibold">

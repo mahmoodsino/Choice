@@ -63,7 +63,7 @@ const FormSection = () => {
       setValue("email", userInfo.email);
       setValue("company", userInfo.company_name);
       setValue("zipCode", userInfo?.address?.post_code);
-      setValue("zipCode", userInfo?.address?.post_code);
+      // setValue("countries", userInfo?.address.country_id);
     }
   }, []);
 
@@ -203,7 +203,7 @@ const FormSection = () => {
                     className="w-full  "
                     ref={ref}
                     name={name}
-                    placeholder="Countries"
+                    placeholder={userInfo?.address?.country_name ? userInfo.address.country_name : "countries" }
                     options={contries}
                     onChange={handleSelectChange}
                     isSearchable={true}
