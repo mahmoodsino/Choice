@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Collapsible from "react-collapsible";
 import { ArrowIcon, RightArrowIcons } from "../../../icons";
 import { BaseButton } from "../../../buttons";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import {
   AttributesProductsAtom,
   AttributesProductsType,
@@ -17,7 +17,7 @@ let toCheck: number[] = [];
 
 const Attributes = () => {
   const [openAttributes, setOpenAttributes] = useState(true);
-  const [attributes, setAttributes] = useRecoilState(AttributesProductsAtom);
+  const attributes = useRecoilValue(AttributesProductsAtom);
   const [val, setVal] = useState<number>();
   const [queryFilter, setQueryFilter] = useRecoilState(QueryFiltersAtom);
   const { replace, query } = useRouter();

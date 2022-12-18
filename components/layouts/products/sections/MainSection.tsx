@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import React, { MutableRefObject, useEffect, useRef, useState } from "react";
 import { toast } from "react-toastify";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import {
   AttributesProductsAtom,
   BrandsAtom,
@@ -28,22 +28,16 @@ import ProductSelect from "./ProductSelect";
 const MainSection = () => {
   const [productsState, setProductsState] = useRecoilState(ProductsAtom);
   const [loading, setLoading] = useState(true);
-  const [token, setToken] = useRecoilState(TokenAtom);
-  const [orderByState, setOrderByState] = useRecoilState(OrderByAtom);
-  const [productsCategorey, setProductsCategory] = useRecoilState(
-    productsCategoreyAtom
-  );
-  const [brands, setBrands] = useRecoilState(BrandsAtom);
-  const [attributes, setAttributes] = useRecoilState(AttributesProductsAtom);
-  const [showFillterProducts, setShowFillterProducts] = useRecoilState(
-    showFillterProductAtom
-  );
+  const token = useRecoilValue(TokenAtom);
+  const setOrderByState = useSetRecoilState(OrderByAtom);
+  const setProductsCategory = useSetRecoilState(productsCategoreyAtom);
+  const setBrands = useSetRecoilState(BrandsAtom);
+  const setAttributes = useSetRecoilState(AttributesProductsAtom);
+  const setShowFillterProducts = useSetRecoilState(showFillterProductAtom);
   const [totalPages, setTotalPages] = useRecoilState(totalPagesAtom);
   const [queryFilter, setQueryFilter] = useRecoilState(QueryFiltersAtom);
   const timerRef = useRef() as MutableRefObject<NodeJS.Timeout>;
-  const [promotionsProducts, setPromotionsProducts] = useRecoilState(
-    PromotionsProductsAtom
-  );
+  const setPromotionsProducts = useSetRecoilState(PromotionsProductsAtom);
 
   const { replace, query, push } = useRouter();
 

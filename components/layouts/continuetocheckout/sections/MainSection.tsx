@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import {
   ErorrMessageAtom,
   handelCrateOrder,
@@ -15,17 +15,14 @@ import { selctedMethodAtom } from "../../cart/sections/SelectDelivaryType";
 import FormSection from "./FormSection";
 
 const MainSection = () => {
-  const [selectedMethod, setSelectedMethod] = useRecoilState(selctedMethodAtom);
+  const selectedMethod = useRecoilValue(selctedMethodAtom);
   const { push } = useRouter();
   const [loadind, setLoading] = useState(false);
-  const [openMessageModal, setOpenMassegModal] =
-    useRecoilState(OpenMessageModalAtom);
-  const [errorMessage, setErorrMessage] = useRecoilState(ErorrMessageAtom);
+  const setOpenMassegModal = useSetRecoilState(OpenMessageModalAtom);
+  const setErorrMessage = useSetRecoilState(ErorrMessageAtom);
   const [savedOrderId, setSavedOrderId] = useState<number>();
-  const [token, setToken] = useRecoilState(TokenAtom);
-  const [shippingAddressId, setShippingAddressId] = useRecoilState(
-    ShippingAddressIdAtom
-  );
+  const token = useRecoilValue(TokenAtom);
+  const shippingAddressId = useRecoilValue(ShippingAddressIdAtom);
 
   const createOrder = async () => {
     if (selectedMethod === "PICKUP") {
@@ -88,7 +85,7 @@ const MainSection = () => {
           </span>
           {!loadind ? (
             <BaseButton
-            onClick={() =>createOrder() }
+              onClick={() => createOrder()}
               className="px-7 py-1.5  bg-yellow-950 rounded-full"
               title="Continue"
             />

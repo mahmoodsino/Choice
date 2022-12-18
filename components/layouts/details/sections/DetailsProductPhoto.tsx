@@ -1,5 +1,5 @@
 import Slider from "react-slick";
-import { useRecoilState } from "recoil";
+import { useRecoilValue } from "recoil";
 import { DetailsAtom } from "../../../../helper";
 
 function SampleNextArrow(props: any) {
@@ -51,7 +51,7 @@ function SamplePrevArrow(props: any) {
 }
 
 const  DetailsProductPhoto = () => {
-  const [detailsState, setDetailsState] = useRecoilState(DetailsAtom);
+  const detailsState= useRecoilValue(DetailsAtom);
   const settings = {
     customPaging: function (i: number) {
       return (

@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import Collapsible from "react-collapsible";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { PromotionsProductsAtom, QueryFiltersAtom } from "../../../../helper";
 import { BaseButton } from "../../../buttons";
 import { ArrowIcon } from "../../../icons";
@@ -9,26 +9,21 @@ import { ArrowIcon } from "../../../icons";
 let selectPromotion: number;
 
 const Promotions = () => {
-  const [promotionsProducts, setPromotionsProducts] = useRecoilState(
-    PromotionsProductsAtom
-  );
+  const promotionsProducts = useRecoilValue(PromotionsProductsAtom);
   const [openBrands, setOpenBrands] = useState(true);
   const [queryFilter, setQueryFilter] = useRecoilState(QueryFiltersAtom);
   const { query, replace } = useRouter();
 
-
-  useEffect (() => {
-    if(typeof(query.promotion)!=="undefined"){
-        setQueryFilter(prev => {
-        return(
+  useEffect(() => {
+    if (typeof query.promotion !== "undefined") {
+      setQueryFilter((prev) => {
+        return (
           //@ts-ignore
-          {...prev,promotion:+(query.promotion)}
-        )
-      })
+          { ...prev, promotion: +query.promotion }
+        );
+      });
     }
-
-  },[query.promotion])
-
+  }, [query.promotion]);
 
   const handelPromotion = (PromptionNumber: number) => {
     if (queryFilter.promotion === PromptionNumber) {

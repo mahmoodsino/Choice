@@ -1,5 +1,5 @@
 import React, {useEffect, useState } from "react";
-import { atom, useRecoilState } from "recoil";
+import { atom, useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import {
     getAddress,
   ShippingAddressIdAtom, TokenAtom,
@@ -25,11 +25,11 @@ const SelectAddAddress = () => {
   const [openSelectAddress, setOpenSelectAddress] = useRecoilState(
     OpenSelectAddressAtom
   );
-  const [shippingAddressId, setShippingAddressId] = useRecoilState(
+  const setShippingAddressId = useSetRecoilState(
     ShippingAddressIdAtom
   );
   const [addressName, setAddressName] = useState("SelectAddress");
-  const [token,setToken]=useRecoilState(TokenAtom)
+  const token=useRecoilValue(TokenAtom)
   const [addAddress,setAddressModal]=useRecoilState(AddAddressModalAtom)
 
 

@@ -1,11 +1,11 @@
 import React from 'react'
 import { BurgerIcon } from '../../../icons'
-import { useRecoilState } from 'recoil'
+import { useRecoilValue } from 'recoil'
 import { HomePageAtom } from '../../../../helper'
 import HomeTree from './HomeTree'
 
 const Categories = () => {
-  const [homePageState,setHomePageState]=useRecoilState(HomePageAtom)
+  const homePageState=useRecoilValue(HomePageAtom)
 
   return (
     <div  className='border  mt-10 w-[90%]'>

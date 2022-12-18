@@ -1,7 +1,6 @@
 import React, { MutableRefObject, useRef, useState } from "react";
 import BaseButton from "../buttons/BaseButton";
-import { useRouter } from "next/router";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import {
   addToCart,
   AllCartsInfoAtom,
@@ -12,7 +11,6 @@ import {
   FetchedItemsType,
   imagesType,
   OpenMessageModalAtom,
-  ProductsAtom,
   TokenAtom,
   updateCart,
 } from "../../helper";
@@ -48,26 +46,13 @@ const BaseCard = ({
   tracking_type,
 }: Props) => {
   const [cartItems, setCartItems] = useRecoilState(CartItemsAtom);
-  const [token, setToken] = useRecoilState(TokenAtom);
+  const token = useRecoilValue(TokenAtom);
   const [loading, setLoading] = useState(false);
   const timerRef = useRef() as MutableRefObject<NodeJS.Timeout>;
-  const [ContinueAsGuestModal, setContinueAsGuestModal] = useRecoilState(
-    CouninueAsGuestModalAtom
-  );
-  const [allCartsInfo, setAllCartsInfo] = useRecoilState(AllCartsInfoAtom);
-  const [productsState, setProductsState] = useRecoilState(ProductsAtom);
-  const [openMessageModal, setOpenMassegModal] =
-    useRecoilState(OpenMessageModalAtom);
-  const [errorMessage, setErorrMessage] = useRecoilState(ErorrMessageAtom);
-
-  const { push } = useRouter();
-
-  const handelMoveToDetails = async () => {
-    push({
-      pathname: "/details",
-      query: { product: encodeURI(`${id}`) },
-    });
-  };
+  const setContinueAsGuestModal = useSetRecoilState(CouninueAsGuestModalAtom);
+  const setAllCartsInfo = useSetRecoilState(AllCartsInfoAtom);
+  const setOpenMassegModal = useSetRecoilState(OpenMessageModalAtom);
+  const setErorrMessage = useSetRecoilState(ErorrMessageAtom);
 
   const handelCart = (id: number) => {
     let isFound = false;
@@ -269,7 +254,7 @@ const BaseCard = ({
         <div>
           <div className="">
             <div className="m-auto w-fit py-2 product-slider-img h-[190px] pt-8  bg-contain">
-              {img?.length!==0 ? (
+              {img?.length !== 0 ? (
                 img?.map((item, i) => {
                   if (item.is_default) {
                     return (
@@ -284,7 +269,7 @@ const BaseCard = ({
                   }
                 })
               ) : (
-                <img className="w-40 h-32" src="/alternative.png" /> 
+                <img className="w-40 h-32" src="/alternative.png" />
               )}
             </div>
             <div className="mx-2">

@@ -3,14 +3,14 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import offers from "../../../../public/assets/images/offers.png";
 import Image from "next/image";
-import { useRecoilState } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import { PromotionsAtom, QueryFiltersAtom } from "../../../../helper";
 import { BaseButton } from "../../../buttons";
 import { useRouter } from "next/router";
 
 const SpecialOffers = () => {
-  const [promotions, setPromotions] = useRecoilState(PromotionsAtom);
-  const [queryFilter, setQueryFilter] = useRecoilState(QueryFiltersAtom);
+  const promotions= useRecoilValue(PromotionsAtom);
+  const setQueryFilter = useSetRecoilState(QueryFiltersAtom);
 
   const {push} = useRouter()
 
@@ -40,7 +40,7 @@ const SpecialOffers = () => {
   }
 
   return (
-    <div className="md:w-[90%] sm:w-[70%] border mt-8">
+    <div className={`md:w-[90%] sm:w-[70%] border mt-8 ${promotions.featured_promotions?.length!==0 ? "block" : "hidden"}`}>
       <span className="font-bold block m-0.5 px-2 py-2 bg-gray-1100">
         SPECIAL OFFERS
       </span>

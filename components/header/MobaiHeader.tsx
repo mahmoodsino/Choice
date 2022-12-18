@@ -1,30 +1,34 @@
 import React from "react";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import { BaseButton } from "../buttons";
 import { AccountIcon, BasketIcon, BurgerIcon, SearchIcon } from "../icons";
 import { goingUpAtom } from "./FixedNavbar";
 import choicePhoto from "../../public/assets/images/choicePhoto.png";
 import Image from "next/image";
 import { BaseInput } from "../inputs";
-import { ActiveDropDownAtom, AllCartsInfoAtom, CouninueAsGuestModalAtom, SearchAtom, ShowSidbarAtom, TokenAtom } from "../../helper";
+import {
+  ActiveDropDownAtom,
+  AllCartsInfoAtom,
+  CouninueAsGuestModalAtom,
+  SearchAtom,
+  ShowSidbarAtom,
+  TokenAtom,
+} from "../../helper";
 import { Dropdown } from "../dropdown";
 import Link from "next/link";
 import LoginIcon from "../icons/LoginIcon";
 import { useRouter } from "next/router";
 
 const MobaiHeader = () => {
-  const [goingUp, setGoingUp] = useRecoilState(goingUpAtom);
+  const goingUp = useRecoilValue(goingUpAtom);
   const [searchState, setSearchState] = useRecoilState(SearchAtom);
   const [activeDropDown, setActiveDropDown] =
     useRecoilState(ActiveDropDownAtom);
   const [showSidbarState, setShowSidbarState] = useRecoilState(ShowSidbarAtom);
-  const [ContinueAsGuestModal, setContinueAsGuestModal] = useRecoilState(
-    CouninueAsGuestModalAtom
-  );
-  const [token,setToken]=useRecoilState(TokenAtom)
-  const [allCartsInfo, setAllCartsInfo] = useRecoilState(AllCartsInfoAtom);
-
-  const {push}=useRouter()
+  const setContinueAsGuestModal = useSetRecoilState(CouninueAsGuestModalAtom);
+  const token = useRecoilValue(TokenAtom);
+  const allCartsInfo = useRecoilValue(AllCartsInfoAtom);
+  const { push } = useRouter();
 
   let userType;
 
@@ -70,16 +74,30 @@ const MobaiHeader = () => {
       </div>
       <div className=" flex items-center">
         <div className="relative">
-          {userType === " user" ? (
+          {userType === "user" ? (
             <BaseButton
               onClick={() => setActiveDropDown(!activeDropDown)}
               className=" flex space-x-2 items-center whitespace-nowrap  py-2 px-2"
             >
               <AccountIcon className="w-10 fill-white" />
             </BaseButton>
+          ) : userType === "guest" ? (
+            <div className="flex items-center ">
+              <BaseButton
+                onClick={() => setActiveDropDown(!activeDropDown)}
+                className=" flex space-x-2 items-center whitespace-nowrap  py-2 px-2"
+              >
+                <AccountIcon className="w-7 fill-white" />
+              </BaseButton>
+              <Link href="/login" className="">
+                <a>
+                  <LoginIcon className="w-7 fill-white" />
+                </a>
+              </Link>
+            </div>
           ) : (
             <Link href="/login" className="">
-              <a >
+              <a>
                 <LoginIcon className="w-10 fill-white" />
               </a>
             </Link>
@@ -91,19 +109,24 @@ const MobaiHeader = () => {
           ) : null}
         </div>
         <div className="relative ">
-            <BaseButton onClick={() =>
-                  token.length > 1
-                    ? handelGoToCart()
-                    : setContinueAsGuestModal(true)
-                } className="flex space-x-2 pl-3 whitespace-nowrap">
-              <div className="absolute px-0.5 right-0  bg-yellow-950 rounded-full text-xs text-white font-extrabold">
-                {allCartsInfo.items.length}
-              </div>
-              <div className="flex flex-col items-center">
-                <BasketIcon className="w-6 fill-white inline-block" />
-                <span className="text-[10px] text-white">$({allCartsInfo.total_price.toFixed(2)})</span>
-              </div>
-            </BaseButton>
+          <BaseButton
+            onClick={() =>
+              token.length > 1
+                ? handelGoToCart()
+                : setContinueAsGuestModal(true)
+            }
+            className="flex space-x-2 pl-3 whitespace-nowrap"
+          >
+            <div className="absolute px-0.5 right-0  bg-yellow-950 rounded-full text-xs text-white font-extrabold">
+              {allCartsInfo.items.length}
+            </div>
+            <div className="flex flex-col items-center">
+              <BasketIcon className="w-6 fill-white inline-block" />
+              <span className="text-[10px] text-white">
+                $({allCartsInfo.total_price.toFixed(2)})
+              </span>
+            </div>
+          </BaseButton>
         </div>
       </div>
     </div>

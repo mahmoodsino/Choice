@@ -1,5 +1,5 @@
 import React from "react";
-import { useRecoilState } from "recoil";
+import { useRecoilValue } from "recoil";
 import { CartItemsAtom, FetchedItemsType } from "../../../../helper";
 import { BaseButton } from "../../../buttons";
 import { BlusIcon, MinusIcon, TrashIcon } from "../../../icons";
@@ -14,8 +14,8 @@ const CartItemsResponse = ({
   handleAddToCart,
   handleRemoveFromCart,
 }: Props) => {
-  const [cartItems, setCartItems] = useRecoilState(CartItemsAtom);
-  const [loading, setLoading] = useRecoilState(CartLoading);
+  const cartItems = useRecoilValue(CartItemsAtom);
+  const loading = useRecoilValue(CartLoading);
 
   return (
     <div

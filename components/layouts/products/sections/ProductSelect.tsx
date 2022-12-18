@@ -4,12 +4,8 @@ import Select, { StylesConfig, ActionMeta } from "react-select";
 import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { orderBySchema } from "../../../../helper/validation";
-import { useRecoilState } from "recoil";
-import {
-  getProducts,
-  OrderByAtom,
-  QueryFiltersAtom,
-} from "../../../../helper";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { getProducts, OrderByAtom, QueryFiltersAtom } from "../../../../helper";
 import { useRouter } from "next/router";
 
 export interface optionType {
@@ -20,23 +16,18 @@ interface IFormInputs {
   orderBy: string;
 }
 const ProductSelect = () => {
-  const [orderByState, setOrderByState] = useRecoilState(OrderByAtom);
-  const [queryFilter,setQueryFilter]=useRecoilState(QueryFiltersAtom)
-  const {replace,query}= useRouter()
+  const orderByState = useRecoilValue(OrderByAtom);
+  const [queryFilter, setQueryFilter] = useRecoilState(QueryFiltersAtom);
+  const { replace, query } = useRouter();
 
   useEffect(() => {
-    if(typeof(query.orderby)==="string"){
+    if (typeof query.orderby === "string") {
       //@ts-ignore
-      setQueryFilter(prev => {
-        return (
-          {...prev,orderby: query.orderby}
-        )
-      })
+      setQueryFilter((prev) => {
+        return { ...prev, orderby: query.orderby };
+      });
     }
-
-  },[query.orderby])
-
-
+  }, [query.orderby]);
 
   const customStyles: StylesConfig<optionType> = {
     option: (provided: ActionMeta, state: ActionMeta) => ({
@@ -53,9 +44,7 @@ const ProductSelect = () => {
       paddingBottom: 5,
     }),
   };
-  const {
-    control,
-  } = useForm<IFormInputs>({
+  const { control } = useForm<IFormInputs>({
     resolver: yupResolver(orderBySchema),
   });
   const route = useRouter().query;
@@ -79,7 +68,7 @@ const ProductSelect = () => {
                 //@ts-ignore
                 product_name: queryFilter.search,
               });
-              if(selectedOption?.label!=null){
+              if (selectedOption?.label != null) {
                 replace(
                   {
                     query: { ...query, orderby: selectedOption?.label },
@@ -89,12 +78,9 @@ const ProductSelect = () => {
                     scroll: false,
                   }
                 );
-
-                setQueryFilter(prev => {
-                  return (
-                    {...prev,orderby: selectedOption?.label}
-                  )
-                })
+                setQueryFilter((prev) => {
+                  return { ...prev, orderby: selectedOption?.label };
+                });
               }
             };
             return (

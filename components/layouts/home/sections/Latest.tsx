@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import { useRecoilState } from "recoil";
+import { useRecoilValue } from "recoil";
 import { getLatestProducts, ProductsType, TokenAtom } from "../../../../helper";
 import { LatestElement } from "../elements";
 
 const Latest = () => {
-  const [token, setToken] = useRecoilState(TokenAtom);
+  const token = useRecoilValue(TokenAtom);
   const [latestProducts, setLatestProducts] = useState<ProductsType[]>([]);
 
   useEffect(() => {
@@ -33,7 +33,7 @@ const Latest = () => {
             description={item.short_description}
             price={item.variation.price}
             id={item.id}
-            image={item.images[0]?.path}
+            image={item?.images[0]?.path}
             variationId={item.variation.id}
           />
         );

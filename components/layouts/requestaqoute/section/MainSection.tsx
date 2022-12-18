@@ -20,10 +20,6 @@ const MainSection = () => {
   },[],)
 
   const {getRootProps,getInputProps}=useDropzone({onDrop})
-
-  
-
-
   return (
     <div className="lg:px-[75px] md:px-[35px] sm:px-5 2xl:container m-auto py-10">
       <div className="flex justify-between  mt-10">

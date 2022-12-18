@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Collapsible from "react-collapsible";
 import { ArrowIcon } from "../../../icons";
 import { BaseButton } from "../../../buttons";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { BrandsAtom, QueryFiltersAtom } from "../../../../helper";
 import { useRouter } from "next/router";
 
@@ -10,23 +10,20 @@ let SleBran: number[] = [];
 
 const Brands = () => {
   const [openBrands, setOpenBrands] = useState(true);
-  const [brands, setBrands] = useRecoilState(BrandsAtom);
+  const brands = useRecoilValue(BrandsAtom);
   const [queryFilter, setQueryFilter] = useRecoilState(QueryFiltersAtom);
   const { replace, query } = useRouter();
-  
-
 
   useEffect(() => {
-    if(typeof(query.brand)!==undefined){
+    if (typeof query.brand !== undefined) {
       //@ts-ignore
-      const q= query?.brand?.split("-")
-      q?.map((item:string) => {
-        let index:number=SleBran.findIndex(find => ( find===(+item)))  
-        if(index<0&&+item!=0){
-          SleBran=[...SleBran,+item]
-        }      
-      })
-      
+      const q = query?.brand?.split("-");
+      q?.map((item: string) => {
+        let index: number = SleBran.findIndex((find) => find === +item);
+        if (index < 0 && +item != 0) {
+          SleBran = [...SleBran, +item];
+        }
+      });
     }
     setQueryFilter((prev) => {
       return {
@@ -34,28 +31,27 @@ const Brands = () => {
         SelectedBrands: SleBran,
       };
     });
-  },[query.brand])
+  }, [query.brand]);
 
-    useEffect(() => {
-      let selCategory : number[] =queryFilter.SelectedCategories
-      if(typeof(query.category)!==undefined){
-        //@ts-ignore
-        const q= query?.category?.split("-")
-        q?.map((item:string) => {
-          let index:number=selCategory.findIndex(find => ( find===(+item)))  
-          if(index<0&&+item!=0){
-            selCategory=[...selCategory,+item]
-          }      
-        })
-        
-      }
-      setQueryFilter((prev) => {
-        return {
-          ...prev,
-          SelectedCategories: selCategory,
-        };
+  useEffect(() => {
+    let selCategory: number[] = queryFilter.SelectedCategories;
+    if (typeof query.category !== undefined) {
+      //@ts-ignore
+      const q = query?.category?.split("-");
+      q?.map((item: string) => {
+        let index: number = selCategory.findIndex((find) => find === +item);
+        if (index < 0 && +item != 0) {
+          selCategory = [...selCategory, +item];
+        }
       });
-  },[query.category])
+    }
+    setQueryFilter((prev) => {
+      return {
+        ...prev,
+        SelectedCategories: selCategory,
+      };
+    });
+  }, [query.category]);
 
   const handeBrands = async (id: number) => {
     const index = SleBran.findIndex((brand) => brand === id);
@@ -66,10 +62,9 @@ const Brands = () => {
     }
 
     let queryBrand = SleBran.map((item) => item).join("-");
-    replace(
-      {query: { ...query, brand: queryBrand },},
-      undefined,{scroll: false,}
-    );
+    replace({ query: { ...query, brand: queryBrand } }, undefined, {
+      scroll: false,
+    });
 
     setQueryFilter((prev) => {
       return {

@@ -10,7 +10,7 @@ import choicePhoto from "../../public/assets/images/choicePhoto.png";
 import Image from "next/image";
 import Link from "next/link";
 import { BaseButton } from "../buttons";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import {
   ActiveDropDownAtom,
   AllCartsInfoAtom,
@@ -24,13 +24,10 @@ const Header = () => {
   const [activeDropDown, setActiveDropDown] =
     useRecoilState(ActiveDropDownAtom);
 
-  const [allCartsInfo, setAllCartsInfo] = useRecoilState(AllCartsInfoAtom);
-  const [ContinueAsGuestModal, setContinueAsGuestModal] = useRecoilState(
-    CouninueAsGuestModalAtom
-  );
-  const [token,setToken]=useRecoilState(TokenAtom)
-
-  const{push}=useRouter()
+  const allCartsInfo = useRecoilValue(AllCartsInfoAtom);
+  const setContinueAsGuestModal = useSetRecoilState(CouninueAsGuestModalAtom);
+  const token = useRecoilValue(TokenAtom);
+  const { push } = useRouter();
 
   let userType;
 
@@ -56,25 +53,32 @@ const Header = () => {
           </div>
         </div>
         <div className="flex relative">
-          {userType === "user" || userType ==="guest" ? (
+          {userType === "guest" ? (
             <div className="flex">
-            <BaseButton
-              onClick={() => setActiveDropDown(!activeDropDown)}
-              className=" flex space-x-2 items-center border-l py-2 px-6"
-            >
-              <AccountIcon className="w-5 fill-gray-950" />
-              <span className="text-sm text-gray-950 ">My Account</span>
-            </BaseButton>
-            <Link href="/login">
-              <a className="flex  items-center space-x-2 border-l">
-                <LoginIcon className="fill-gray-950 w-8 py-2 pl-2" />
-                <span className="text-sm text-gray-950">Login</span>
-              </a>
-            </Link>
-
+              <BaseButton
+                onClick={() => setActiveDropDown(!activeDropDown)}
+                className=" flex space-x-2 items-center border-l py-2 px-6"
+              >
+                <AccountIcon className="w-5 fill-gray-950" />
+                <span className="text-sm text-gray-950 ">My Account</span>
+              </BaseButton>
+              <Link href="/login">
+                <a className="flex  items-center space-x-2 border-l">
+                  <LoginIcon className="fill-gray-950 w-8 py-2 pl-2" />
+                  <span className="text-sm text-gray-950">Login</span>
+                </a>
+              </Link>
             </div>
-
-            
+          ) : userType === "user" ? (
+            <div className="flex">
+              <BaseButton
+                onClick={() => setActiveDropDown(!activeDropDown)}
+                className=" flex space-x-2 items-center border-l py-2 px-6"
+              >
+                <AccountIcon className="w-5 fill-gray-950" />
+                <span className="text-sm text-gray-950 ">My Account</span>
+              </BaseButton>
+            </div>
           ) : (
             <Link href="/login">
               <a className="flex  items-center space-x-2 border-l">
@@ -100,22 +104,25 @@ const Header = () => {
             </a>
           </Link>
 
-            <BaseButton onClick={() =>
-                  token.length > 1
-                    ? handelGoToCart()
-                    : setContinueAsGuestModal(true)
-                } className="flex space-x-2 pl-3">
-              <BasketIcon className="w-7 fill-blue-950 inline-block" />
-              <div>
-                <span className="block text-sm text-blue-950 font-bold">
-                  Shopping Cart
-                </span>
-                <span className="block text-xs text-gray-1050">
-                  {allCartsInfo?.items?.length} item(s)- $
-                  {allCartsInfo?.total_price}
-                </span>
-              </div>
-            </BaseButton>
+          <BaseButton
+            onClick={() =>
+              token.length > 1
+                ? handelGoToCart()
+                : setContinueAsGuestModal(true)
+            }
+            className="flex space-x-2 pl-3"
+          >
+            <BasketIcon className="w-7 fill-blue-950 inline-block" />
+            <div>
+              <span className="block text-sm text-blue-950 font-bold">
+                Shopping Cart
+              </span>
+              <span className="block text-xs text-gray-1050">
+                {allCartsInfo?.items?.length} item(s)- $
+                {allCartsInfo?.total_price}
+              </span>
+            </div>
+          </BaseButton>
         </div>
       </div>
     </div>

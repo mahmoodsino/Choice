@@ -1,9 +1,9 @@
 import React from "react";
-import { useRecoilState } from "recoil";
+import { useRecoilValue } from "recoil";
 import { OrderDetailsAtom } from "../../../../helper";
 
 const OrderDetails = () => {
-  const [orderDetails, setOrderDetails] = useRecoilState(OrderDetailsAtom);
+  const orderDetails = useRecoilValue(OrderDetailsAtom);
 
   let useType;
   if (typeof window !== "undefined") {

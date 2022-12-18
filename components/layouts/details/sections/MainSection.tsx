@@ -8,7 +8,6 @@ import {
   getSimilarProducts,
   ProductsType,
 } from "../../../../helper";
-import { ContinueAsGuest } from "../../../continueAsGuest";
 import { Spinner } from "../../../spinner";
 import DetailsCard from "./DetailsCard";
 import DetailsProductPhoto from "./DetailsProductPhoto";
@@ -26,15 +25,15 @@ const MainSection = () => {
       setLoading(true);
       if (route.product) {
         const res = await getProductDetails(+route.product);
-        if (res === null ) {
+        if (res === null) {
           toast.error("some thing went wrong");
         } else {
           setDetailsState(res.result);
         }
         const response = await getSimilarProducts(+route.product);
-        if(response===null){
-          toast.error("some thing went wrong")
-        }else{
+        if (response === null) {
+          toast.error("some thing went wrong");
+        } else {
           setRelatedProducts(response.result);
         }
       }
@@ -55,7 +54,14 @@ const MainSection = () => {
               <DetailsCard />
             </div>
           </div>
-          <div className="lg:mt-36 bg-[#FBFBFB] py-5 px-5">
+          <div
+            className={`lg:mt-28 bg-[#FBFBFB] py-5 px-5 ${
+              detailsState.product?.description?.length !== 0 &&
+              detailsState.product?.description !== null
+                ? "block"
+                : "hidden"
+            }`}
+          >
             <span className="font-bold text-lg">Product Infomation</span>
             <div className="h-0 w-[70%] border mt-2">
               <div className="ml-10 h-0 border border-black w-[15%]"></div>
@@ -71,8 +77,8 @@ const MainSection = () => {
           <Spinner className="w-72" />
         </div>
       )}
-     
-      <MoveToCartPageModal/>
+
+      <MoveToCartPageModal />
     </div>
   );
 };

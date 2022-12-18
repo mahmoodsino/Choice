@@ -1,5 +1,5 @@
 import React from "react";
-import { useRecoilState } from "recoil";
+import { useRecoilValue } from "recoil";
 import { QueryFiltersAtom, totalPagesAtom } from "../../helper";
 import Pagination from "react-js-pagination";
 
@@ -8,8 +8,8 @@ interface Props {
 }
 
 const Paginations = ({ paginate }: Props) => {
-  const [totalPages, setTotalPages] = useRecoilState(totalPagesAtom);
-  const [queryFilter, setQueryFilter] = useRecoilState(QueryFiltersAtom);
+  const totalPages = useRecoilValue(totalPagesAtom);
+  const queryFilter = useRecoilValue(QueryFiltersAtom);
 
   return (
     <div className="bg-[#FAFAFB]   mt-10  ">

@@ -1,11 +1,11 @@
 import { useRouter } from "next/router";
 import React from "react";
-import { useRecoilState } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import { PromotionsAtom, QueryFiltersAtom } from "../../../../helper";
 
 const Offer = () => {
-  const [promotions, setPromotions] = useRecoilState(PromotionsAtom);
-  const [queryFilter, setQueryFilter] = useRecoilState(QueryFiltersAtom);
+  const promotions = useRecoilValue(PromotionsAtom);
+  const setQueryFilter = useSetRecoilState(QueryFiltersAtom);
 
   const { pathname, push, replace, query } = useRouter();
 
@@ -33,7 +33,7 @@ const Offer = () => {
         background:
           "linear-gradient(180deg, #FFC700 0%, rgba(255, 199, 0, 0.48) 67.55%, rgba(255, 199, 0, 0.17) 100%)",
       }}
-      className="w-[90%] mt-8 py-5 cursor-pointer"
+      className={`w-[90%] mt-8 py-5 cursor-pointer ${promotions?.special_promotion ? "block" : "hidden"}`}
     >
       <div className="text-center">
         <span className="text-3xl text-red-950 font-semibold">SAVE UP TO </span>

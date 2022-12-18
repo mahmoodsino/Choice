@@ -1,22 +1,20 @@
-import { useState } from "react";
 import { BaseButton } from "../../../buttons";
 import { v4 } from "uuid";
-import { useRecoilState } from "recoil";
+import { useRecoilValue } from "recoil";
 import { TrackOrderAtom } from "../../../../helper";
 import { useRouter } from "next/router";
 
 const Orders = () => {
-  const [ordersState, setOrdersState] = useRecoilState(TrackOrderAtom);
+  const ordersState = useRecoilValue(TrackOrderAtom);
 
-  const {push}=useRouter()
+  const { push } = useRouter();
 
-    const getOrdreDetails = async (id:number) => {
-
-      push({
-        pathname: "/viewreceipt",
-        query: { order: encodeURI(id.toString()) },
-      });
-    }
+  const getOrdreDetails = async (id: number) => {
+    push({
+      pathname: "/viewreceipt",
+      query: { order: encodeURI(id.toString()) },
+    });
+  };
 
   return (
     <div>
@@ -51,7 +49,7 @@ const Orders = () => {
               </div>
               <div>
                 <BaseButton
-                  onClick={() =>getOrdreDetails(item.id)}
+                  onClick={() => getOrdreDetails(item.id)}
                   title="View receipt"
                   className="underline"
                 />

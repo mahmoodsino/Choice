@@ -1,6 +1,5 @@
 import Link from "next/link";
 import React from "react";
-import { BaseButton } from "../../../buttons";
 import FormSection from "./FormSection";
 
 const MainSection = () => {

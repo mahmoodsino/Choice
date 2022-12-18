@@ -30,13 +30,13 @@ apiWorker.interceptors.response.use(
   }
 );
 
-export const getApiOptions = (path = null) => {
-  return {
-    root: `${root}${path}`,
-    options: {
-      headers: {},
-    },
-  };
-};
+// export const getApiOptions = (path = null) => {
+//   return {
+//     root: `${root}${path}`,
+//     options: {
+//       headers: {},
+//     },
+//   };
+// };
 
 export default apiWorker;

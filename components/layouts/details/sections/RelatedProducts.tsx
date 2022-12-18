@@ -8,7 +8,7 @@ interface Props {
 
 const RelatedProducts = ({ products }: Props) => {
   return (
-    <div className="lg:mt-14 sm:mt-5">
+    <div className="lg:mt-28 sm:mt-5">
       <span className="text-4xl block  text-center font-semibold">
         RELATED PRODUCTS
       </span>

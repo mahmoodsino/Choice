@@ -1,113 +1,123 @@
-import React, { useState } from 'react'
-import { atom, useRecoilState } from 'recoil';
+import React, { useState } from "react";
+import {
+  atom,
+  useRecoilState,
+  useRecoilValue,
+  useSetRecoilState,
+} from "recoil";
 //@ts-ignore
 import Select, { ActionMeta, StylesConfig } from "react-select";
-import { addressBookSchema, CitiesAtom, CountriesAtom, countryType, handelAddAddAress, ShippingAddressIdAtom, StateAtom, TokenAtom } from '../../../../helper';
-import { Controller, useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
-import { BaseInput } from '../../../inputs';
-import { getCitesOfState, getStateOfCountry } from '../../../../helper/sever/address-info';
-import { BaseButton } from '../../../buttons';
-import { Spinner } from '../../../spinner';
-import { toast } from 'react-toastify';
-
-
-
+import {
+  addressBookSchema,
+  CitiesAtom,
+  CountriesAtom,
+  countryType,
+  handelAddAddAress,
+  ShippingAddressIdAtom,
+  StateAtom,
+  TokenAtom,
+} from "../../../../helper";
+import { Controller, useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { BaseInput } from "../../../inputs";
+import {
+  getCitesOfState,
+  getStateOfCountry,
+} from "../../../../helper/sever/address-info";
+import { BaseButton } from "../../../buttons";
+import { Spinner } from "../../../spinner";
+import { toast } from "react-toastify";
 
 export const AddAddressModalAtom = atom<boolean>({
-    key: "AddAddressModalAtom",
-    default: false,
-  });
+  key: "AddAddressModalAtom",
+  default: false,
+});
 
-  interface IFormInputs {
-    addressName: string;
-    address: string;
-    countries: string;
-    cities: string;
-    zipPostalCode: number;
-    houseBuildingNo: number;
-    states: number;
-    cityId: number;
-  }
-
+interface IFormInputs {
+  addressName: string;
+  address: string;
+  countries: string;
+  cities: string;
+  zipPostalCode: number;
+  houseBuildingNo: number;
+  states: number;
+  cityId: number;
+}
 
 const AddAddressModal = () => {
-    const [addAddress,setAddressModal]=useRecoilState(AddAddressModalAtom)
-    const [countryId, setCountryId] = useState<number | undefined>();
-    const [contries, setCountries] = useRecoilState(CountriesAtom);
-    const [statesOfCountry, setStatesOfCountry] = useRecoilState(StateAtom);
-    const [loading, setLoading] = useState(false);
-    const [stateId, setStateId] = useState<number | undefined>();
-    const [cities, setCities] = useRecoilState(CitiesAtom);
-    const [token, setToken] = useRecoilState(TokenAtom);
-    const [saveLoading,setSaveLoading]=useState(false)
-    const [shippingAddressId, setShippingAddressId] = useRecoilState(
-        ShippingAddressIdAtom
-      );
+  const [addAddress, setAddressModal] = useRecoilState(AddAddressModalAtom);
+  const [countryId, setCountryId] = useState<number | undefined>();
+  const contries = useRecoilValue(CountriesAtom);
+  const [statesOfCountry, setStatesOfCountry] = useRecoilState(StateAtom);
+  const [loading, setLoading] = useState(false);
+  const [stateId, setStateId] = useState<number | undefined>();
+  const [cities, setCities] = useRecoilState(CitiesAtom);
+  const token = useRecoilValue(TokenAtom);
+  const [saveLoading, setSaveLoading] = useState(false);
+  const setShippingAddressId = useSetRecoilState(ShippingAddressIdAtom);
 
-    const {
-        control,
-        register,
-        handleSubmit,
-        formState: { errors },
-      } = useForm<IFormInputs>({
-        resolver: yupResolver(addressBookSchema),
-      });
+  const {
+    control,
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<IFormInputs>({
+    resolver: yupResolver(addressBookSchema),
+  });
 
+  const customStyles: StylesConfig<countryType> = {
+    option: (provided: ActionMeta, state: ActionMeta) => ({
+      ...provided,
+      borderBottom: "1px solid #F8F8F8",
+      color: state.isSelected ? "#373737" : "#373737",
+    }),
+    control: (base: ActionMeta) => ({
+      ...base,
+      "&:hover": { borderColor: "gray" },
+      border: "1px solid #CCCCCC",
+      boxShadow: "none",
+      paddingTop: 3,
+      paddingBottom: 4,
+    }),
+  };
 
-    const customStyles: StylesConfig<countryType> = {
-        option: (provided: ActionMeta, state: ActionMeta) => ({
-          ...provided,
-          borderBottom: "1px solid #F8F8F8",
-          color: state.isSelected ? "#373737" : "#373737",
-        }),
-        control: (base: ActionMeta) => ({
-          ...base,
-          "&:hover": { borderColor: "gray" },
-          border: "1px solid #CCCCCC",
-          boxShadow: "none",
-          paddingTop: 3,
-          paddingBottom: 4,
-        }),
-      };
+  const submit = async (data: IFormInputs) => {
+    setSaveLoading(true);
+    const res = await handelAddAddAress(
+      data.addressName,
+      data.address,
+      data.countries,
+      data.states,
+      data.cityId,
+      data.cities,
+      data.zipPostalCode,
+      data.houseBuildingNo,
+      token
+    );
 
-      const submit = async (data:IFormInputs) =>{
-        setSaveLoading(true)
-        const res = await handelAddAddAress(
-            data.addressName,
-            data.address,
-            data.countries,
-            data.states,
-            data.cityId,
-            data.cities,
-            data.zipPostalCode,
-            data.houseBuildingNo,
-            token
-          );
-          
-          if(res===null){
-              toast.error("some thing went wrong")
-          }else{
-            setShippingAddressId(res.data.id);
-          }
-          setAddressModal(false);
-          setSaveLoading(false)
-      }
-
+    if (res === null) {
+      toast.error("some thing went wrong");
+    } else {
+      setShippingAddressId(res.data.id);
+    }
+    setAddressModal(false);
+    setSaveLoading(false);
+  };
 
   return (
     <div className={`2xl:container `}>
       <>
         <div
           className={`${
-            addAddress
-              ? "top-0 z-50 "
-              : "-top-[200%] invisible"
+            addAddress ? "top-0 z-50 " : "-top-[200%] invisible"
           } inset-0 sm:w-[95%] rounded-xl sm:h-[70vh] md:h-[90vh] overflow-y-auto bg-white md:w-[60%] lg:w-[40%] w-[50vw] h-fit left-0 right-0 top-0 bottom-0 mx-auto my-auto shadow-lg z-50 fixed transition-all duration-300 ease-in-out`}
         >
-          <div className= {`sm:px-5 md:px-16 py-10 ${loading && "pointer-events-none"}`}>
-            <form onSubmit={handleSubmit(submit)} className='space-y-5' >
-              
+          <div
+            className={`sm:px-5 md:px-16 py-10 ${
+              loading && "pointer-events-none"
+            }`}
+          >
+            <form onSubmit={handleSubmit(submit)} className="space-y-5">
               <BaseInput
                 title="Address Nickname"
                 placeholder="Work, home, etc.."
@@ -140,7 +150,7 @@ const AddAddressModal = () => {
                       const handleSelectChange = async (
                         selectedOption: countryType | null
                       ) => {
-                        setLoading(true)
+                        setLoading(true);
                         if (selectedOption?.value !== undefined) {
                           setCountryId(+selectedOption?.value);
                           setStatesOfCountry([]);
@@ -156,11 +166,14 @@ const AddAddressModal = () => {
                                 label: StatesLabel,
                                 value: statesValue,
                               };
-                              setStatesOfCountry((prev) => [...prev, newStateStructure]);
+                              setStatesOfCountry((prev) => [
+                                ...prev,
+                                newStateStructure,
+                              ]);
                             }
                           );
                         }
-                        setLoading(false)
+                        setLoading(false);
                         onChange(selectedOption?.value);
                       };
                       return (
@@ -202,7 +215,7 @@ const AddAddressModal = () => {
                         const handleSelectChange = async (
                           selectedOption: countryType | null
                         ) => {
-                          setLoading(true)
+                          setLoading(true);
                           if (selectedOption?.value !== undefined) {
                             setStateId(+selectedOption.value);
                             setCities([]);
@@ -225,7 +238,7 @@ const AddAddressModal = () => {
                               }
                             );
                           }
-                          setLoading(false)
+                          setLoading(false);
                           onChange(selectedOption?.value);
                         };
                         return (
@@ -251,7 +264,8 @@ const AddAddressModal = () => {
                       }}
                     />
                   </div>
-                ) : typeof countryId === "number" && statesOfCountry.length === 0 ? (
+                ) : typeof countryId === "number" &&
+                  statesOfCountry.length === 0 ? (
                   <div>
                     <BaseInput
                       title="YourCity"
@@ -339,18 +353,17 @@ const AddAddressModal = () => {
                 </div>
               </div>
               <div className="flex justify-end space-x-2">
-                {!saveLoading ? 
+                {!saveLoading ? (
+                  <BaseButton
+                    type="submit"
+                    title="Save"
+                    className="md:px-6 sm:px-3 py-2 border bg-blue-950 text-white font-medium"
+                  />
+                ) : (
+                  <Spinner className="w-10" />
+                )}
                 <BaseButton
-                  type="submit"
-                  title="Save"
-                  className="md:px-6 sm:px-3 py-2 border bg-blue-950 text-white font-medium"
-                /> : 
-                <Spinner className="w-10"/>
-              }
-                <BaseButton
-                  onClick={() => (
-                    setAddressModal(false)
-                  )}
+                  onClick={() => setAddressModal(false)}
                   title="Cancel"
                   className="md:px-6 cursor-pointer sm:px-3 py-2 border border-black font-medium"
                   type="button"
@@ -364,7 +377,7 @@ const AddAddressModal = () => {
         ) : null}
       </>
     </div>
-  )
-}
+  );
+};
 
-export default AddAddressModal
+export default AddAddressModal;

@@ -4,8 +4,14 @@ import { BaseInput } from "../../../inputs";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { registerSchema } from "../../../../helper/validation";
-import { ErorrMessageAtom, handelRegister, OpenMessageModalAtom, TokenAtom, YouHaveItemsModalAtom } from "../../../../helper";
-import { useRecoilState } from "recoil";
+import {
+  ErorrMessageAtom,
+  handelRegister,
+  OpenMessageModalAtom,
+  TokenAtom,
+  YouHaveItemsModalAtom,
+} from "../../../../helper";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import { useRouter } from "next/router";
 import { YouHaveItemInCartModal } from "../../../you-have-item-modal";
 import { Spinner } from "../../../spinner";
@@ -19,17 +25,13 @@ interface IFormInputs {
 
 const FormSection = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const [token,setToken]=useRecoilState(TokenAtom)
+  const [token, setToken] = useRecoilState(TokenAtom);
   const [guestUsrerId, setGuestUserId] = useState<number | null>(null);
-  const{push}=useRouter()
-  const [openYouHaveItemsModal, setYouHaveItemsModal] = useRecoilState(
-    YouHaveItemsModalAtom
-  );
-  const [loading,setLoading]=useState(false)
-  const [openMessageModal, setOpenMassegModal] =
-    useRecoilState(OpenMessageModalAtom);
-  const [errorMessage, setErorrMessage] = useRecoilState(ErorrMessageAtom);
-
+  const { push } = useRouter();
+  const setYouHaveItemsModal = useSetRecoilState(YouHaveItemsModalAtom);
+  const [loading, setLoading] = useState(false);
+  const setOpenMassegModal = useSetRecoilState(OpenMessageModalAtom);
+  const setErorrMessage = useSetRecoilState(ErorrMessageAtom);
 
   const {
     register,
@@ -40,13 +42,19 @@ const FormSection = () => {
   });
 
   const submitForm = async (data: IFormInputs) => {
-    setLoading(true)
-    const res = await handelRegister(data.firstName,data.lastName,data.email,data.password,token)
-    if (res ===null) {
+    setLoading(true);
+    const res = await handelRegister(
+      data.firstName,
+      data.lastName,
+      data.email,
+      data.password,
+      token
+    );
+    if (res === null) {
       setErorrMessage("the given data was invaled");
-      setOpenMassegModal(true)
+      setOpenMassegModal(true);
       setLoading(false);
-    }else{
+    } else {
       localStorage.setItem("token", res.result.token);
       localStorage.setItem("id", res.result.user.id);
       localStorage.setItem("email", res.result.user.email);
@@ -60,7 +68,7 @@ const FormSection = () => {
         setGuestUserId(res.result.guest_user_id);
         setYouHaveItemsModal(true);
       }
-      setLoading(false)
+      setLoading(false);
     }
   };
 
@@ -127,22 +135,20 @@ const FormSection = () => {
         </div>
 
         <div className=" m-auto flex justify-center">
-          {!loading ?
-           <BaseButton
-             type="submit"
-             className=" px-7 py-1.5 rounded-full bg-blue-950 text-white font-semibold  "
-             title="Create account"
-           /> : 
-           <div>
-            <Spinner className="w-9" />
-           </div>
-           
-          }
-
+          {!loading ? (
+            <BaseButton
+              type="submit"
+              className=" px-7 py-1.5 rounded-full bg-blue-950 text-white font-semibold  "
+              title="Create account"
+            />
+          ) : (
+            <div>
+              <Spinner className="w-9" />
+            </div>
+          )}
         </div>
       </form>
       <YouHaveItemInCartModal guest_user_id={guestUsrerId} />
-
     </div>
   );
 };

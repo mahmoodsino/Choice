@@ -22,7 +22,7 @@ import {
   StateAtom,
   TokenAtom,
 } from "../../../../helper";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import {
   getCitesOfState,
   getStateOfCountry,
@@ -33,9 +33,7 @@ import { toast } from "react-toastify";
 import { Spinner } from "../../../spinner";
 import { useRouter } from "next/router";
 import {
-  PaymentProvidorAtom,
   paymentProvidorIdAtom,
-  publicKeyAtom,
 } from "../../../../helper/state/payment";
 
 interface IFormInputs {
@@ -51,22 +49,16 @@ interface IFormInputs {
 
 const FormSection = () => {
   const [countryId, setCountryId] = useState<number | undefined>();
-  const [contries, setCountries] = useRecoilState(CountriesAtom);
+  const contries = useRecoilValue(CountriesAtom);
   const [statesOfCountry, setStatesOfCountry] = useRecoilState(StateAtom);
   const [loading, setLoading] = useState(false);
   const [stateId, setStateId] = useState<number | undefined>();
   const [cities, setCities] = useRecoilState(CitiesAtom);
-  const [token, setToken] = useRecoilState(TokenAtom);
+  const token = useRecoilValue(TokenAtom);
   const [payLoading, setPayLoading] = useState(false);
-  const [openMessageModal, setOpenMassegModal] =
-    useRecoilState(OpenMessageModalAtom);
-  const [errorMessage, setErorrMessage] = useRecoilState(ErorrMessageAtom);
-  const [paymentProvidorState, setPaymentProvidorState] =
-    useRecoilState(PaymentProvidorAtom);
-  const [paymentProvidorId, setPaymenProvidorId] = useRecoilState(
-    paymentProvidorIdAtom
-  );
-  const [publicKey, setPublicKey] = useRecoilState(publicKeyAtom);
+  const setOpenMassegModal = useSetRecoilState(OpenMessageModalAtom);
+  const setErorrMessage = useSetRecoilState(ErorrMessageAtom);
+  const paymentProvidorId = useRecoilValue(paymentProvidorIdAtom);
   const [clientSecret, setClientSecret] = useState<string>();
 
   const router = useRouter().query;
@@ -115,8 +107,6 @@ const FormSection = () => {
 
   const stripe = useStripe();
   const elements = useElements();
-  
-  
 
   const handelPay = async (data: IFormInputs) => {
     let secrit: string = "";

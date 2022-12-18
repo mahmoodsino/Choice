@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import React, { useState } from "react";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import {
   ErorrMessageAtom,
   handelItemGuestToUser,
@@ -16,29 +16,27 @@ interface Props {
 }
 
 const YouHaveItemInCartModal = ({ guest_user_id }: Props) => {
-  const [token, setToken] = useRecoilState(TokenAtom);
-
+  const token = useRecoilValue(TokenAtom);
   const [openYouHaveItemsModal, setYouHaveItemsModal] = useRecoilState(
     YouHaveItemsModalAtom
   );
-  const [loading,setLoading]=useState(false)
-  const [openMessageModal, setOpenMassegModal] =
-    useRecoilState(OpenMessageModalAtom);
-    const [errorMessage, setErorrMessage] = useRecoilState(ErorrMessageAtom);
+  const [loading, setLoading] = useState(false);
+  const setOpenMassegModal = useSetRecoilState(OpenMessageModalAtom);
+  const setErorrMessage = useSetRecoilState(ErorrMessageAtom);
 
   const push = useRouter().push;
 
   const handelItemsGuestTouser = async (guest_user_id: number) => {
-    setLoading(true)
+    setLoading(true);
     const res = await handelItemGuestToUser(token, guest_user_id);
-    if(res===null){
-      setYouHaveItemsModal(false)
-      setErorrMessage("some thing went wrong")
-      setOpenMassegModal(true)
-    }else{
-      window.location.href="./"
+    if (res === null) {
+      setYouHaveItemsModal(false);
+      setErorrMessage("some thing went wrong");
+      setOpenMassegModal(true);
+    } else {
+      window.location.href = "./";
     }
-    setLoading(false)
+    setLoading(false);
   };
 
   return (
@@ -51,21 +49,21 @@ const YouHaveItemInCartModal = ({ guest_user_id }: Props) => {
         >
           <div className=" ">
             <span className=" text-gray-1400 font-bold text-lg rounded-xl py-5 px-5 block bg-gray-100">
-            You have items in the cart. Do you want to keep it?
+              You have items in the cart. Do you want to keep it?
             </span>
             <div className="flex justify-start space-x-5 mt-3 px-5 py-5">
-              {!loading ? 
-              <BaseButton
-                onClick={() =>
-                  typeof guest_user_id === "number" &&
-                  handelItemsGuestTouser(guest_user_id)
-                }
-                className="px-5 py-2 text-blue-950 border-2 font-bold border-blue-950"
-                title="yes"
-              /> : 
-              <Spinner className="w-12 " />
-              
-            }
+              {!loading ? (
+                <BaseButton
+                  onClick={() =>
+                    typeof guest_user_id === "number" &&
+                    handelItemsGuestTouser(guest_user_id)
+                  }
+                  className="px-5 py-2 text-blue-950 border-2 font-bold border-blue-950"
+                  title="yes"
+                />
+              ) : (
+                <Spinner className="w-12 " />
+              )}
               <BaseButton
                 onClick={() => (setYouHaveItemsModal(false), push("./"))}
                 className="px-5 py-2 text-red-950 border-2 font-bold border-red-950"

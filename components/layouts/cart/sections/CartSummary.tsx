@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import {
   AllCartsInfoAtom,
   CartItemsAtom,
@@ -12,26 +12,21 @@ import {
   TokenAtom,
 } from "../../../../helper";
 import { BaseButton } from "../../../buttons";
-import { CheckoutIcon } from "../../../icons";
 import { Spinner } from "../../../spinner";
 import { CartLoading } from "./CartItemTable";
 import SelectAddAddress from "./SelectAddAddress";
 import SelectDelivaryType, { selctedMethodAtom } from "./SelectDelivaryType";
 
 const CartSummary = () => {
-  const [allCartsInfo, setAllCartsInfo] = useRecoilState(AllCartsInfoAtom);
-  const [cartItems, setCartItems] = useRecoilState(CartItemsAtom);
+  const allCartsInfo = useRecoilValue(AllCartsInfoAtom);
+  const cartItems = useRecoilValue(CartItemsAtom);
   const [loading, setLoading] = useRecoilState(CartLoading);
-  const [selectedMethod, setSelectedMethod] = useRecoilState(selctedMethodAtom);
-  const [orderLoading, setOrderLoading] = useState(false);
-  const [shippingAddressId, setShippingAddressId] = useRecoilState(
-    ShippingAddressIdAtom
-  );
-  const [openMessageModal, setOpenMassegModal] =
-    useRecoilState(OpenMessageModalAtom);
-  const [errorMessage, setErorrMessage] = useRecoilState(ErorrMessageAtom);
+  const selectedMethod = useRecoilValue(selctedMethodAtom);
+  const shippingAddressId = useRecoilValue(ShippingAddressIdAtom);
+  const setOpenMassegModal = useSetRecoilState(OpenMessageModalAtom);
+  const setErorrMessage = useSetRecoilState(ErorrMessageAtom);
   const [savedOrderId, setSavedOrderId] = useState<number>();
-  const [token, setToken] = useRecoilState(TokenAtom);
+  const token = useRecoilValue(TokenAtom);
 
   const checkQuantity = () => {
     let isFound = true;

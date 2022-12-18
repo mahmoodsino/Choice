@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import {
   addToCart,
   AllCartsInfoAtom,
@@ -22,7 +22,7 @@ import { Spinner } from "../../../spinner";
 import { useRouter } from "next/router";
 
 const DetailsCard = () => {
-  const [detailsState, setDetailsState] = useRecoilState(DetailsAtom);
+  const detailsState = useRecoilValue(DetailsAtom);
   const [variationsState, setVariationsState] = useRecoilState(VariationsAtom);
   const [attributeNames, setAttributeNames] = useState<{
     [key: string]: { id: number; parent_id: number; name: string }[];
@@ -38,21 +38,19 @@ const DetailsCard = () => {
     parent: number;
   }>();
   const [localCart, setLocalCart] = useRecoilState(LocalCartAtom);
-  const [ContinueAsGuestModal, setContinueAsGuestModal] = useRecoilState(
-    CouninueAsGuestModalAtom
-  );
-  const [token, setToken] = useRecoilState(TokenAtom);
-  const [allCartsInfo, setAllCartsInfo] = useRecoilState(AllCartsInfoAtom);
-  const [cartItems, setCartItems] = useRecoilState(CartItemsAtom);
+  const setContinueAsGuestModal = useSetRecoilState(CouninueAsGuestModalAtom);
+  const token = useRecoilValue(TokenAtom);
+  const setAllCartsInfo = useSetRecoilState(AllCartsInfoAtom);
+  const setCartItems = useSetRecoilState(CartItemsAtom);
   const [loading, setLoading] = useState(false);
-  const [MoveToCartPageModalState, setMoveToCartPageModalState] =
-    useRecoilState(MoveToCartPageModalAtom);
-    const [openMessageModal, setOpenMassegModal] =
-    useRecoilState(OpenMessageModalAtom);
-  const [errorMessage, setErorrMessage] = useRecoilState(ErorrMessageAtom);
-  const {push} = useRouter()
-  const [buyLoad,setBuyLoad] = useState(false)
-  
+  const setMoveToCartPageModalState = useSetRecoilState(
+    MoveToCartPageModalAtom
+  );
+  const setOpenMassegModal = useSetRecoilState(OpenMessageModalAtom);
+  const setErorrMessage = useSetRecoilState(ErorrMessageAtom);
+  const { push } = useRouter();
+  const [buyLoad, setBuyLoad] = useState(false);
+
   const handleAddToCart = async (clickedItem: DetailsType) => {
     setLocalCart((prev) => {
       const isItemInCarts = prev.find(
@@ -96,13 +94,12 @@ const DetailsCard = () => {
   };
 
   useEffect(() => {
-      detailsState.variations.map(item=>{
-        if(item.is_default===1){
-          setVariationsState(item)
-        }
-      })
-  },[detailsState])
-  
+    detailsState.variations.map((item) => {
+      if (item.is_default === 1) {
+        setVariationsState(item);
+      }
+    });
+  }, [detailsState]);
 
   useEffect(() => {
     setLocalCart([]);
@@ -174,7 +171,10 @@ const DetailsCard = () => {
             </div>
           );
         }
-      } else if (detailsState.product?.tracking_type ==2 ||detailsState.product?.tracking_type ==3) {
+      } else if (
+        detailsState.product?.tracking_type == 2 ||
+        detailsState.product?.tracking_type == 3
+      ) {
         if (variationsState.available_quantity === 0) {
           return (
             <p className="text-sm block text-red-950 h-[24px]">
@@ -253,8 +253,6 @@ const DetailsCard = () => {
     }
     setAttributeNames(newNames);
   }, [detailsState]);
-
-
 
   useEffect(() => {
     let attributValueID: number[] = [];
@@ -343,13 +341,10 @@ const DetailsCard = () => {
     });
   }, [newArrayOFArray, variationsState, attributeToSetVAriation]);
 
-
   const handelAttribute = (value: { id: number; parent_id: number }) => {
     let num: { id: number; parent: number } = { id: -1, parent: -1 };
     num = { id: value.id, parent: value.parent_id };
     setAttributesToSetVAriation(num);
-
-
 
     let count = selectedAttributes.length;
     let countArray = 0;
@@ -421,7 +416,7 @@ const DetailsCard = () => {
   };
 
   // useEffect(() => {
-    
+
   // }, [attributeToSetVAriation]);
 
   const getbg = (id: number) => {
@@ -452,7 +447,7 @@ const DetailsCard = () => {
           setErorrMessage("some thing went wrong");
           setOpenMassegModal(true);
           setLoading(false);
-        }else if(res==400){
+        } else if (res == 400) {
           setErorrMessage("you cant add any more of this product");
           setOpenMassegModal(true);
           setLoading(false);
@@ -465,7 +460,6 @@ const DetailsCard = () => {
       }
     });
   };
-
 
   const handelBuyNow = async () => {
     localCart.map(async (item) => {
@@ -483,20 +477,20 @@ const DetailsCard = () => {
         if (res === null) {
           setErorrMessage("some thing went wrong");
           setOpenMassegModal(true);
-          setBuyLoad(false)
-        }else if(res==400){
+          setBuyLoad(false);
+        } else if (res == 400) {
           setErorrMessage("you cant add any more of this product");
           setOpenMassegModal(true);
-          setBuyLoad(false)
+          setBuyLoad(false);
         } else {
           setAllCartsInfo(res.result);
           setCartItems(res.result.items);
-          setBuyLoad(false)
-          push("/cart")
+          setBuyLoad(false);
+          push("/cart");
         }
       }
     });
-  }
+  };
 
   return (
     <div>
@@ -572,19 +566,19 @@ const DetailsCard = () => {
         <div className="font-medium space-x-2 h-24 flex items-center">
           {!loading ? (
             <BaseButton
-            disabled={
-              variationsState.in_stock === 0
-                ? true
-                : detailsState.product?.tracking_type === 1
-                ? false
-                : detailsState.product?.tracking_type === 2 &&
-                variationsState.available_quantity === 0
-                ? true
-                : detailsState.product?.tracking_type === 3 &&
-                variationsState.available_quantity === 0
-                ? true
-                : false
-            }
+              disabled={
+                variationsState.in_stock === 0
+                  ? true
+                  : detailsState.product?.tracking_type === 1
+                  ? false
+                  : detailsState.product?.tracking_type === 2 &&
+                    variationsState.available_quantity === 0
+                  ? true
+                  : detailsState.product?.tracking_type === 3 &&
+                    variationsState.available_quantity === 0
+                  ? true
+                  : false
+              }
               onClick={() =>
                 token.length > 1
                   ? finallAddtoCart()
@@ -600,33 +594,34 @@ const DetailsCard = () => {
               <Spinner className="w-16 " />
             </div>
           )}
-          {!buyLoad ? 
-          <BaseButton
-          disabled={
-            variationsState.in_stock === 0
-              ? true
-              : detailsState.product?.tracking_type === 1
-              ? false
-              : detailsState.product?.tracking_type === 2 &&
-              variationsState.available_quantity === 0
-              ? true
-              : detailsState.product?.tracking_type === 3 &&
-              variationsState.available_quantity === 0
-              ? true
-              : false
-          }
-          onClick={() =>
-            token.length > 1
-              ? handelBuyNow()
-              : setContinueAsGuestModal(true)
-          }
-            className="px-7 py-1.5 whitespace-nowrap  bg-yellow-950 rounded-full disabled:cursor-not-allowed"
-            title="Buy Now"
-          /> : 
-          <div className=" inline-block justify-center items-center h-24 mt-9">
+          {!buyLoad ? (
+            <BaseButton
+              disabled={
+                variationsState.in_stock === 0
+                  ? true
+                  : detailsState.product?.tracking_type === 1
+                  ? false
+                  : detailsState.product?.tracking_type === 2 &&
+                    variationsState.available_quantity === 0
+                  ? true
+                  : detailsState.product?.tracking_type === 3 &&
+                    variationsState.available_quantity === 0
+                  ? true
+                  : false
+              }
+              onClick={() =>
+                token.length > 1
+                  ? handelBuyNow()
+                  : setContinueAsGuestModal(true)
+              }
+              className="px-7 py-1.5 whitespace-nowrap  bg-yellow-950 rounded-full disabled:cursor-not-allowed"
+              title="Buy Now"
+            />
+          ) : (
+            <div className=" inline-block justify-center items-center h-24 mt-9">
               <Spinner className="w-16 " />
             </div>
-        }
+          )}
         </div>
       </div>
     </div>

@@ -1,15 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
-import { useRecoilState } from 'recoil'
+import {  useRecoilValue, useSetRecoilState } from 'recoil'
 import { getUserInfo, TokenAtom, UserInfoAtom } from '../../../../helper'
 import { Spinner } from '../../../spinner'
 import FormSection from './FormSection'
 
 const MainSections = () => {
-const [token,setToken]=useRecoilState(TokenAtom)
-const [userInfo,setUserInfo]=useRecoilState(UserInfoAtom)
+const token=useRecoilValue(TokenAtom)
+const setUserInfo=useSetRecoilState(UserInfoAtom)
 const [loading,setLoading]=useState(false)
-
 
   useEffect(() => {
     const getData = async () =>{

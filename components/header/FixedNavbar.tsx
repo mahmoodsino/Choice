@@ -1,18 +1,13 @@
 import Image from "next/image";
 import Link from "next/link";
-import React, { useEffect, useRef, useState } from "react";
-import { atom, useRecoilState } from "recoil";
-import {
-  AccountIcon,
-  ArrowIcon,
-  BasketIcon,
-} from "../icons";
+import React, { useEffect, useRef } from "react";
+import { atom, useRecoilState, useRecoilValue } from "recoil";
+import { AccountIcon, ArrowIcon, BasketIcon } from "../icons";
 import choicePhoto from "../../public/assets/images/choicePhoto.png";
 import { BaseButton } from "../buttons";
 import {
   ActiveDropDownAtom,
   AllCartsInfoAtom,
-  SearchAtom,
   showCategoriesAtom,
 } from "../../helper";
 import { useRouter } from "next/router";
@@ -27,13 +22,12 @@ export const goingUpAtom = atom<boolean>({
 
 const FixedNavbar = () => {
   const [goingUp, setGoingUp] = useRecoilState(goingUpAtom);
-  const [searchState, setSearchState] = useRecoilState(SearchAtom);
   const { pathname } = useRouter();
   const [activeDropDown, setActiveDropDown] =
     useRecoilState(ActiveDropDownAtom);
   const [showCategories, setShowCategories] =
     useRecoilState(showCategoriesAtom);
-  const [allCartsInfo, setAllCartsInfo] = useRecoilState(AllCartsInfoAtom);
+  const allCartsInfo = useRecoilValue(AllCartsInfoAtom);
 
   const prevScrollY = useRef(0);
   useEffect(() => {

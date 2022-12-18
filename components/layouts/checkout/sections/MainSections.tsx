@@ -1,14 +1,14 @@
 import { useRouter } from "next/router";
 import React, { useEffect } from "react";
 import { toast } from "react-toastify";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { getOrderCreatedOrder, OrderDetailsAtom, TokenAtom } from "../../../../helper";
 import { OrderReview } from "../../../orderReview";
 import FormSection from "./FormSection";
 
 const MainSections = () => {
   const router = useRouter().query;
-  const [token, setToken] = useRecoilState(TokenAtom);
+  const token = useRecoilValue(TokenAtom);
   const [orderDetails, setOrderDetails] = useRecoilState(OrderDetailsAtom);
   useEffect(() => {
     const getData = async () => {

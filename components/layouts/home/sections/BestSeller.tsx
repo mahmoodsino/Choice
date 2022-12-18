@@ -6,7 +6,7 @@ import { BaseCard } from "../../../card";
 import { Spinner } from "../../../spinner";
 
 function SampleNextArrow(props: any) {
-  const { className, style, onClick } = props;
+  const { onClick } = props;
   return (
     <div
       className={`text-black absolute right-0  -top-[52px]     h-8 w-8 border   text-center cursor-pointer  z-20 `}
@@ -30,7 +30,7 @@ function SampleNextArrow(props: any) {
 }
 
 function SamplePrevArrow(props: any) {
-  const { className, style, onClick } = props;
+  const { onClick } = props;
   return (
     <div
       className={`text-black absolute -top-[52px] right-10  border    h-8 w-8   text-center  cursor-pointer   z-20    `}

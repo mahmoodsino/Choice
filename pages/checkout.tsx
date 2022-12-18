@@ -9,7 +9,7 @@ import { PaymentProvidorAtom, paymentProvidorIdAtom, publicKeyAtom } from "../he
 
 let stripePromise: any;
 
-const checkout = () => {
+const Checkout = () => {
   const [paymentProvidorState, setPaymentProvidorState] = useRecoilState(PaymentProvidorAtom)
   const [paymentProvidorId, setPaymenProvidorId] = useRecoilState(paymentProvidorIdAtom)
   const [publicKey, setPublicKey] = useRecoilState(publicKeyAtom)
@@ -20,7 +20,7 @@ const checkout = () => {
     const getData = async () => {
       const res = await getPaymentProvidor();
       if (res === null) {
-        toast.error("some thing went wrong");
+        toast.error("something went wrong");
       } else {
         setPaymentProvidorState(res.result.payment_providers);
       }
@@ -58,4 +58,4 @@ const checkout = () => {
   );
 };
 
-export default checkout;
+export default Checkout;

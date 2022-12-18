@@ -1,7 +1,7 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import React, { useEffect, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import {
   accountSchema,
   CitiesAtom,
@@ -36,14 +36,14 @@ interface IFormInputs {
 }
 
 const FormSection = () => {
-  const [userInfo, setUserInfo] = useRecoilState(UserInfoAtom);
+  const userInfo= useRecoilValue(UserInfoAtom);
   const [countryId, setCountryId] = useState<number | undefined>();
-  const [contries, setCountries] = useRecoilState(CountriesAtom);
+  const contries= useRecoilValue(CountriesAtom);
   const [statesOfCountry, setStatesOfCountry] = useRecoilState(StateAtom);
   const [loading, setLoading] = useState(false);
   const [stateId, setStateId] = useState<number | undefined>();
   const [cities, setCities] = useRecoilState(CitiesAtom);
-  const [token, setToken] = useRecoilState(TokenAtom);
+  const token= useRecoilValue(TokenAtom);
   const [updateLoading, setUpdateLoading] = useState(false);
 
   const {

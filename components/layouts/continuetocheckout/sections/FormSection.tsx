@@ -3,13 +3,12 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import {
   ErorrMessageAtom,
   handelItemGuestToUser,
   handelLogin,
   loginCheckSchema,
-  loginSchema,
   OpenMessageModalAtom,
   TokenAtom,
 } from "../../../../helper";
@@ -25,9 +24,8 @@ interface IFormInputs {
 const FormSection = () => {
   const [token, setToken] = useRecoilState(TokenAtom);
   const [loading, setLoading] = useState(false);
-  const [openMessageModal, setOpenMassegModal] =
-    useRecoilState(OpenMessageModalAtom);
-  const [errorMessage, setErorrMessage] = useRecoilState(ErorrMessageAtom);
+  const setOpenMassegModal = useSetRecoilState(OpenMessageModalAtom);
+  const setErorrMessage = useSetRecoilState(ErorrMessageAtom);
   const { push } = useRouter();
 
   const {

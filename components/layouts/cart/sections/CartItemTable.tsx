@@ -1,5 +1,10 @@
 import React, { MutableRefObject, useRef } from "react";
-import { atom, useRecoilState } from "recoil";
+import {
+  atom,
+  useRecoilState,
+  useRecoilValue,
+  useSetRecoilState,
+} from "recoil";
 import {
   AllCartsInfoAtom,
   CartItemsAtom,
@@ -22,11 +27,10 @@ export const CartLoading = atom({
 const CartItemTable = () => {
   const [cartItems, setCartItems] = useRecoilState(CartItemsAtom);
   const timerRef = useRef() as MutableRefObject<NodeJS.Timeout>;
-  const [token, setToken] = useRecoilState(TokenAtom);
-  const [allCartsInfo, setAllCartsInfo] = useRecoilState(AllCartsInfoAtom);
-  const [openMessageModal, setOpenMassegModal] =
-    useRecoilState(OpenMessageModalAtom);
-  const [errorMessage, setErorrMessage] = useRecoilState(ErorrMessageAtom);
+  const token = useRecoilValue(TokenAtom);
+  const setAllCartsInfo = useSetRecoilState(AllCartsInfoAtom);
+  const setOpenMassegModal = useSetRecoilState(OpenMessageModalAtom);
+  const setErorrMessage = useSetRecoilState(ErorrMessageAtom);
   const [loading, setLoading] = useRecoilState(CartLoading);
 
   const handleAddToCart = async (clickedItem: FetchedItemsType) => {
@@ -225,7 +229,11 @@ const CartItemTable = () => {
                       <div className=" border product-slider-img">
                         <img
                           className="w-20 h-20"
-                          src={item.product?.image?.path ? item.product?.image?.path :"/alternative.png"}
+                          src={
+                            item.product?.image?.path
+                              ? item.product?.image?.path
+                              : "/alternative.png"
+                          }
                         />
                       </div>
                       <div>

@@ -1,9 +1,8 @@
-import Image from "next/image";
-import { useRecoilState } from "recoil";
+import { useRecoilValue } from "recoil";
 import { OrderDetailsAtom } from "../../helper";
 
 const CardReview = () => {
-  const [orderDetails, setOrderDetails] = useRecoilState(OrderDetailsAtom);
+  const orderDetails = useRecoilValue(OrderDetailsAtom);
 
   return (
     <div>

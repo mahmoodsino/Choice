@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import {
   getOrderCreatedOrder,
   getPaymentProvidor,
@@ -14,12 +14,11 @@ import { OrderReview } from "../../../orderReview";
 import { Spinner } from "../../../spinner";
 import { ProgressLine } from "../../../steper";
 import OrderDetails from "./OrderDetails";
-import PaymentInfo from "./PaymentInfo";
 import ShippingAddress from "./ShippingAddress";
 
 const MainSection = () => {
   const [progressPercentage, setProgressPercentage] = useState(35);
-  const [token, setToken] = useRecoilState(TokenAtom);
+  const token= useRecoilValue(TokenAtom);
   const [orderDetails, setOrderDetails] = useRecoilState(OrderDetailsAtom);
   const [loading, setLoading] = useState(false);
   const [paymentProvidorState, setPaymentProvidorState] = useState<
@@ -28,6 +27,7 @@ const MainSection = () => {
   const [paymentProvidorId, setPaymenProvidorId] = useState<number>();
 
   const router = useRouter().query;
+  const {push} = useRouter()
 
   useEffect(() => {
     const getData = async () => {
@@ -63,7 +63,6 @@ const MainSection = () => {
       }
     });
   }, [paymentProvidorState]);
-  const { push } = useRouter();
   const handelpayForOrder = async () => {
     if (paymentProvidorId) {
       push({

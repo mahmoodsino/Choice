@@ -1,7 +1,5 @@
 import Link from "next/link";
-import { useRouter } from "next/router";
 import React from "react";
-import { BaseButton } from "../../../buttons";
 
 type props = {
   image: string;
@@ -9,15 +7,6 @@ type props = {
 };
 
 const GradientElement = ({ image, id }: props) => {
-  const { push } = useRouter();
-
-  const handelBrand = () => {
-    push({
-      pathname: "/products",
-      query: { brand: id },
-    });
-  };
-
   return (
     <Link href={`/products?brand=${id}`}>
       <a>

@@ -1,4 +1,4 @@
-import {  useRecoilState } from "recoil";
+import {  useRecoilState, useRecoilValue } from "recoil";
 import { HomePageAtom, OpenCategoryModalAtom } from "../../helper";
 import { BaseButton } from "../buttons";
 import { CloseIcon } from "../icons";
@@ -10,7 +10,7 @@ const MobailCategoryModal = () => {
   const [openCategoryModal, setOpencategoryModal] = useRecoilState(
     OpenCategoryModalAtom
   );
-  const [homePageState,setHomePageState]=useRecoilState(HomePageAtom)
+  const homePageState=useRecoilValue(HomePageAtom)
 
   return (
     <div>

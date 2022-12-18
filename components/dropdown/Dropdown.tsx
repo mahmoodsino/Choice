@@ -1,27 +1,26 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React from "react";
-import { useRecoilState } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import { ActiveDropDownAtom, handelLogout, TokenAtom } from "../../helper";
 import { BaseButton } from "../buttons";
 
 const Dropdown = () => {
-  const [activeDropDown, setActiveDropDown] =
-    useRecoilState(ActiveDropDownAtom);
-  const [token, setToken] = useRecoilState(TokenAtom);
+  const setActiveDropDown = useSetRecoilState(ActiveDropDownAtom);
+  const token = useRecoilValue(TokenAtom);
   const push = useRouter().push;
 
   const LogoutHandel = async () => {
     const res = await handelLogout(token);
-    if(res===null){
+    if (res === null) {
       localStorage.removeItem("token");
-    localStorage.removeItem("type");
-    localStorage.removeItem("email");
-    localStorage.removeItem("id");
-    localStorage.removeItem("last_name");
-    localStorage.removeItem("first_name");
-    window.location.reload();
-    }else{
+      localStorage.removeItem("type");
+      localStorage.removeItem("email");
+      localStorage.removeItem("id");
+      localStorage.removeItem("last_name");
+      localStorage.removeItem("first_name");
+      window.location.reload();
+    } else {
       localStorage.removeItem("token");
       localStorage.removeItem("type");
       localStorage.removeItem("email");
@@ -38,7 +37,10 @@ const Dropdown = () => {
     userType = localStorage.getItem("type" || "");
   }
   return (
-    <div onClick={() =>setActiveDropDown(false) } className="flex flex-col w-[160px]">
+    <div
+      onClick={() => setActiveDropDown(false)}
+      className="flex flex-col w-[160px]"
+    >
       {userType === "user" ? (
         <div onClick={() => setActiveDropDown(false)} className="">
           <Link href="/myaccoutn">

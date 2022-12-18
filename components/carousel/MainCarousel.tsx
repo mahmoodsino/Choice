@@ -6,12 +6,7 @@ import mainImage from "../../public/assets/images/mainImage.png"
 import Link from "next/link";
 import Image from "next/image";
 
-
-
-
 class Carousel extends Component {
-
-
   render() {
     const settings = {
       dots: true,

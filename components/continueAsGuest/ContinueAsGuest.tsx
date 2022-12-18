@@ -1,51 +1,51 @@
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
-import { useRecoilState } from "recoil";
-import { CouninueAsGuestModalAtom, DetailsType, ErorrMessageAtom, handelRegisterAsGuest, OpenMessageModalAtom, TokenAtom } from "../../helper";
+import React, { useState } from "react";
+import { useRecoilState, useSetRecoilState } from "recoil";
+import {
+  CouninueAsGuestModalAtom,
+  DetailsType,
+  ErorrMessageAtom,
+  handelRegisterAsGuest,
+  OpenMessageModalAtom,
+  TokenAtom,
+} from "../../helper";
 import { BaseButton } from "../buttons";
 import { CloseIcon } from "../icons";
 import choicePhoto from "../../public/assets/images/choicePhoto.png";
 import Image from "next/image";
 import { Spinner } from "../spinner";
 
-
 interface Props {
   addToCart?: (clickedItem: DetailsType) => void;
-
 }
 
-const ContinueAsGuest = ({addToCart}:Props) => {
+const ContinueAsGuest = ({ addToCart }: Props) => {
   const [ContinueAsGuestModal, setContinueAsGuestModal] = useRecoilState(
     CouninueAsGuestModalAtom
   );
-  const [token, setToken] = useRecoilState(TokenAtom);
-  const [openMessageModal, setOpenMassegModal] =
-  useRecoilState(OpenMessageModalAtom);
-const [errorMessage, setErorrMessage] = useRecoilState(ErorrMessageAtom);
-  const [loading,setLoading]=useState(false)
-
-
+  const setToken = useSetRecoilState(TokenAtom);
+  const setOpenMassegModal = useSetRecoilState(OpenMessageModalAtom);
+  const setErorrMessage = useSetRecoilState(ErorrMessageAtom);
+  const [loading, setLoading] = useState(false);
 
   const handelGuest = async () => {
-    setLoading(true)
-    const res = await handelRegisterAsGuest()
-    if(res===null){
-      setContinueAsGuestModal(false)
-      setErorrMessage("some thing went wrong!")
-      setOpenMassegModal(true)
-    }
-    else{
+    setLoading(true);
+    const res = await handelRegisterAsGuest();
+    if (res === null) {
+      setContinueAsGuestModal(false);
+      setErorrMessage("some thing went wrong!");
+      setOpenMassegModal(true);
+    } else {
       localStorage.setItem("token", res.result.token.access_token);
       localStorage.setItem("id", res.result.user.id);
       localStorage.setItem("email", res.result.user.email);
       localStorage.setItem("type", res.result.user.type);
       setToken(res.result.token.access_token);
-      setContinueAsGuestModal(false)
-      window.location.reload()
-      
+      setContinueAsGuestModal(false);
+      window.location.reload();
     }
-    setLoading(false)
-}
+    setLoading(false);
+  };
 
   return (
     <div className="2xl:container">
@@ -58,8 +58,7 @@ const [errorMessage, setErorrMessage] = useRecoilState(ErorrMessageAtom);
           <div className=" pb-10 py-5">
             <div className="flex items-center justify-between px-4 pr-10">
               <div className="w-[25%] mr-10">
-
-              <Image src={choicePhoto} />
+                <Image src={choicePhoto} />
               </div>
               <div
                 onClick={() => setContinueAsGuestModal(false)}
@@ -68,7 +67,9 @@ const [errorMessage, setErorrMessage] = useRecoilState(ErorrMessageAtom);
                 <CloseIcon className="w-5 cursor-pointer" />
               </div>
             </div>
-            <span className="font-semibold block mt-5  px-10">Please Login to your account.</span>
+            <span className="font-semibold block mt-5  px-10">
+              Please Login to your account.
+            </span>
             <div className=" mt-3 grid grid-cols-2 gap-3 px-10">
               <Link href="/login">
                 <a
@@ -91,16 +92,16 @@ const [errorMessage, setErorrMessage] = useRecoilState(ErorrMessageAtom);
               <span className="befor">OR</span>
             </div>
             <div className="px-10">
-            {!loading ? 
-            <BaseButton
-              onClick={() => handelGuest()}
-              className="block px-2 font-semibold mt-2  py-2 w-full bg-gray-100 hover:-translate-y-1 duration-300 ease-in-out "
-            >
-              Countinue as a guest
-            </BaseButton> : 
-            <Spinner className="w-12 " />
-            
-          }
+              {!loading ? (
+                <BaseButton
+                  onClick={() => handelGuest()}
+                  className="block px-2 font-semibold mt-2  py-2 w-full bg-gray-100 hover:-translate-y-1 duration-300 ease-in-out "
+                >
+                  Countinue as a guest
+                </BaseButton>
+              ) : (
+                <Spinner className="w-12 " />
+              )}
             </div>
           </div>
         </div>

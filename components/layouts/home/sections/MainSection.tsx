@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { MainCarousel } from "../../../carousel";
 import { CommentIcon, FluentIcon, LikeIcon, TruckIcon } from "../../../icons";
 import HomeHelp from "../elements/HomeHelp";
@@ -16,17 +16,8 @@ import Information from "./Information";
 import BrandsCarosal from "./BrandsCarosal";
 import Image from "next/image";
 import Offer from "./Offer";
-import { getHomeInfo, getPromotions, HomePageAtom, PromotionsAtom } from "../../../../helper";
-import { useRecoilState } from "recoil";
-import {toast} from "react-toastify"
 
 const MainSection = () => {
-
-
-
-  
-
-
 
   return (
     <div className="pb-20">

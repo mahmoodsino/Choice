@@ -1,6 +1,6 @@
 import axios from "axios"
 import apiWorker from "../../axios"
-const root = process.env.NEXT_PUBLIC_PAYMENT
+const root = process.env.NEXT_PUBLIC_BASE
 const pay =process.env.NEXT_PUBLIC_PUBLISH_KEY
 
 const getPaymentProvidor = async () => {

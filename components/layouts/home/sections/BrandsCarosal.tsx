@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import Slider from "react-slick";
 import { GradientElement } from '../elements';
-import penray from "../../../../public/assets/images/penray.png"
 import { getBrands, homeBrandType } from '../../../../helper';
 import { toast } from 'react-toastify';
 
@@ -31,10 +30,6 @@ const BrandsCarosal = () => {
         }
         getData()
       },[])
-
-      console.log(brands);
-      
-
   return (
     <div>
 

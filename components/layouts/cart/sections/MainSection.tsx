@@ -1,7 +1,7 @@
 import Link from "next/link";
 import React, { MutableRefObject, useEffect, useRef, useState } from "react";
 import { toast } from "react-toastify";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import {
   AllCartsInfoAtom,
   CartItemsAtom,
@@ -16,8 +16,8 @@ import CartSummary from "./CartSummary";
 const MainSection = () => {
   const [loading, setLoading] = useState(false);
   const [cartItems, setCartItems] = useRecoilState(CartItemsAtom);
-  const [allCartsInfo, setAllCartsInfo] = useRecoilState(AllCartsInfoAtom);
-  const [token, setToken] = useRecoilState(TokenAtom);
+  const setAllCartsInfo = useSetRecoilState(AllCartsInfoAtom);
+  const token= useRecoilValue(TokenAtom);
   const timerRef = useRef() as MutableRefObject<NodeJS.Timeout>;
 
 
