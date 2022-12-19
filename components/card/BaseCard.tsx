@@ -248,7 +248,7 @@ const BaseCard = ({
     <div
       className={`sm:w-[${
         smallWidth ? smallWidth : "100%"
-      }] lg:w-[${width}] h-fit  border  mt-2 ml-1`}
+      }] lg:w-[${width}] h-fit  border  mt-2 ml-1 hover:border-blue-950/50 hover:shadow-lg transition-all duration-300`}
     >
       <div className="   ">
         <div>
@@ -277,13 +277,16 @@ const BaseCard = ({
                 <a>
                   <span
                     title={name}
-                    className="block font-bold line-clamp sm:w-[120px] md:w-[199px] lg:w-[150px]"
+                    className="block font-bold line-clamp sm:w-[120px] md:w-[199px] lg:w-[155px]"
                   >
                     {name}
                   </span>
                 </a>
               </Link>
-              <span className="block font-medium line-clamp sm:w-[120px] md:w-[199px] lg:w-[150]">
+              <span
+                title={description}
+                className="block font-medium line-clamp sm:w-[120px] md:w-[199px] lg:w-[155px]"
+              >
                 {description ? description : "White Lithium Grease"}
               </span>
               <span className="text-gray-1050 text-lg font-semibold">
@@ -291,7 +294,7 @@ const BaseCard = ({
               </span>
             </div>
           </div>
-          <div className="flex md:flex-row sm:flex-col items-center sm:py-1 sm:space-y-1 md:space-y-0  w-full md:h-[43px]  justify-around bg-[#F3F3F3] border  py-2">
+          <div className="flex md:flex-row sm:flex-col items-center sm:py-1 sm:space-y-1 md:space-y-0  w-full md:h-[43px]  justify-between px-2 bg-[#F3F3F3] border  py-2">
             {!loading ? (
               <div>
                 {cartItems.length === 0 ? (
@@ -315,7 +318,7 @@ const BaseCard = ({
                         ? handleAddToCart()
                         : setContinueAsGuestModal(true)
                     }
-                    className="px-3 whitespace-nowrap py-1 text-xs bg-blue-950 rounded-full font-semibold text-white disabled:bg-gray-500 disabled:cursor-not-allowed"
+                    className="px-3 whitespace-nowrap py-1 text-xs bg-blue-950 rounded-full font-semibold text-white disabled:bg-blue-950/50 disabled:cursor-not-allowed"
                     title="ADD TO CART"
                   />
                 )}

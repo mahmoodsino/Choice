@@ -518,7 +518,7 @@ const DetailsCard = () => {
           <span className="text-gray-1400 text-sm">Accessories</span>
         </div>
       </div>
-      <div className="mt-5 border-b-2 space-y-2 pb-10 w-[100%] ">
+      <div className={`mt-5 border-b-2 space-y-2 pb-10 w-[100%] ${detailsState?.variations?.length<2 && "hidden"}`} >
         {Object.keys(attributeNames).map((key, i) => {
           const values = attributeNames[key];
           return (

@@ -19,16 +19,19 @@ const FillterProductsMobile = () => {
             showFillterProducts ? "bottom-0 " : "-bottom-full"
           } h-[70vh] shadow-[0_0_5px_rgba(0,0,0,0.12)] overflow-y-auto w-[100%] z-50 fixed bg-white  rounded-t-2xl transition-all duration-300 ease-in-out`}
         >
-          <div className="fixed shadow-md bg-white z-50 h-10 border w-full">
+          <div className="fixed  p-3 bg-white z-50 h-10  w-full">
             <button onClick={() => setShowFillterProducts(false)}>
               <CloseIcon className="w-6 mt-2" />
             </button>
           </div>
-          <div className="flex justify-center pt-7">
+          <div className="flex justify-center pt-7 py-5">
             <Fillters />
           </div>
         </div>
       </>
+      {showFillterProducts ? (
+          <div onClick={() =>setShowFillterProducts(false) } className="opacity-25 fixed inset-0 z-40 bg-black  "></div>
+        ) : null}
     </div>
   );
 };

@@ -3,7 +3,7 @@ import { useRecoilValue } from "recoil";
 import { DetailsAtom } from "../../../../helper";
 
 function SampleNextArrow(props: any) {
-  const {onClick } = props;
+  const { onClick } = props;
   return (
     <div
       className={`text-black absolute right-0 top-[100%]  bg-[#f3f3f3] h-10 w-10 text-center cursor-pointer z-20 `}
@@ -27,7 +27,7 @@ function SampleNextArrow(props: any) {
 }
 
 function SamplePrevArrow(props: any) {
-  const {onClick} = props;
+  const { onClick } = props;
   return (
     <div
       className={`text-black absolute top-[100%] left-0 bg-[#f3f3f3] h-10 w-10 text-center cursor-pointer z-20`}
@@ -50,19 +50,18 @@ function SamplePrevArrow(props: any) {
   );
 }
 
-const  DetailsProductPhoto = () => {
-  const detailsState= useRecoilValue(DetailsAtom);
+const DetailsProductPhoto = () => {
+  const detailsState = useRecoilValue(DetailsAtom);
   const settings = {
     customPaging: function (i: number) {
       return (
-        <a  className="product-slider-img  ">
-          {detailsState.product?.images &&
-              (
-              <img
+        <a className="product-slider-img  ">
+          {detailsState.product?.images && (
+            <img
               className="h-full w-full"
-                src={detailsState.product.images[i]?.path}
-              />
-            )}
+              src={detailsState.product.images[i]?.path}
+            />
+          )}
         </a>
       );
     },
@@ -79,23 +78,27 @@ const  DetailsProductPhoto = () => {
     nextArrow: <SampleNextArrow />,
     prevArrow: <SamplePrevArrow />,
     arrows: true,
-    
   };
   return (
     <div className=" border">
       <Slider {...settings}>
-        {detailsState.product?.images && detailsState.product.images.length !==0 ?
+        {detailsState.product?.images &&
+        detailsState.product.images.length !== 0 ? (
           detailsState.product.images.map((img) => {
             return (
               <div key={img.id} className="product-slider-img">
-                <img  className="m-auto lg:w-[400px] md:w-[280px] sm:w-[180px] "  src={img.path} />
+                <img
+                  className="m-auto lg:w-[400px] md:w-[280px] sm:w-[180px]  lg:h-[350px] md:h-[250px] sm:h-[150px]"
+                  src={img.path}
+                />
               </div>
             );
-          }) :
+          })
+        ) : (
           <div className="md:ml-36 lg:ml-24">
             <img width={400} height={400} src="/alternative.png" alt="" />
           </div>
-          }
+        )}
       </Slider>
     </div>
   );

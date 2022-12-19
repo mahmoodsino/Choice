@@ -17,7 +17,7 @@ const ContactSection = () => {
         info="Choice@gmail.com"
       />
       <ContactElement
-        icon={<Location className="w-7 rounded-full fill-white m-auto " />}
+        icon={<Location className="w-7 fill-white m-auto " />}
         title="Location "
         info="Lorem ipsum dolor sit amet, consectetur "
       />

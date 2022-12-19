@@ -252,7 +252,7 @@ const CartItemTable = () => {
                   </td>
                   <td className="p-2 w-[25%] ">
                     <div>
-                      <div className="border w-[130px] flex  items-center space-x-8 px-2 py-1">
+                      <div className="border w-[150px] flex  items-center space-x-8 px-2 py-1">
                         <BaseButton
                           onClick={() =>
                             item.id && handleRemoveFromCart(item.id)
@@ -261,7 +261,7 @@ const CartItemTable = () => {
                         >
                           <MinusIcon className="w-3 fill-black ml-1 mr-1" />
                         </BaseButton>
-                        <span className="block w-[55px] text-center">
+                        <span className="block w-[80px] text-center">
                           {item.quantity}
                         </span>
                         {item.in_stock === 1 &&

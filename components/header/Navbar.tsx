@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
-import React from "react";
+import React, { MouseEvent } from "react";
 import { useRecoilState, useSetRecoilState } from "recoil";
 import { QueryFiltersAtom, SearchAtom } from "../../helper";
 import BaseButton from "../buttons/BaseButton";
@@ -21,7 +21,8 @@ const Navbar = () => {
   const { pathname, push, replace, query } = useRouter();
   const setQueryFilter = useSetRecoilState(QueryFiltersAtom);
 
-  const handelSearch = async () => {
+  const handelSearch = async (e:any) => {
+    e.preventDefault()
     setQueryFilter((prev) => {
       return { ...prev, search: searchState };
     });
@@ -69,8 +70,9 @@ const Navbar = () => {
               type="search"
             />
             <BaseButton
+              type="submit"
               className="px-5 py-0.5 bg-yellow-950"
-              onClick={() => handelSearch()}
+              onClick={(e) => handelSearch(e)}
             >
               <SearchIcon className="w-5 fill-blue-950 " />
             </BaseButton>

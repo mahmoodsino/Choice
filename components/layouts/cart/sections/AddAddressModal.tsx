@@ -150,6 +150,10 @@ const AddAddressModal = () => {
                       const handleSelectChange = async (
                         selectedOption: countryType | null
                       ) => {
+                        setCountryId(undefined);
+                        setStateId(undefined);
+                        setStatesOfCountry([]);
+                        setCities([]);
                         setLoading(true);
                         if (selectedOption?.value !== undefined) {
                           setCountryId(+selectedOption?.value);
@@ -373,7 +377,10 @@ const AddAddressModal = () => {
           </div>
         </div>
         {addAddress ? (
-          <div className="opacity-25 fixed inset-0 z-40 bg-black "></div>
+          <div
+            onClick={() => setAddressModal(false)}
+            className="opacity-25 fixed inset-0 z-40 bg-black "
+          ></div>
         ) : null}
       </>
     </div>

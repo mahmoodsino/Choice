@@ -166,6 +166,10 @@ const FormSection = () => {
                 const handleSelectChange = async (
                   selectedOption: countryType | null
                 ) => {
+                  setCountryId(undefined)
+                  setStateId(undefined)
+                  setStatesOfCountry([])
+                  setCities([])
                   setLoading(true);
                   if (selectedOption?.value !== undefined) {
                     setCountryId(+selectedOption?.value);

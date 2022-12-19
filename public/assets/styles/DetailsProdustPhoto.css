@@ -1,15 +1,19 @@
 .slick-dots.slick-thumb li {
     width: 80px;
     height: 80px; 
-    top: 90px;
+    top: 20px;
     border: 1px solid z;
     background-color: white;
     overflow: hidden;
   }
-  
   .slick-dots.slick-thumb li.slick-active {
     border: 3px solid black;
     width: 80px;
+  }
+  
+  .slick-slider ul{
+    /* border: 1px solid blueviolet; */
+    height: 0 !important;  
   }
   
   @media screen and (max-width: 992px) {

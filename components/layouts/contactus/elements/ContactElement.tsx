@@ -8,8 +8,8 @@ interface Props {
 
 const ContactElement = ({ icon, title, info }: Props) => {
   return (
-    <div className="bg-gray-1450 flex px-3 py-2 space-x-3 items-center">
-      <div className="w-14 h-14 bg-yellow-950 rounded-full flex items-center ">
+    <div className="bg-gray-1450 flex justify-start px-3 py-2 space-x-3 items-center">
+      <div className="w-14 h-14 bg-yellow-950 rounded-full flex items-center shrink-0">
         {icon}
       </div>
       <div>

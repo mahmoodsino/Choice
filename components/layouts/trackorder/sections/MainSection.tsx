@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import { useRecoilValue, useSetRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import { getOrders, TokenAtom, TrackOrderAtom } from "../../../../helper";
 import { Spinner } from "../../../spinner";
 import Orders from "./Order";
 
 const MainSection = () => {
-  const setOrdersState = useSetRecoilState(TrackOrderAtom);
+  const [ordersState,setOrdersState] = useRecoilState(TrackOrderAtom);
   const [loading, setLoading] = useState(false);
   const token = useRecoilValue(TokenAtom);
 
@@ -45,6 +45,11 @@ const MainSection = () => {
             <div>
               <Spinner className="w-56" />
             </div>
+          )}
+          {ordersState?.length == 0 && (
+            <span className="text-center block text-lg">
+              you have no order yet !!
+            </span>
           )}
         </div>
       </div>

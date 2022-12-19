@@ -12,7 +12,10 @@ const Fillters = () => {
       <Promotions />
       <Brands />
       <Attributes />
+      <div className="sm:hidden lg: block">
       <Latest />
+
+      </div>
       <Offer />
     </div>
   );
