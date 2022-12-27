@@ -305,7 +305,7 @@ const BaseCard = ({
                         ? handleAddToCart()
                         : setContinueAsGuestModal(true)
                     }
-                    className="px-3 whitespace-nowrap py-1 text-xs bg-blue-950 rounded-full font-semibold text-white disabled:bg-gray-500 disabled:cursor-not-allowed"
+                    className="px-3 whitespace-nowrap py-1 text-xs bg-blue-950 rounded-full font-semibold text-white disabled:bg-blue-950/50 disabled:cursor-not-allowed"
                     title="ADD TO CART"
                   />
                 ) : variationId && handelCart(variationId) ? (
