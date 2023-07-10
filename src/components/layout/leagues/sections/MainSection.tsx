@@ -26,8 +26,6 @@ const MainSection = () => {
   const { isLoading, refetch, data, error, isError, isFetching } =
     useFetch<CountryData>("v1/countries/all");
 
-  console.log(data);
-
   return (
     <div className="card">
       {selectedCountry != 0 && (
