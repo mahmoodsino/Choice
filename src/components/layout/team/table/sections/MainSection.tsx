@@ -9,11 +9,7 @@ const MainSection = () => {
     setIsLiftShow(true);
     setIsRightShow(true);
   }, []);
-  return (
-    <div>
-      <TeamsTable />
-    </div>
-  );
+  return <div>{/* <TeamsTable /> */}</div>;
 };
 
 export default MainSection;

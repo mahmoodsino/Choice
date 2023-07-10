@@ -7,32 +7,28 @@ import TableTr from "./TableTr";
 interface Props {
   season: SeasonsTypes[];
   leagueId: number;
-  gameSeasonId?:number
+  gameSeasonId?: number;
 }
 
-const TeamsTable: FC<Props> = ({ season, leagueId,gameSeasonId }) => {
+const TeamsTable: FC<Props> = ({ season, leagueId, gameSeasonId }) => {
   const [selectedSeason, setSelectedSeason] = useState<number>();
   const { isLoading, refetch, data, error, isError, isFetching } =
     useFetch<TableData>(`v1/leagues/${leagueId}/${selectedSeason}/standings`);
 
-
-    useEffect(() =>{
-      if(gameSeasonId){
-        setSelectedSeason(gameSeasonId)
-      }else{
-        setSelectedSeason(season[0].id)
-      }
-
-    },[season,gameSeasonId])
+  useEffect(() => {
+    if (gameSeasonId) {
+      setSelectedSeason(gameSeasonId);
+    } else {
+      setSelectedSeason(season[0].id);
+    }
+  }, [season, gameSeasonId]);
 
   const [tableType, setTableType] = useState<"home" | "away" | "overall">(
     "overall"
   );
-  const handleSeasonChange = (event:any) => {
+  const handleSeasonChange = (event: any) => {
     setSelectedSeason(event.target.value);
   };
-
-  console.log(selectedSeason);
 
   const type: ["home", "away", "overall"] = ["home", "away", "overall"];
   return (
@@ -45,7 +41,11 @@ const TeamsTable: FC<Props> = ({ season, leagueId,gameSeasonId }) => {
           <div style={{ width: "200px" }}>
             <select onChange={handleSeasonChange}>
               {season.map((item, i) => {
-                return <option value={item.id}>{item.name}</option>;
+                return (
+                  <option key={i} value={item.id}>
+                    {item.name}
+                  </option>
+                );
               })}
             </select>
           </div>
@@ -53,10 +53,10 @@ const TeamsTable: FC<Props> = ({ season, leagueId,gameSeasonId }) => {
             {type.map((item, i) => {
               return (
                 <button
+                  key={i}
                   className="btn-primary"
                   style={{ cursor: "pointer", color: "white" }}
                   onClick={() => setTableType(item)}
-                  key={i}
                 >
                   {item}
                 </button>
