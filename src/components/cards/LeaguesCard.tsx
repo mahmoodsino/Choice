@@ -5,12 +5,14 @@ interface Props {
   img: string;
   name: string;
   id: number;
+  onClick?: () => void;
 }
 
-const LeaguesCard: FC<Props> = ({ img, name, id }) => {
+// href={`/league/${id}/table`}
+const LeaguesCard: FC<Props> = ({ img, name, id, onClick }) => {
   return (
-    <li>
-      <Link href={`/league/${id}/table`}>
+    <li onClick={onClick}>
+      <Link href="#">
         <img src={img} />
       </Link>
       <span>{name}</span>
