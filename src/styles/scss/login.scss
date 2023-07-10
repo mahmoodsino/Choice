@@ -1,0 +1,58 @@
+@import './vars';
+
+.login-page {
+    background-attachment: fixed;
+    background-position: center;
+    background-image: url('../imgs/login2.png');
+    min-height: 100vh;
+    margin-top: -70px;
+    padding-top: 70px;
+
+    .logo-box {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+
+        .login-logo {
+            max-width: 90%;
+            width: 450px;
+        }
+
+        .download-box {
+            h3 {
+                text-align: center;
+                color: $fnt_color1;
+                font-weight: 600;
+                font-size: 16px;
+            }
+
+            margin-top: 50px;
+        }
+    }
+
+    .login-box {
+        position: relative;
+        z-index: 3;
+        margin-top: 100px;
+
+        span {
+            color: $fnt_color4;
+            font-size: 15px;
+
+            a {
+                color: $c1;
+                text-transform: capitalize;
+            }
+        }
+
+        h3 {
+            color: $fnt_color2;
+            font-size: 30px;
+            font-weight: 600;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            text-transform: capitalize;
+        }
+    }
+}

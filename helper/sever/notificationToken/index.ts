@@ -1,1 +1,0 @@
-export {default as handelSendNotificationToken} from "./services"

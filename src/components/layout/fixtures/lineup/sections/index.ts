@@ -1,0 +1,1 @@
+export {default as FixturesLineupMainSection} from "./MainSection"

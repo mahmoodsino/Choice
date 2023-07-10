@@ -1,0 +1,116 @@
+@import"_vars";
+
+nav.main-nav {
+    display: flex;
+    background: rgba($color: $bg2, $alpha: .85);
+    backdrop-filter: blur(6px);
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    padding: 0px 5%;
+
+    .left {
+        display: flex;
+        align-items: center;
+    }
+
+    .links {
+        display: flex;
+        padding: 0 4%;
+
+        li {
+            a {
+                color: $fnt_color1;
+                text-decoration: none;
+                padding: 25px 20px;
+                display: inline-flex;
+                align-items: center;
+                position: relative;
+                white-space: nowrap;
+                font-weight: 600;
+                transition: .3s all;
+
+                i {
+                    margin-right: 7px;
+                    font-size: 19px;
+                }
+
+                &::after {
+                    content: '';
+                    position: absolute;
+                    bottom: 0;
+                    left: 0;
+                    right: 0;
+                    margin: auto;
+                    height: 3px;
+                    border-radius: 15px 15px 0 0;
+                    opacity: 0;
+                    width: 40px;
+                    max-width: 90%;
+                    transition: .3s all;
+                }
+
+                &:hover {
+                    color: $fnt_color2;
+
+                    &::after {
+                        background: rgba($color: #fff, $alpha: .4);
+                        opacity: .3;
+                    }
+                }
+
+                &.active {
+                    color: $c1;
+
+                    &::after {
+                        opacity: 1;
+                        background: $c1;
+                    }
+                }
+            }
+        }
+    }
+
+    .logo {
+        color: white;
+        text-decoration: none;
+    }
+
+}
+
+.blob {
+    background: black;
+    border-radius: 50%;
+    box-shadow: 0 0 0 0 rgba(0, 0, 0, 1);
+    height: 15px;
+    width: 15px;
+    transform: scale(1);
+    animation: pulse-red 2s infinite;
+}
+
+.blob.red {
+    background: rgba(255, 82, 82, 1);
+    box-shadow: 0 0 0 0 rgba(255, 82, 82, 1);
+    animation: pulse-red 2s infinite;
+}
+
+@keyframes pulse-red {
+    0% {
+        transform: scale(0.95);
+        box-shadow: 0 0 0 0 rgba(255, 82, 82, 0.7);
+    }
+
+    70% {
+        transform: scale(1);
+        box-shadow: 0 0 0 10px rgba(255, 82, 82, 0);
+    }
+
+    100% {
+        transform: scale(0.95);
+        box-shadow: 0 0 0 0 rgba(255, 82, 82, 0);
+    }
+}

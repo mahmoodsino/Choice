@@ -1,0 +1,17 @@
+@import "./vars";
+
+
+.download-app-box {
+    background-image: url('../imgs/bg1.jpg');
+    background-size: cover;
+    background-position: bottom;
+    border-radius: 20px;
+    padding: 25px;
+    margin-top: 20px;
+    color: #fff;
+
+    h3 {
+        font-size: 19px;
+        font-weight: 600;
+    }
+}

@@ -1,0 +1,118 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap");
+nav.main-nav {
+  display: flex;
+  background: rgba(30, 30, 30, 0.85);
+  -webkit-backdrop-filter: blur(6px);
+          backdrop-filter: blur(6px);
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  padding: 0px 5%;
+}
+nav.main-nav .left {
+  display: flex;
+  align-items: center;
+}
+nav.main-nav .links {
+  display: flex;
+  padding: 0 4%;
+}
+nav.main-nav .links li a {
+  color: #c3c3c3;
+  text-decoration: none;
+  padding: 25px 20px;
+  display: inline-flex;
+  align-items: center;
+  position: relative;
+  white-space: nowrap;
+  font-weight: 600;
+  transition: 0.3s all;
+}
+nav.main-nav .links li a i {
+  margin-right: 7px;
+  font-size: 19px;
+}
+nav.main-nav .links li a::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+  height: 3px;
+  border-radius: 15px 15px 0 0;
+  opacity: 0;
+  width: 40px;
+  max-width: 90%;
+  transition: 0.3s all;
+}
+nav.main-nav .links li a:hover {
+  color: white;
+}
+nav.main-nav .links li a:hover::after {
+  background: rgba(255, 255, 255, 0.4);
+  opacity: 0.3;
+}
+nav.main-nav .links li a.active {
+  color: #4baa50;
+}
+nav.main-nav .links li a.active::after {
+  opacity: 1;
+  background: #4baa50;
+}
+nav.main-nav .logo {
+  color: white;
+  text-decoration: none;
+}
+
+.blob {
+  background: black;
+  border-radius: 50%;
+  box-shadow: 0 0 0 0 rgb(0, 0, 0);
+  height: 15px;
+  width: 15px;
+  transform: scale(1);
+  -webkit-animation: pulse-red 2s infinite;
+          animation: pulse-red 2s infinite;
+}
+
+.blob.red {
+  background: rgb(255, 82, 82);
+  box-shadow: 0 0 0 0 rgb(255, 82, 82);
+  -webkit-animation: pulse-red 2s infinite;
+          animation: pulse-red 2s infinite;
+}
+
+@-webkit-keyframes pulse-red {
+  0% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(255, 82, 82, 0.7);
+  }
+  70% {
+    transform: scale(1);
+    box-shadow: 0 0 0 10px rgba(255, 82, 82, 0);
+  }
+  100% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(255, 82, 82, 0);
+  }
+}
+
+@keyframes pulse-red {
+  0% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(255, 82, 82, 0.7);
+  }
+  70% {
+    transform: scale(1);
+    box-shadow: 0 0 0 10px rgba(255, 82, 82, 0);
+  }
+  100% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(255, 82, 82, 0);
+  }
+}/*# sourceMappingURL=navbar.css.map */

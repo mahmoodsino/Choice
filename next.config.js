@@ -1,13 +1,11 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {
-  reactStrictMode: true,
-  swcMinify: true,
-}
+const path = require("path");
 
-module.exports = {
-  reactStrictMode: true,
-  images: {
-      domains: ["i.ebayimg.com",""],
-      formats: ["image/webp"],
+const nextConfig = {
+  reactStrictMode: false,
+  sassOptions: {
+    includePaths: [path.join(__dirname, "styles")],
   },
 };
+
+module.exports = nextConfig;

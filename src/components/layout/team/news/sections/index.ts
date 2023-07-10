@@ -1,0 +1,1 @@
+export {default as NewsTeamMainSection} from "./MainSection"

@@ -1,0 +1,6 @@
+export { default as TrendingNews } from "./TrendingNews"
+export { default as SideSection } from "./SideSection"
+export { default as TeamBox } from "./TeamBox"
+export { default as LeagueBox } from "./LeagueBox"
+export { default as FixturesBox } from "./FixturesBox"
+export { default as PlayerProfileBox } from "./PlayerProfileBox"

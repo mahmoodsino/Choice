@@ -1,7 +1,0 @@
-export type {default as brandType} from "./brandType"
-export type {default as companytype} from "./companytype"
-export type {default as variationType} from "./variationType"
-export type {default as imagesType} from "./imagesType"
-export type {default as Attribute_valuesProductsType} from "./Attribute_valuesProductsType"
-export type {default as AttributesProductsType} from "./AttributesProductsType"
-export type {default as PromotionsProductsType} from "./PromotionsProductsType"

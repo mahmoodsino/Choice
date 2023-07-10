@@ -1,1 +1,0 @@
-export {default as handelComletePay} from "./service"

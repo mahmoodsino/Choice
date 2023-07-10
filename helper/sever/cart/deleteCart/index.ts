@@ -1,1 +1,0 @@
-export {default as deleteCart} from "./services"
