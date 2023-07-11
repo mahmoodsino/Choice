@@ -20,7 +20,9 @@ const FixturesBox: FC<Props> = ({ children }) => {
   const { pathname } = useRouter();
   const { query } = useRouter();
   const { isLoading, refetch, data, error, isError, isFetching } =
-    useFetch<FixtureDetailsDataTypes>(`v1/fixtures/details/${query.id}`);
+    useFetch<FixtureDetailsDataTypes>(
+      query.id ? `v1/fixtures/details/${query.id}` : ""
+    );
 
   return (
     <div>

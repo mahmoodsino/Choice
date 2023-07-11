@@ -13,7 +13,9 @@ interface Props {
 const TeamsTable: FC<Props> = ({ season, leagueId, gameSeasonId }) => {
   const [selectedSeason, setSelectedSeason] = useState<number>();
   const { isLoading, refetch, data, error, isError, isFetching } =
-    useFetch<TableData>(`v1/leagues/${leagueId}/${selectedSeason}/standings`);
+    useFetch<TableData>(
+      selectedSeason ? `v1/leagues/${leagueId}/${selectedSeason}/standings` : ""
+    );
 
   useEffect(() => {
     if (gameSeasonId) {

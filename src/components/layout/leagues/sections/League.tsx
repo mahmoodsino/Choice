@@ -10,7 +10,9 @@ interface Props {
 
 const League: FC<Props> = ({ countryId }) => {
   const { isLoading, refetch, data, error, isError, isFetching } =
-    useFetch<LeaguesTypes>(`v1/leagues/all/country/${countryId}`);
+    useFetch<LeaguesTypes>(
+      countryId ? `v1/leagues/all/country/${countryId}` : ""
+    );
   return (
     <div>
       {!isLoading ? (
