@@ -1,34 +1,39 @@
-import React from "react";
+import { TransfersType } from "@/utils";
+import React, { FC } from "react";
 
-const TransfersCard = () => {
+interface Props {
+  transfers: TransfersType;
+}
+
+const TransfersCard: FC<Props> = ({ transfers }) => {
   return (
     <div className="transfer-item">
-      <img className="t-img" src="/pa.png" />
-      <h3>Cedric Soares</h3>
+      <img className="t-img" src={transfers?.player?.image} />
+      <h3>{transfers?.player?.name}</h3>
       <div className="trans-box">
         <div className="left">
           <a href="#" className="p-name">
-            Man Utd
+            {transfers?.from_team?.name}
           </a>
         </div>
         <div className="middle">
           <a href="#">
-            <img className="p-img" src="/pa.png" />
+            <img className="p-img" src={transfers?.from_team?.image} />
           </a>
           <i className="fi fi-rr-angle-double-small-right"></i>
           <a href="#">
-            <img className="p-img" src="/pa.png" />
+            <img className="p-img" src={transfers?.to_team?.image} />
           </a>
         </div>
         <div className="right">
           <a href="#" className="p-name">
-            Atletico Madrid
+            {transfers?.to_team?.name}
           </a>
         </div>
       </div>
 
-      <span className="date">jul 2023 - May 2024</span>
-      <span className="val">Market Value $274k</span>
+      {/* <span className="date">{transfers?.player} - May 2024</span> */}
+      {/* <span className="val">Market Value $274k</span> */}
     </div>
   );
 };

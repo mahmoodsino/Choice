@@ -1,5 +1,6 @@
 import { useAuth } from "@/context/auth/AuthContext";
 import { FixtureDetailsTypes, TeamUpcomingFixtureType } from "@/utils";
+import moment from "moment";
 import Link from "next/link";
 import React, { FC } from "react";
 import { CustomBtn } from "../buttons";
@@ -15,12 +16,14 @@ const MatchList: FC<Props> = ({ fixtures }) => {
       {fixtures?.map((item, i) => {
         return (
           <li key={i}>
-            <div className="left">{item.state}</div>
+            <div className="left">{item.state == "FT" && item.state}</div>
             <Link href={`/fixtures/${item.id}/overview`} className="middle">
               <img src={item.home.image} />
               <span>{item.home.name}</span>
               <span className="score">
-                {item.score.home} : {item.score.away}
+                {item.state == "NS"
+                  ? moment(item.starting_at).format("HH:mm")
+                  : `${item.score.home} : ${item.score.away}`}
               </span>
               <span>{item.away.name}</span>
               <img src={item.away.image} />

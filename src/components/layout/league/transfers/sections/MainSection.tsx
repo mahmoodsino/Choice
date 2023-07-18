@@ -9,13 +9,7 @@ const MainSection = () => {
     setIsLiftShow(true);
     setIsRightShow(true);
   }, []);
-  return (
-    <div>
-      <TransfersCard />
-      <TransfersCard />
-      <TransfersCard />
-    </div>
-  );
+  return <div></div>;
 };
 
 export default MainSection;

@@ -39,6 +39,8 @@ const FixturesBox: FC<Props> = ({ children }) => {
     }
   }, [data]);
 
+  console.log(data?.data);
+
   return (
     <div>
       {!isLoading && !isError && (
@@ -114,7 +116,10 @@ const FixturesBox: FC<Props> = ({ children }) => {
             <FixturesLineupMainSection lineups={data?.data.lineups!} />
           )}
           {pathname.includes(`/fixtures/[id]/overview`) && (
-            <FixturesOverviewMainSection statistics={data?.data?.statistics!} />
+            <FixturesOverviewMainSection
+              details={data?.data!}
+              statistics={data?.data?.statistics!}
+            />
           )}
           {pathname.includes(`/fixtures/[id]/h2h`) && (
             <FixturesH2HMainSection

@@ -54,8 +54,22 @@ export interface LineupsTypes {
   away: TeamLineupsTypes;
 }
 
+interface EventsType {
+  type: "SUBSTITUTION" | "REDCARD" | "YELLOWCARD" | "GOAL";
+  type_text: string;
+  subtype: string;
+  subtype_text: string;
+  player1: string;
+  player2: null;
+  minute: number;
+  extra_minute: number;
+  is_injured: boolean;
+  team: string;
+}
+
 export interface FixtureDetailsTypes {
   id: number;
+  events: EventsType[];
   home: TeamTypes;
   away: TeamTypes;
   state: string;
@@ -64,6 +78,7 @@ export interface FixtureDetailsTypes {
   league: LeaguesDataTypes;
   score: ScoreType;
   lineups?: LineupsTypes;
+  venue: TeamVenueType;
   season_id?: number;
   statistics: StatisticsTypes;
 }
@@ -217,4 +232,26 @@ export interface NewsSlugDetails {
     entity_name: string;
     entity_image: string;
   }[];
+}
+
+export interface TransfersType {
+  id: number;
+  player: {
+    id: number;
+    name: string;
+    short_name: string;
+    image: string;
+    country: CountryTypes;
+    position: string;
+  };
+  to_team: {
+    id: number;
+    name: string;
+    image: string;
+  };
+  from_team: {
+    id: number;
+    name: string;
+    image: string;
+  };
 }

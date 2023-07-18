@@ -157,7 +157,7 @@ const LeagueBox: FC<Props> = ({ children }) => {
                 News
               </Link>
             </li>
-            <li>
+            {/* <li>
               <Link
                 className={`${
                   pathname == `/league/[id]/transfers` ? "active" : ""
@@ -166,7 +166,7 @@ const LeagueBox: FC<Props> = ({ children }) => {
               >
                 Transfers
               </Link>
-            </li>
+            </li> */}
             <li>
               <Link
                 className={`${

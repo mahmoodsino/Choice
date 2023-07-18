@@ -1,18 +1,23 @@
 import { HowWillWin } from "@/components/cards";
 import { FixturesBox } from "@/components/layout/base-box";
 import { AppContext } from "@/context/BaseBox";
-import { StatisticsTypes } from "@/utils";
+import { FixtureDetailsTypes, StatisticsTypes } from "@/utils";
 import React, { FC, useContext, useEffect } from "react";
 
 interface Props {
   statistics: StatisticsTypes;
+  details: FixtureDetailsTypes;
 }
 
 interface StatisticsDetailsProps {
   statistics: StatisticsTypes;
+  details: FixtureDetailsTypes;
 }
 
-const StatisticsDetails: FC<StatisticsDetailsProps> = ({ statistics }) => {
+const StatisticsDetails: FC<StatisticsDetailsProps> = ({
+  statistics,
+  details,
+}) => {
   return (
     <div>
       <div style={{ textAlign: "center" }}>
@@ -44,38 +49,46 @@ const StatisticsDetails: FC<StatisticsDetailsProps> = ({ statistics }) => {
         );
       })}
       <ul className="over">
-        <li className="match-details">
-          <div className=" time">
-            <span> 10</span>
-          </div>
-          <div className="img-name">
-            <div className="img-div">
-              <img src="/pa.png" />
-            </div>
-            <div className="name">
-              <span> sdgfdxnxhngf dvdhfcj ( 1 - 0 )</span>
-            </div>
-          </div>
-        </li>
-        <li className="match-details go-right">
-          <div className=" time">
-            <span> 10</span>
-          </div>
-          <div className="img-name">
-            <div className="img-div">
-              <img src="/pa.png" />
-            </div>
-            <div className="name">
-              <span> sdgfdxnxhngf dvdhfcj ( 1 - 0 )</span>
-            </div>
-          </div>
-        </li>
+        {details?.events?.map((item, i) => {
+          return (
+            <li
+              key={i}
+              className={`match-details ${item.team == "away" && "go-right"}`}
+            >
+              <div className=" time">
+                <span>{item.minute}</span>
+              </div>
+              <div className="img-name">
+                <div className="img-div">
+                  <img
+                    src={
+                      item?.type == "YELLOWCARD"
+                        ? "/YELLOWCARD.png"
+                        : item?.type == "REDCARD"
+                        ? "/REDCARD.png"
+                        : item?.type == "GOAL"
+                        ? "/GOAL.png"
+                        : "/SUBSTITUTION.png"
+                    }
+                  />{" "}
+                </div>
+                <div
+                  style={{ display: "flex", flexDirection: "column" }}
+                  className="name"
+                >
+                  <span>{item.player1}</span>
+                  {item?.type == "SUBSTITUTION" && <span>{item?.player2}</span>}
+                </div>
+              </div>
+            </li>
+          );
+        })}
       </ul>
     </div>
   );
 };
 
-const MainSection: FC<Props> = ({ statistics }) => {
+const MainSection: FC<Props> = ({ statistics, details }) => {
   const { setIsLiftShow, setIsRightShow } = useContext(AppContext);
   useEffect(() => {
     setIsLiftShow(true);
@@ -90,7 +103,9 @@ const MainSection: FC<Props> = ({ statistics }) => {
         </li>
       </ul>
       <HowWillWin />
-      <StatisticsDetails statistics={statistics} />
+      {details?.state != "NS" && (
+        <StatisticsDetails statistics={statistics} details={details} />
+      )}
     </div>
   );
 };
