@@ -1,5 +1,4 @@
 import { FixturesMainSection } from "@/components";
-import React from "react";
 
 const fixtures = () => {
   return (

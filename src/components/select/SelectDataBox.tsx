@@ -1,5 +1,5 @@
-import moment, { Moment } from "moment";
-import React, { FC, useEffect, useState } from "react";
+import moment from "moment";
+import React, { FC, MutableRefObject, useRef, useState } from "react";
 
 interface Props {
   timeInMoment: string;
@@ -7,14 +7,27 @@ interface Props {
 }
 
 const SelectDataBox: FC<Props> = ({ setTimeInMoment, timeInMoment }) => {
+  const timerRef = useRef() as MutableRefObject<NodeJS.Timeout>;
+  const [momentDate, setMomentDate] = useState<string>(moment().toString());
+
   const handleAddDay = () => {
-    setTimeInMoment(moment(timeInMoment).add(1, "day").format("DD MMM, YYYY"));
+    let newTime = momentDate;
+    newTime = moment(newTime).add(1, "day").format("DD MMM, YYYY");
+    setMomentDate(moment(momentDate).add(1, "day").format("DD MMM, YYYY"));
+    clearTimeout(timerRef.current);
+    timerRef.current = setTimeout(() => {
+      setTimeInMoment(newTime);
+    }, 700);
   };
 
   const handleSubtractDay = () => {
-    setTimeInMoment(
-      moment(timeInMoment).subtract(1, "day").format("DD MMM, YYYY")
-    );
+    let newTime = momentDate;
+    newTime = moment(newTime).subtract(1, "day").format("DD MMM, YYYY");
+    setMomentDate(moment(momentDate).subtract(1, "day").format("DD MMM, YYYY"));
+    clearTimeout(timerRef.current);
+    timerRef.current = setTimeout(() => {
+      setTimeInMoment(newTime);
+    }, 700);
   };
 
   return (
@@ -23,7 +36,7 @@ const SelectDataBox: FC<Props> = ({ setTimeInMoment, timeInMoment }) => {
         <i className="fi fi-rr-angle-left"></i>
       </button>
       <span className="current">
-        {moment(timeInMoment).format("DD MMM, YYYY")}
+        {moment(momentDate).format("DD MMM, YYYY")}
       </span>
       <button onClick={handleAddDay} className="btn-circle">
         <i className="fi fi-rr-angle-right"></i>

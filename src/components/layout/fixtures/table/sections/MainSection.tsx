@@ -3,17 +3,14 @@ import { SeasonsTypes } from "@/utils";
 import { FC } from "react";
 
 interface Props {
-  season:SeasonsTypes[]
-  leagueId:number
-  gameSeasonId:number
+  selectedSeason: number;
+  leagueId: number;
 }
 
-const MainSection:FC<Props> = ({season,leagueId,gameSeasonId}) => {
-
-  
+const MainSection: FC<Props> = ({ selectedSeason, leagueId }) => {
   return (
     <div>
-      <TeamsTable season={season} leagueId={leagueId} gameSeasonId={gameSeasonId} />
+      <TeamsTable selectedSeason={selectedSeason} leagueId={leagueId} />
     </div>
   );
 };

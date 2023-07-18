@@ -6,10 +6,11 @@ interface Props {
   name: string;
   id: number;
   onClick?: () => void;
+  href?: string;
 }
 
 // href={`/league/${id}/table`}
-const LeaguesCard: FC<Props> = ({ img, name, id, onClick }) => {
+const LeaguesCard: FC<Props> = ({ img, name, id, onClick, href }) => {
   return (
     <li
       style={{
@@ -20,7 +21,7 @@ const LeaguesCard: FC<Props> = ({ img, name, id, onClick }) => {
       }}
       onClick={onClick}
     >
-      <Link href="#">
+      <Link href={href ? href : ""}>
         <img src={img} />
       </Link>
       <span>{name}</span>

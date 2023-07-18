@@ -1,18 +1,23 @@
+import { NewsType } from "@/utils";
 import Link from "next/link";
 import React, { FC } from "react";
 
-const NewsMainCard: FC = () => {
+interface NewsMainCardProps {
+  news: NewsType;
+}
+
+const NewsMainCard: FC<NewsMainCardProps> = ({ news }) => {
   return (
     <div className=" box-news1">
-      <Link href="#">
+      <Link href={`/news/${news.slug}`}>
         {" "}
-        <img className="img1" src="/mes.jfif" />{" "}
+        <img className="img1" src={news?.image} />{" "}
       </Link>
-      <a href="#">
-        <h3> Real Sociedad 1-4 FC Barclona:Its all starting to click</h3>
+      <a href={`/news/${news.slug}`}>
+        <h3>{news?.title}</h3>
       </a>
 
-      <span> about 2 hours ago</span>
+      {/* <span>{news.}</span> */}
     </div>
   );
 };

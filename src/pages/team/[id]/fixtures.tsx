@@ -1,12 +1,8 @@
-import { FixturesTeamMainSection } from '@/components'
-import React from 'react'
+import { FixturesTeamMainSection } from "@/components";
+import React from "react";
 
 const fixtures = () => {
-  return (
-    <div>
-      <FixturesTeamMainSection/>
-    </div>
-  )
-}
+  return <div></div>;
+};
 
-export default fixtures
+export default fixtures;

@@ -47,9 +47,7 @@ const FormSection: FC = () => {
     <div className="col-6">
       <div className="login-box">
         <h3>Create new account.</h3>
-        <span>
-          Already A Member ? <Link href="/login">log in </Link>
-        </span>
+
         <form onSubmit={handleSubmit}>
           <div className="row">
             <div className="col-6">

@@ -1,12 +1,8 @@
-import { LeagueTableMainSection } from '@/components'
-import React from 'react'
+import { LeagueTableMainSection } from "@/components";
+import React from "react";
 
 const table = () => {
-  return (
-    <div>
-      <LeagueTableMainSection/>
-    </div>
-  )
-}
+  return <div></div>;
+};
 
-export default table
+export default table;

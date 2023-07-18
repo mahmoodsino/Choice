@@ -2,11 +2,7 @@ import { TableTeamMainSection } from "@/components";
 import React from "react";
 
 const table = () => {
-  return (
-    <div>
-      <TableTeamMainSection />
-    </div>
-  );
+  return <div></div>;
 };
 
 export default table;

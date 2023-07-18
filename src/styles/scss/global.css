@@ -534,7 +534,7 @@ button {
 }
 
 .leagues-table img {
-  width: 25px;
+  width: 15;
   height: 25px;
   margin-right: 5px;
 }
@@ -1141,5 +1141,83 @@ button {
 .over .go-right .img-name {
   flex-direction: row-reverse;
 }
+
+
+.blog-details img {
+  width: 100%;
+  border-radius: 15px;
+  margin-top: 10px;
+}
+
+.blog-details span {
+  color: rgba(206, 194, 194, 0.836);
+  font-size: 13px;
+  margin-bottom: 0px;
+}
+
+.blog-details h1 {
+  font-weight: 400;
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+
+.blog-details .btn-4 {
+  background: #4baa50;
+  color: rgb(5, 41, 20);
+  border-radius: 100px;
+  font-weight: 500;
+  padding: 2px;
+  padding-left: 8px;
+  padding-right: 8px;
+  font-size: 14px;
+  margin-left: 3px;
+}
+
+.blog-details .entity .entity-box {
+  display: flex;
+}
+
+.blog-details .entity .entity-box img {
+  width: 40px;
+  height: 40px;
+}
+
+.blog-details .entity .entity-box span {
+  margin-top: 20px;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+.box-title-123 {
+  display: flex;
+}
+
+.box-title-123 img {
+  width: 50px;
+  height: 50px;
+  margin-top: 15px;
+}
+
+.box-title-123 .dd {
+  padding-left: 15px;
+}
+
+.box-title-123 .dd h3 {
+  font-weight: 400;
+  padding-top: opx;
+  margin-bottom: 0px;
+}
+
+.sp11 {
+  color: rgba(206, 194, 194, 0.836);
+  font-size: 13px;
+}
+
+.date-white {
+  font-size: 14px;
+  font-weight: 200;
+}
+
+/*# sourceMappingURL=global.css.map */
 
 /*# sourceMappingURL=global.css.map */

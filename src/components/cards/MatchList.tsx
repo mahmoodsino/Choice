@@ -1,19 +1,21 @@
-import { FixturesType } from "@/utils";
+import { useAuth } from "@/context/auth/AuthContext";
+import { FixtureDetailsTypes, TeamUpcomingFixtureType } from "@/utils";
 import Link from "next/link";
 import React, { FC } from "react";
 import { CustomBtn } from "../buttons";
 
 interface Props {
-  fixtures: FixturesType[];
+  fixtures: FixtureDetailsTypes[] | TeamUpcomingFixtureType[];
 }
 
 const MatchList: FC<Props> = ({ fixtures }) => {
+  const { isAuth } = useAuth();
   return (
     <ul className="match-list">
       {fixtures?.map((item, i) => {
         return (
           <li key={i}>
-            <div className="left">&quot;{item.time}&quot;</div>
+            <div className="left">{item.state}</div>
             <Link href={`/fixtures/${item.id}/overview`} className="middle">
               <img src={item.home.image} />
               <span>{item.home.name}</span>
@@ -23,11 +25,14 @@ const MatchList: FC<Props> = ({ fixtures }) => {
               <span>{item.away.name}</span>
               <img src={item.away.image} />
             </Link>
-            <div className="right">
-              <button className="btn-circle btn-sm btn-no-bg mark-noti-btn [active]"></button>
-            </div>
+            {item.state != "FT" && isAuth() && (
+              <div className="right">
+                <button className="btn-circle btn-sm btn-no-bg mark-noti-btn"></button>
+              </div>
+            )}
           </li>
         );
+        // [active]
       })}
     </ul>
   );

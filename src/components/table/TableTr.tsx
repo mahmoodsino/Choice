@@ -1,21 +1,21 @@
 import { TableTrType, TeamTypes } from "@/utils";
-import React,{FC} from "react";
+import Link from "next/link";
+import React, { FC } from "react";
 
-
-
-interface Props{
-  TableTr:TableTrType
-  index:number
+interface Props {
+  TableTr: TableTrType;
+  index: number;
+  tableShowType: "all" | "short";
 }
 
-const TableTr:FC<Props> = ({TableTr,index}) => {
+const TableTr: FC<Props> = ({ TableTr, index }) => {
   return (
     <tr>
-      <td>{index+1}</td>
+      <td>{index + 1}</td>
       <td>
-        <a href="team.html" className="imsp">
+        <Link href={`/team/${TableTr?.team?.id}/fixtures`} className="imsp">
           <img src={TableTr?.team?.image} /> <span>{TableTr?.team?.name}</span>
-        </a>
+        </Link>
       </td>
       <td>
         <span className="number">{TableTr.details.played_matches}</span>{" "}

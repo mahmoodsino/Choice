@@ -1,4 +1,8 @@
-import { MatchesType } from "@/utils";
+import {
+  FixtureDetailsTypes,
+  LeaguesDataTypes,
+  TeamUpcomingFixtureType,
+} from "@/utils";
 import moment, { Moment } from "moment";
 import React, { FC, useState } from "react";
 import { Loading } from "../loading";
@@ -10,8 +14,9 @@ interface Props {
   canSelect?: boolean;
   timeInMoment?: string;
   setTimeInMoment?: React.Dispatch<React.SetStateAction<string>>;
-  matches: MatchesType[];
+  matches?: LeaguesDataTypes[];
   isLoading: Boolean;
+  fixtures?: FixtureDetailsTypes[] | TeamUpcomingFixtureType[];
 }
 
 const MainCard: FC<Props> = ({
@@ -20,6 +25,7 @@ const MainCard: FC<Props> = ({
   timeInMoment,
   matches,
   isLoading,
+  fixtures,
 }) => {
   return (
     <div className="card">
@@ -31,18 +37,16 @@ const MainCard: FC<Props> = ({
       )}
       {!isLoading ? (
         <div>
-          {matches?.map((item,i) => {
-            return (
-              <div key={i}>
-                <BoxTitle
-                  ligCountry={item.country}
-                  ligImage={item.image}
-                  ligTitle={item.name}
-                />
-                <MatchList fixtures={item.fixtures} />
-              </div>
-            );
-          })}
+          {matches &&
+            matches?.map((item, i) => {
+              return (
+                <div key={i}>
+                  <BoxTitle league={item} />
+                  <MatchList fixtures={item.fixtures!} />
+                </div>
+              );
+            })}
+          {fixtures && <MatchList fixtures={fixtures} />}
         </div>
       ) : (
         <Loading style={{ width: "70px" }} />

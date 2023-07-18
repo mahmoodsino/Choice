@@ -1,12 +1,8 @@
-import { LeagueNewsMainSection } from '@/components'
-import React from 'react'
+import { LeagueNewsMainSection } from "@/components";
+import React from "react";
 
 const news = () => {
-  return (
-    <div>
-      <LeagueNewsMainSection/>
-    </div>
-  )
-}
+  return <div></div>;
+};
 
-export default news
+export default news;

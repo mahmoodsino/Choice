@@ -1,19 +1,23 @@
+import { NewsType } from "@/utils";
 import Link from "next/link";
 import React, { FC } from "react";
 
-const NewsSecondaryCard: FC = () => {
+interface NewsSecondaryCard {
+  news: NewsType;
+}
+
+const NewsSecondaryCard: FC<NewsSecondaryCard> = ({ news }) => {
   return (
     <div className="news">
       <div className=" box-news2">
-        <Link href="#">
-          {" "}
-          <img className="img2" src="/mes.jfif" />{" "}
+        <Link href={`/news/${news.slug}`}>
+          <img className="img2" src={news?.image} />{" "}
         </Link>
         <div>
-          <a href="#">
-            <h3> The squad for the trip to San Sebastion Xavi names ...</h3>
+          <a href={`/news/${news.slug}`}>
+            <h3>{news?.title}</h3>
           </a>
-          <span> 22 AUG 2022 14:16</span>
+          {/* <span> 22 AUG 2022 14:16</span> */}
         </div>
       </div>
     </div>

@@ -1,6 +1,7 @@
 import { usePost } from "@/api/hooks/usePost";
 import { Loading } from "@/components/loading";
 import { useAuth } from "@/context/auth/AuthContext";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { FC, useState } from "react";
 import { toast } from "react-toastify";
@@ -45,6 +46,9 @@ const FormSection: FC = () => {
     <div className="col-6">
       <div className="login-box">
         <h3>Login to your account.</h3>
+        <span>
+          You don&lsquo;t have account ? <Link href="/register">sign up</Link>
+        </span>
         <form onSubmit={handleSubmit}>
           <div className="row">
             <div className="col-12">

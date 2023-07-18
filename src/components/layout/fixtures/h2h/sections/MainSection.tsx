@@ -1,5 +1,7 @@
 import { useFetch } from "@/api/hooks/useFetch";
+import { ReloadButton } from "@/components/buttons";
 import { Loading } from "@/components/loading";
+import { NoData } from "@/components/no-data";
 import { H2HDataTypes, ScoreType, TeamTypes } from "@/utils";
 import Link from "next/link";
 import { FC } from "react";
@@ -55,6 +57,8 @@ const MainSection: FC<Props> = ({ away, home }) => {
       ) : (
         <Loading style={{ width: "30px" }} />
       )}
+      {isError && <ReloadButton refetch={refetch} />}
+      {!isLoading && data?.data?.fixtures?.length == 0 && <NoData />}
     </div>
   );
 };

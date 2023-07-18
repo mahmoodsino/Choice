@@ -8,21 +8,13 @@ interface Props {
   statistics: StatisticsTypes;
 }
 
-const MainSection: FC<Props> = ({ statistics }) => {
-  const { setIsLiftShow, setIsRightShow } = useContext(AppContext);
-  useEffect(() => {
-    setIsLiftShow(true);
-    setIsRightShow(true);
-  }, []);
+interface StatisticsDetailsProps {
+  statistics: StatisticsTypes;
+}
+
+const StatisticsDetails: FC<StatisticsDetailsProps> = ({ statistics }) => {
   return (
     <div>
-      <ul className="fixture-info-list">
-        <li>
-          <img src="/star.svg" />
-          <span>beIN Sports CONNECT MENA</span>
-        </li>
-      </ul>
-      <HowWillWin />
       <div style={{ textAlign: "center" }}>
         <span> Average Possession</span>
       </div>
@@ -51,6 +43,54 @@ const MainSection: FC<Props> = ({ statistics }) => {
           </div>
         );
       })}
+      <ul className="over">
+        <li className="match-details">
+          <div className=" time">
+            <span> 10</span>
+          </div>
+          <div className="img-name">
+            <div className="img-div">
+              <img src="/pa.png" />
+            </div>
+            <div className="name">
+              <span> sdgfdxnxhngf dvdhfcj ( 1 - 0 )</span>
+            </div>
+          </div>
+        </li>
+        <li className="match-details go-right">
+          <div className=" time">
+            <span> 10</span>
+          </div>
+          <div className="img-name">
+            <div className="img-div">
+              <img src="/pa.png" />
+            </div>
+            <div className="name">
+              <span> sdgfdxnxhngf dvdhfcj ( 1 - 0 )</span>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  );
+};
+
+const MainSection: FC<Props> = ({ statistics }) => {
+  const { setIsLiftShow, setIsRightShow } = useContext(AppContext);
+  useEffect(() => {
+    setIsLiftShow(true);
+    setIsRightShow(true);
+  }, []);
+  return (
+    <div>
+      <ul className="fixture-info-list">
+        <li>
+          <img src="/star.svg" />
+          <span>beIN Sports CONNECT MENA</span>
+        </li>
+      </ul>
+      <HowWillWin />
+      <StatisticsDetails statistics={statistics} />
     </div>
   );
 };

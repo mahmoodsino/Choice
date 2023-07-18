@@ -1,6 +1,18 @@
+import { useFetch } from "@/api/hooks/useFetch";
+import { ReloadButton } from "@/components/buttons";
 import { TeamBox } from "@/components/layout/base-box";
+import { Loading } from "@/components/loading";
+import { NoData } from "@/components/no-data";
 import { AppContext } from "@/context/BaseBox";
-import { useContext, useEffect } from "react";
+import { CountryTypes, TeamSquadType } from "@/utils";
+import { useRouter } from "next/router";
+import { useContext, useEffect, useState, FC } from "react";
+
+interface SquadProps {
+  image: string;
+  name: string;
+  country: CountryTypes;
+}
 
 const MainSection = () => {
   const { setIsLiftShow, setIsRightShow } = useContext(AppContext);
@@ -8,31 +20,112 @@ const MainSection = () => {
     setIsLiftShow(true);
     setIsRightShow(true);
   }, []);
+  const { query } = useRouter();
+  const { isLoading, refetch, data, error, isError, isFetching } =
+    useFetch<any>(query.id ? `v1/teams/squad/${query.id}` : "");
+  const [squadInfo, setSquadInfo] = useState<TeamSquadType[]>();
 
-  const Squad = () => {
+  useEffect(() => {
+    if (data) {
+      setSquadInfo(data.data);
+    }
+  }, [data]);
+
+  const Squad: FC<SquadProps> = ({ country, image, name }) => {
     return (
       <>
-        <h3 className="h3-3"> Coach</h3>
         <div className="im-sp-3">
           <div className="left">
-            <img src="/pa.png" />
+            <img src={image} />
           </div>
           <div className="inform">
-            <span className="title"> Patrick Winqvist</span>
+            <span className="title">{name}</span>
 
-            <span> England </span>
+            <span>{country.name}</span>
           </div>
         </div>
-        <hr></hr>
       </>
     );
   };
 
   return (
     <div>
-      <Squad />
-      <Squad />
-      <Squad />
+      {!isLoading ? (
+        <div>
+          <div>
+            <h3 className="h3-3">Goalkeeper</h3>
+            {squadInfo?.map((item, i) => {
+              return (
+                <div key={i}>
+                  {item.position == "Goalkeeper" && (
+                    <Squad
+                      country={item.country}
+                      image={item.image}
+                      name={item.name}
+                    />
+                  )}
+                </div>
+              );
+            })}
+            <hr></hr>
+          </div>
+          <div>
+            <h3 className="h3-3">Defender</h3>
+            {squadInfo?.map((item, i) => {
+              return (
+                <div key={i}>
+                  {item.position == "Defender" && (
+                    <Squad
+                      country={item.country}
+                      image={item.image}
+                      name={item.name}
+                    />
+                  )}
+                </div>
+              );
+            })}
+            <hr></hr>
+          </div>
+          <div>
+            <h3 className="h3-3">Midfielder</h3>
+            {squadInfo?.map((item, i) => {
+              return (
+                <div key={i}>
+                  {item.position == "Midfielder" && (
+                    <Squad
+                      country={item.country}
+                      image={item.image}
+                      name={item.name}
+                    />
+                  )}
+                </div>
+              );
+            })}
+            <hr></hr>
+          </div>
+          <div>
+            <h3 className="h3-3">Attacker</h3>
+            {squadInfo?.map((item, i) => {
+              return (
+                <div key={i}>
+                  {item.position == "Attacker" && (
+                    <Squad
+                      country={item.country}
+                      image={item.image}
+                      name={item.name}
+                    />
+                  )}
+                </div>
+              );
+            })}
+            <hr></hr>
+          </div>
+        </div>
+      ) : (
+        <Loading style={{ width: "45px" }} />
+      )}
+      {isError && <ReloadButton refetch={refetch} />}
+      {!isLoading && squadInfo?.length == 0 && <NoData />}
     </div>
   );
 };

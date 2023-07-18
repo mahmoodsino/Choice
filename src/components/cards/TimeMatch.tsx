@@ -1,3 +1,4 @@
+import { useAuth } from "@/context/auth/AuthContext";
 import { ScoreType, TeamTypes } from "@/utils";
 import React, { FC } from "react";
 import { CustomBtn } from "../buttons";
@@ -11,6 +12,7 @@ interface Props {
 }
 
 const TimeMatch: FC<Props> = ({ awayTeam, homeTeam, startAt, time, score }) => {
+  const { isAuth } = useAuth();
   return (
     <div className="time-match">
       <div className="left">
@@ -20,11 +22,14 @@ const TimeMatch: FC<Props> = ({ awayTeam, homeTeam, startAt, time, score }) => {
       </div>
       <div className="middle">
         <h3>{startAt}</h3>
-        <span className="timer">&quot;{time}&quot;</span>
-        <div>
-          <CustomBtn isActive isFav isNotif={false} />
-          <CustomBtn isActive isFav={false} isNotif={true} />
-        </div>
+        {/* &quot;{time}&quot; */}
+        <span className="timer"></span>
+        {isAuth() && (
+          <div>
+            <CustomBtn isFav isNotif={false} />
+            <CustomBtn isFav={false} isNotif={true} />
+          </div>
+        )}
       </div>
       <div className="right">
         <img src={awayTeam?.image} />

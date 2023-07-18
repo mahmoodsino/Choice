@@ -2,11 +2,7 @@ import { LeagueTransfersMainSection } from "@/components";
 import React from "react";
 
 const transfers = () => {
-  return (
-    <div>
-      <LeagueTransfersMainSection />
-    </div>
-  );
+  return <div></div>;
 };
 
 export default transfers;

@@ -1,10 +1,12 @@
 import { useFetch } from "@/api/hooks/useFetch";
+import { ReloadButton } from "@/components/buttons";
 import { TimeMatch } from "@/components/cards";
 import { Loading } from "@/components/loading";
-import { FixtureDetailsDataTypes } from "@/utils";
+import { SelectSeasons } from "@/components/select-seasons";
+import { FixtureDetailsTypes } from "@/utils";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { FC, ReactElement } from "react";
+import { FC, ReactElement, useState, useEffect } from "react";
 import {
   FixturesH2HMainSection,
   FixturesLineupMainSection,
@@ -15,6 +17,12 @@ import {
 interface Props {
   children: ReactElement;
 }
+export interface FixtureDetailsDataTypes {
+  message: string;
+  pagination: boolean;
+  success: boolean;
+  data: FixtureDetailsTypes;
+}
 
 const FixturesBox: FC<Props> = ({ children }) => {
   const { pathname } = useRouter();
@@ -23,10 +31,17 @@ const FixturesBox: FC<Props> = ({ children }) => {
     useFetch<FixtureDetailsDataTypes>(
       query.id ? `v1/fixtures/details/${query.id}` : ""
     );
+  const [selectedSeason, setSelectedSeason] = useState<number>();
+
+  useEffect(() => {
+    if (data) {
+      setSelectedSeason(data?.data?.season_id);
+    }
+  }, [data]);
 
   return (
     <div>
-      {!isLoading ? (
+      {!isLoading && !isError && (
         <div className="card">
           <TimeMatch
             awayTeam={data?.data?.away!}
@@ -46,16 +61,18 @@ const FixturesBox: FC<Props> = ({ children }) => {
                 Overview
               </Link>
             </li>
-            <li>
-              <Link
-                className={`${
-                  pathname == `/fixtures/[id]/lineup` ? "active" : ""
-                } }`}
-                href={`/fixtures/${query.id}/lineup`}
-              >
-                Lineup
-              </Link>
-            </li>
+            {data?.data?.lineups?.away?.field?.length! > 0 && (
+              <li>
+                <Link
+                  className={`${
+                    pathname == `/fixtures/[id]/lineup` ? "active" : ""
+                  } }`}
+                  href={`/fixtures/${query.id}/lineup`}
+                >
+                  Lineup
+                </Link>
+              </li>
+            )}
             {data?.data?.league?.has_table && (
               <li>
                 <Link
@@ -79,13 +96,20 @@ const FixturesBox: FC<Props> = ({ children }) => {
               </Link>
             </li>
           </ul>
+
           {pathname.includes(`/fixtures/[id]/table`) && (
-            <FixturesTableMainSection
-              gameSeasonId={data?.data?.season_id!}
-              season={data?.data?.league?.seasons!}
-              leagueId={data?.data?.league?.id!}
-            />
+            <div>
+              <SelectSeasons
+                seasons={data?.data?.league?.seasons!}
+                setSelectedSeason={setSelectedSeason}
+              />
+              <FixturesTableMainSection
+                selectedSeason={selectedSeason!}
+                leagueId={data?.data?.league?.id!}
+              />
+            </div>
           )}
+
           {pathname.includes(`/fixtures/[id]/lineup`) && (
             <FixturesLineupMainSection lineups={data?.data.lineups!} />
           )}
@@ -99,9 +123,9 @@ const FixturesBox: FC<Props> = ({ children }) => {
             />
           )}
         </div>
-      ) : (
-        <Loading style={{ width: "50px" }} />
       )}
+      {isLoading && <Loading style={{ width: "50px" }} />}
+      {isError && <ReloadButton refetch={refetch} />}
     </div>
   );
 };

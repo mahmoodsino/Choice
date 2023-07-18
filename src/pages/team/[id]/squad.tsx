@@ -1,12 +1,8 @@
-import { SquadTeamMainSection } from '@/components'
-import React from 'react'
+import { SquadTeamMainSection } from "@/components";
+import React from "react";
 
 const squad = () => {
-  return (
-    <div>
-      <SquadTeamMainSection/>
-    </div>
-  )
-}
+  return <div></div>;
+};
 
-export default squad
+export default squad;

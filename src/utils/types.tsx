@@ -1,6 +1,6 @@
 //Leagues Types
 export interface LeaguesDataTypes {
-  fixtures: null;
+  fixtures: FixtureDetailsTypes[];
   id: number;
   image: string;
   name: string;
@@ -8,16 +8,7 @@ export interface LeaguesDataTypes {
   seasons: SeasonsTypes[];
   type: string;
   has_table: boolean;
-}
-
-export interface LeaguesTypes {
-  current_page: number;
-  data: LeaguesDataTypes[];
-  has_more: boolean;
-  message: string;
-  pagination: boolean;
-  per_page: number;
-  success: boolean;
+  current_season: SeasonsTypes;
 }
 
 export interface CountryTypes {
@@ -33,24 +24,6 @@ export interface SeasonsTypes {
 
 //matches type
 
-export interface MatchesDataType {
-  message: string;
-  pagination: boolean;
-  per_page: number;
-  current_page: number;
-  has_more: boolean;
-  data: MatchesType[];
-  success: boolean;
-}
-
-export interface MatchesType {
-  id: number;
-  name: string;
-  image: string;
-  country: CountryTypes;
-  fixtures: FixturesType[];
-}
-
 export interface TeamTypes {
   id: number;
   name: string;
@@ -59,16 +32,6 @@ export interface TeamTypes {
 export interface ScoreType {
   home: number;
   away: number;
-}
-
-export interface FixturesType {
-  id: number;
-  home: TeamTypes;
-  away: TeamTypes;
-  state: string;
-  time: number;
-  starting_at: string;
-  score: ScoreType;
 }
 
 //Fixture types
@@ -102,14 +65,7 @@ export interface FixtureDetailsTypes {
   score: ScoreType;
   lineups?: LineupsTypes;
   season_id?: number;
-  statistics:StatisticsTypes
-}
-
-export interface FixtureDetailsDataTypes {
-  message: string;
-  pagination: boolean;
-  success: boolean;
-  data: FixtureDetailsTypes;
+  statistics: StatisticsTypes;
 }
 
 //H2h Types
@@ -135,14 +91,7 @@ export interface H2HTypes {
 
 //table
 
-export interface TableData {
-  success: string;
-  data: Table;
-  message: string;
-  pagination: boolean;
-}
-
-export interface Table {
+export interface TableType {
   overall: TableTrType[];
   home: TableTrType[];
   away: TableTrType[];
@@ -181,4 +130,91 @@ export interface StatisticsInfoType {
 export interface StatisticsTypes {
   all: StatisticsInfoType[];
   possession: PossessionType;
+}
+
+//teams
+
+export interface TrophiesType {
+  league_name: string;
+  league_image: string;
+  winner: string[];
+  runnerup: string[];
+}
+
+export interface TeamVenueType {
+  id: number;
+  name: string;
+  image: string;
+  city_name: string;
+  surface: string;
+  capacity: number;
+  lat: string;
+  lng: string;
+}
+
+export interface TeamDetailsType {
+  id: number;
+  name: string;
+  image: string;
+  short_code: string;
+  founded: number;
+  country: CountryTypes;
+  venue: TeamVenueType;
+  league_season: {
+    season_id: number;
+    season_name: string;
+    league_name: string;
+    league_image: string;
+  }[];
+  trophies: TrophiesType[];
+}
+
+export interface TeamUpcomingFixtureType {
+  id: number;
+  home: TeamTypes;
+  away: TeamTypes;
+  state: string;
+  time: string;
+  season_id?: number;
+  league: LeaguesDataTypes;
+  starting_at: string;
+  score: ScoreType;
+}
+
+export interface TeamSquadType {
+  id: number;
+  name: string;
+  short_name: string;
+  image: string;
+  country: CountryTypes;
+  position: "Midfielder" | "Defender" | "Goalkeeper" | "Attacker";
+}
+
+//news
+export interface EntityType {
+  entity_id: number;
+  type: string;
+  entity_name: string;
+  entity_image: string;
+}
+
+export interface NewsType {
+  category: string[];
+  slug: string;
+  title: string;
+  image: string;
+  entities: EntityType[];
+}
+
+export interface NewsSlugDetails {
+  category: string[];
+  slug: string;
+  title: string;
+  image: string;
+  entities: {
+    entity_id: number;
+    type: string;
+    entity_name: string;
+    entity_image: string;
+  }[];
 }

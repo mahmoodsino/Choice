@@ -1,15 +1,24 @@
 import { TeamBox } from "@/components/layout/base-box";
 import { TeamsTable } from "@/components/table";
 import { AppContext } from "@/context/BaseBox";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, FC } from "react";
 
-const MainSection = () => {
+interface Props {
+  selectedSeason: number;
+  leagueId: number;
+}
+
+const MainSection: FC<Props> = ({ leagueId, selectedSeason }) => {
   const { setIsLiftShow, setIsRightShow } = useContext(AppContext);
   useEffect(() => {
     setIsLiftShow(true);
     setIsRightShow(true);
   }, []);
-  return <div>{/* <TeamsTable /> */}</div>;
+  return (
+    <div>
+      <TeamsTable leagueId={leagueId} selectedSeason={selectedSeason} />
+    </div>
+  );
 };
 
 export default MainSection;

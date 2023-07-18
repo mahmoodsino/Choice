@@ -2,11 +2,7 @@ import { TransfersTeamMainSection } from "@/components/layout/team";
 import React from "react";
 
 const transfers = () => {
-  return (
-    <div>
-      <TransfersTeamMainSection />
-    </div>
-  );
+  return <div></div>;
 };
 
 export default transfers;

@@ -1,10 +1,11 @@
 import { useFetch } from "@/api/hooks/useFetch";
+import { ReloadButton } from "@/components/buttons";
 import { LeaguesCard } from "@/components/cards";
 import { Loading } from "@/components/loading";
-import { Pagination } from "@/components/pagination";
 import { AppContext } from "@/context/BaseBox";
-import { CountryTypes, LeaguesTypes } from "@/utils";
-import React, { useContext, useEffect, useState } from "react";
+import { CountryTypes } from "@/utils";
+import { useRouter } from "next/router";
+import { useContext, useEffect, useRef, useState } from "react";
 import League from "./League";
 
 type CountryData = {
@@ -25,60 +26,81 @@ const MainSection = () => {
   }, []);
   const [selectedCountry, setSelectedCountry] = useState(0);
   const [page, setPage] = useState<number>(1);
+  const { query, replace, pathname } = useRouter();
   const { isLoading, refetch, data, error, isError, isFetching } =
     useFetch<CountryData>("v1/countries/all", {
       page: page,
     });
 
   const [counties, setCounties] = useState<CountryTypes[]>([]);
+  const observe = useRef<IntersectionObserver>();
+  const [loadMore, setLoadMore] = useState(false);
 
   useEffect(() => {
+    setLoadMore(true);
     if (data) {
       setCounties((prevItems) => [...prevItems, ...data.data]);
     }
+    setLoadMore(false);
   }, [data]);
 
-  console.log(counties);
+  useEffect(() => {
+    if (query.CountryId) {
+      setSelectedCountry(+query.CountryId);
+    }
+  }, [query.CountryId]);
+
+  const firstResultRef = (node: HTMLDivElement) => {
+    if (isLoading) return;
+    if (observe.current) observe.current.disconnect();
+    observe.current = new IntersectionObserver((entries) => {
+      if (
+        entries[0].isIntersecting &&
+        !loadMore &&
+        data?.has_more! &&
+        data?.pagination!
+      ) {
+        setLoadMore(true);
+        setPage((prev) => (prev += 1));
+      }
+    });
+    if (node) observe.current.observe(node);
+  };
 
   return (
     <div>
       <div className="card">
-        {selectedCountry != 0 && (
-          <button
-            onClick={() => setSelectedCountry(0)}
-            style={{ color: "white", fontWeight: "bold", cursor: "pointer" }}
-          >
-            Return
-          </button>
-        )}
         {selectedCountry > 0 ? (
           <div>
-            <League countryId={selectedCountry} />
+            <League
+              setSelectedCountry={setSelectedCountry}
+              countryId={selectedCountry}
+            />
           </div>
         ) : (
           <div>
             <ul className="leagues-ul2">
               {counties.map((item, i) => {
                 return (
-                  <LeaguesCard
-                    onClick={() => setSelectedCountry(item.id)}
-                    img={item.image}
-                    key={i}
-                    id={item.id}
-                    name={item.name}
-                  />
+                  <>
+                    <LeaguesCard
+                      href={`/leagues?CountryId=${item.id}`}
+                      img={item.image}
+                      key={i}
+                      id={item.id}
+                      name={item.name}
+                    />
+                    {i === counties.length - 1 && (
+                      <span ref={firstResultRef}></span>
+                    )}
+                  </>
                 );
               })}
             </ul>
             {isLoading && <Loading style={{ width: "40px" }} />}
-            <Pagination
-              hasMore={data?.has_more!}
-              hasPagination={data?.pagination!}
-              page={page}
-              setPage={setPage}
-            />
           </div>
         )}
+        {isError && <ReloadButton refetch={refetch} />}
       </div>
     </div>
   );

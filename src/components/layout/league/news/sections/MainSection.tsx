@@ -1,30 +1,20 @@
-import { NewsMainCard } from "@/components/cards";
-import { LeagueBox } from "@/components/layout/base-box";
+import { NewsEntity } from "@/components/new";
 import { AppContext } from "@/context/BaseBox";
-import React, { useContext, useEffect } from "react";
+import { NewsType } from "@/utils";
+import { useRouter } from "next/router";
+import { useContext, useEffect } from "react";
 
 const MainSection = () => {
-    const { setIsLiftShow, setIsRightShow } = useContext(AppContext);
+  const { setIsLiftShow, setIsRightShow } = useContext(AppContext);
   useEffect(() => {
     setIsLiftShow(true);
     setIsRightShow(true);
   }, []);
+  const { query } = useRouter();
+
   return (
     <div>
-      <div className="row">
-        <div className="col-md-6">
-          <NewsMainCard />
-        </div>
-        <div className="col-md-6">
-          <NewsMainCard />
-        </div>
-        <div className="col-md-6">
-          <NewsMainCard />
-        </div>
-        <div className="col-md-6">
-          <NewsMainCard />
-        </div>
-      </div>
+      <NewsEntity entity_id={+query.id!} />
     </div>
   );
 };
