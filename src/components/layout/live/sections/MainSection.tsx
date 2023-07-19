@@ -49,6 +49,7 @@ const MainSection: FC = () => {
         isLoading={isLoading}
         matches={data?.data!}
         canSelect={false}
+        refetch={refetch}
       />
       {isError && <ReloadButton refetch={refetch} />}
       {!isLoading && data?.data?.length == 0 && <NoData />}

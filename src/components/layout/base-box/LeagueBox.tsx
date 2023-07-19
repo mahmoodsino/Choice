@@ -47,11 +47,13 @@ const LeagueBox: FC<Props> = ({ children }) => {
     data: AddToFavoriteData,
     mutate,
   } = usePost<any, any>("favorite/store");
+  const [firstTime, setFirstTime] = useState(true);
 
   useEffect(() => {
     if (detailsData) {
       setLeague(detailsData.data);
       setSelectedSeason(detailsData?.data?.current_season?.id);
+      setFirstTime(false);
     }
   }, [detailsData]);
 
@@ -66,9 +68,11 @@ const LeagueBox: FC<Props> = ({ children }) => {
         if (data.data.data.favorite) {
           console.log("true add");
           toast.success("Added successfully");
+          refetch();
         } else {
           console.log("true remove");
           toast.success("Removed successfully");
+          refetch();
         }
       },
       onError: (error) => {
@@ -79,7 +83,7 @@ const LeagueBox: FC<Props> = ({ children }) => {
 
   return (
     <div>
-      {!isLoading ? (
+      {!isLoading && (
         <div className="card">
           <div className="box-title-2">
             <div className="left">
@@ -137,7 +141,7 @@ const LeagueBox: FC<Props> = ({ children }) => {
                 </Link>
               </li>
             )}
-            <li>
+            {/* <li>
               <Link
                 className={`${
                   pathname == `/league/[id]/knockout` ? "active" : ""
@@ -146,7 +150,7 @@ const LeagueBox: FC<Props> = ({ children }) => {
               >
                 Knockout
               </Link>
-            </li>
+            </li> */}
             <li>
               <Link
                 className={`${
@@ -167,7 +171,7 @@ const LeagueBox: FC<Props> = ({ children }) => {
                 Transfers
               </Link>
             </li> */}
-            <li>
+            {/* <li>
               <Link
                 className={`${
                   pathname == `/league/[id]/seasons` ? "active" : ""
@@ -176,7 +180,7 @@ const LeagueBox: FC<Props> = ({ children }) => {
               >
                 Seasons
               </Link>
-            </li>
+            </li> */}
           </ul>
 
           {pathname.includes(`/league/[id]/table`) && (
@@ -193,9 +197,8 @@ const LeagueBox: FC<Props> = ({ children }) => {
             <LeagueTransfersMainSection />
           )}
         </div>
-      ) : (
-        <Loading style={{ width: "40px" }} />
       )}
+      {isLoading && firstTime && <Loading style={{ width: "40px" }} />}
       {isError && <ReloadButton refetch={refetch} />}
     </div>
   );

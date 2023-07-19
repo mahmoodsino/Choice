@@ -9,9 +9,10 @@ import { Loading } from "../loading";
 
 interface Props {
   league: LeaguesDataTypes;
+  refetch?: any;
 }
 
-const BoxTitle: FC<Props> = ({ league }) => {
+const BoxTitle: FC<Props> = ({ league, refetch }) => {
   const { isAuth } = useAuth();
   const {
     isLoading: AddToFavoriteLoading,
@@ -32,9 +33,11 @@ const BoxTitle: FC<Props> = ({ league }) => {
         if (data.data.data.favorite) {
           console.log("true add");
           toast.success("Added successfully");
+          refetch();
         } else {
           console.log("true remove");
           toast.success("Removed successfully");
+          refetch();
         }
       },
       onError: (error) => {

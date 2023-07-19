@@ -36,10 +36,12 @@ const TeamBox: FC<Props> = ({ children }) => {
     data: AddToFavoriteData,
     mutate,
   } = usePost<any, any>("favorite/store");
+  const [firstTime, setFirstTime] = useState(true);
 
   useEffect(() => {
     if (data) {
       setTeamDetails(data?.data);
+      setFirstTime(false);
     }
   }, [data]);
   useEffect(() => {
@@ -59,9 +61,11 @@ const TeamBox: FC<Props> = ({ children }) => {
         if (data.data.data.favorite) {
           console.log("true add");
           toast.success("Added successfully");
+          refetch();
         } else {
           console.log("true remove");
           toast.success("Removed successfully");
+          refetch();
         }
       },
       onError: (error) => {
@@ -72,7 +76,7 @@ const TeamBox: FC<Props> = ({ children }) => {
 
   return (
     <div>
-      {!isLoading ? (
+      {!isLoading && (
         <div className="card">
           <div className="box-title-2">
             <div className="left">
@@ -178,9 +182,8 @@ const TeamBox: FC<Props> = ({ children }) => {
             <TransfersTeamMainSection />
           )}
         </div>
-      ) : (
-        <Loading style={{ width: "35px" }} />
       )}
+      {isLoading && firstTime && <Loading style={{ width: "35px" }} />}
       {isError && <ReloadButton refetch={refetch} />}
     </div>
   );

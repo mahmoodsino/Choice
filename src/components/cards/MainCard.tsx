@@ -14,6 +14,7 @@ interface Props {
   isLoading: Boolean;
   fixtures?: FixtureDetailsTypes[];
   firstTime?: boolean;
+  refetch?: any;
 }
 
 const MainCard: FC<Props> = ({
@@ -24,6 +25,7 @@ const MainCard: FC<Props> = ({
   isLoading,
   fixtures,
   firstTime = true,
+  refetch,
 }) => {
   return (
     <div className="card">
@@ -39,7 +41,7 @@ const MainCard: FC<Props> = ({
           matches?.map((item, i) => {
             return (
               <div key={i}>
-                <BoxTitle league={item} />
+                <BoxTitle refetch={refetch} league={item} />
                 <MatchList fixtures={item.fixtures!} />
               </div>
             );

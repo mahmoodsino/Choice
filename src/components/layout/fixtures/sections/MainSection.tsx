@@ -34,6 +34,13 @@ const MainSection: FC = () => {
         momentDate
       ).format("YYYY-MM-DD")}`
     );
+  const [firstTime, setFirstTime] = useState(true);
+
+  useEffect(() => {
+    if (data) {
+      setFirstTime(false);
+    }
+  }, [data]);
 
   return (
     <div>
@@ -44,6 +51,8 @@ const MainSection: FC = () => {
         canSelect
         setTimeInMoment={setMomentDate}
         timeInMoment={momentDate}
+        refetch={refetch}
+        firstTime={firstTime}
       />
       {isError && <ReloadButton refetch={refetch} />}
       {!isLoading && data?.data?.length == 0 && <NoData />}

@@ -1,6 +1,6 @@
 import { useFetch } from "@/api/hooks/useFetch";
 import { usePost } from "@/api/hooks/usePost";
-import { CustomBtn } from "@/components/buttons";
+import { CustomBtn, ReloadButton } from "@/components/buttons";
 import { TransfersCard } from "@/components/cards";
 import { Loading } from "@/components/loading";
 import { NewsEntity } from "@/components/new";
@@ -35,10 +35,12 @@ const PlayerProfileBox: FC<Props> = ({ children }) => {
     data: AddToFavoriteData,
     mutate,
   } = usePost<any, any>("favorite/store");
+  const [firstTime, setFirstTime] = useState(true);
 
   useEffect(() => {
     if (data) {
       setPlayer(data?.data);
+      setFirstTime(false);
     }
   }, [data]);
 
@@ -53,9 +55,11 @@ const PlayerProfileBox: FC<Props> = ({ children }) => {
         if (data.data.data.favorite) {
           console.log("true add");
           toast.success("Added successfully");
+          refetch();
         } else {
           console.log("true remove");
           toast.success("Removed successfully");
+          refetch()
         }
       },
       onError: (error) => {
@@ -150,7 +154,10 @@ const PlayerProfileBox: FC<Props> = ({ children }) => {
           </ul>
 
           {pathname.includes("/player/[id]/player-profile") && (
-            <PlayerProfileMainSection player={player!} />
+            <>
+              <PlayerProfileMainSection player={player!} />
+              {isError && <ReloadButton refetch={refetch} />}
+            </>
           )}
           {pathname.includes("/player/[id]/player-transfers") && (
             <div>
@@ -245,7 +252,7 @@ const PlayerProfileBox: FC<Props> = ({ children }) => {
           )}
         </div>
       )}
-      {isLoading && <Loading style={{ width: "50px" }} />}
+      {isLoading && firstTime && <Loading style={{ width: "50px" }} />}
     </div>
   );
 };
