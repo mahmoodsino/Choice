@@ -270,3 +270,33 @@ export interface TransfersType {
     image: string;
   };
 }
+
+//player
+
+export interface PlayerType {
+  id: number;
+  name: string;
+  short_name: string;
+  height: number;
+  weight: number | null;
+  date_of_birth: string;
+  gender: "male" | "female";
+  image: string;
+  country: CountryTypes | null;
+  position: string;
+  transfers: TransferPlayerType[];
+}
+
+export interface TransferPlayerType {
+  id: number;
+  player: {
+    id: number;
+    name: string;
+    short_name: string;
+    image: string;
+    country: CountryTypes;
+    position: string;
+  };
+  to_team: TeamTypes;
+  from_team: TeamTypes;
+}

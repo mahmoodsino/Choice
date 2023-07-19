@@ -1,5 +1,6 @@
 import { AppContext } from "@/context/BaseBox";
 import { LineupsTypes, PlayerTypes } from "@/utils";
+import Link from "next/link";
 import { FC, useContext, useEffect } from "react";
 
 // interface LineupProps {
@@ -59,14 +60,14 @@ const MainSection: FC<Props> = ({ lineups }) => {
               >
                 {item.map((player, i) => {
                   return (
-                    <div key={i}>
+                    <Link href={`/player/${player.id}`} key={i}>
                       <Lineup
                         image={player?.image}
                         id={player?.id}
                         name={player?.name}
                         short_name={player?.short_name}
                       />
-                    </div>
+                    </Link>
                   );
                 })}
               </div>
@@ -93,14 +94,14 @@ const MainSection: FC<Props> = ({ lineups }) => {
               >
                 {item.map((player, i) => {
                   return (
-                    <div key={i}>
+                    <Link href={`/player/${player.id}`} key={i}>
                       <Lineup
                         image={player?.image}
                         id={player?.id}
                         name={player?.name}
                         short_name={player?.short_name}
                       />
-                    </div>
+                    </Link>
                   );
                 })}
               </div>

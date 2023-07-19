@@ -5,6 +5,7 @@ import { Loading } from "@/components/loading";
 import { NoData } from "@/components/no-data";
 import { AppContext } from "@/context/BaseBox";
 import { CountryTypes, TeamSquadType } from "@/utils";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import { useContext, useEffect, useState, FC } from "react";
 
@@ -41,7 +42,7 @@ const MainSection = () => {
           <div className="inform">
             <span className="title">{name}</span>
 
-            <span>{country.name}</span>
+            <span>{country?.name}</span>
           </div>
         </div>
       </>
@@ -58,11 +59,13 @@ const MainSection = () => {
               return (
                 <div key={i}>
                   {item.position == "Goalkeeper" && (
-                    <Squad
-                      country={item.country}
-                      image={item.image}
-                      name={item.name}
-                    />
+                    <Link href={`/player/${item.id}`}>
+                      <Squad
+                        country={item?.country}
+                        image={item?.image}
+                        name={item?.name}
+                      />
+                    </Link>
                   )}
                 </div>
               );
@@ -75,11 +78,13 @@ const MainSection = () => {
               return (
                 <div key={i}>
                   {item.position == "Defender" && (
-                    <Squad
-                      country={item.country}
-                      image={item.image}
-                      name={item.name}
-                    />
+                    <Link href={`/player/${item.id}`}>
+                      <Squad
+                        country={item?.country}
+                        image={item?.image}
+                        name={item?.name}
+                      />
+                    </Link>
                   )}
                 </div>
               );
@@ -92,11 +97,13 @@ const MainSection = () => {
               return (
                 <div key={i}>
                   {item.position == "Midfielder" && (
-                    <Squad
-                      country={item.country}
-                      image={item.image}
-                      name={item.name}
-                    />
+                    <Link href={`/player/${item.id}`}>
+                      <Squad
+                        country={item.country}
+                        image={item?.image}
+                        name={item?.name}
+                      />
+                    </Link>
                   )}
                 </div>
               );
@@ -109,11 +116,13 @@ const MainSection = () => {
               return (
                 <div key={i}>
                   {item.position == "Attacker" && (
-                    <Squad
-                      country={item.country}
-                      image={item.image}
-                      name={item.name}
-                    />
+                    <Link href={`/player/${item.id}`}>
+                      <Squad
+                        country={item?.country}
+                        image={item?.image}
+                        name={item?.name}
+                      />
+                    </Link>
                   )}
                 </div>
               );

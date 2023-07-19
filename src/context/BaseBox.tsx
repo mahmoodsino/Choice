@@ -4,6 +4,7 @@ import {
   TrendingNews,
   LeagueBox,
   TeamBox,
+  PlayerProfileBox,
 } from "@/components";
 import { useRouter } from "next/router";
 import React, { createContext, FC, useEffect, useState } from "react";
@@ -44,6 +45,8 @@ const BaseBox: FC<Props> = ({ children }) => {
             <LeagueBox>{children}</LeagueBox>
           ) : pathname.includes("/team/[id]/") ? (
             <TeamBox>{children}</TeamBox>
+          ) : pathname.includes("/player/[id]") ? (
+            <PlayerProfileBox>{children}</PlayerProfileBox>
           ) : (
             children
           )}

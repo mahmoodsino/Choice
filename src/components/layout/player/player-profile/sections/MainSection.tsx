@@ -1,30 +1,23 @@
-import { PlayerProfileBox } from "@/components/layout/base-box";
 import { AppContext } from "@/context/BaseBox";
-import { useContext, useEffect } from "react";
+import { PlayerType } from "@/utils";
+import { useContext, useEffect, FC } from "react";
 
-const MainSection = () => {
+interface Props {
+  player: PlayerType;
+}
+
+const MainSection: FC<Props> = ({ player }) => {
   const { setIsLiftShow, setIsRightShow } = useContext(AppContext);
   useEffect(() => {
     setIsLiftShow(true);
     setIsRightShow(true);
   }, []);
 
-  const PlayerProfileInfo = () => {
-    return (
-      <div className="col-6">
-        <div className="pic-details">
-          <div className="left">
-            <img src="/laliga.png" />
-          </div>
-          <div className="inform">
-            <span> Hight</span>
+  // const PlayerProfileInfo = () => {
+  //   return (
 
-            <h3> 188 cm </h3>
-          </div>
-        </div>
-      </div>
-    );
-  };
+  //   );
+  // };
 
   const PlayerTeam = () => {
     return (
@@ -46,11 +39,56 @@ const MainSection = () => {
   };
 
   return (
-    <PlayerProfileBox>
+    <div>
       <div className="row">
-        <PlayerProfileInfo />
-        <PlayerProfileInfo />
-        <PlayerProfileInfo />
+        <div className="col-6">
+          <div className="pic-details">
+            <div className="left">
+              <img src="/laliga.png" />
+            </div>
+            <div className="inform">
+              <span> Hight</span>
+
+              <h3>{player?.height}</h3>
+            </div>
+          </div>
+        </div>
+        <div className="col-6">
+          <div className="pic-details">
+            <div className="left">
+              <img src="/laliga.png" />
+            </div>
+            <div className="inform">
+              <span> Position</span>
+
+              <h3>{player?.position}</h3>
+            </div>
+          </div>
+        </div>
+        <div className="col-6">
+          <div className="pic-details">
+            <div className="left">
+              <img src="/laliga.png" />
+            </div>
+            <div className="inform">
+              <span> Weight</span>
+
+              <h3>{player?.weight}</h3>
+            </div>
+          </div>
+        </div>
+        <div className="col-6">
+          <div className="pic-details">
+            <div className="left">
+              <img src="/laliga.png" />
+            </div>
+            <div className="inform">
+              <span> Date of birth</span>
+
+              <h3>{player?.date_of_birth}</h3>
+            </div>
+          </div>
+        </div>
       </div>
       <hr />
       <PlayerTeam />
@@ -60,7 +98,7 @@ const MainSection = () => {
         <Info />
         <Info />
       </ul>
-    </PlayerProfileBox>
+    </div>
   );
 };
 
