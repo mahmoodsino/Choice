@@ -60,7 +60,7 @@ const MainSection: FC<Props> = ({ lineups }) => {
               >
                 {item.map((player, i) => {
                   return (
-                    <Link href={`/player/${player.id}`} key={i}>
+                    <Link href={`/player/${player.id}/player-profile`} key={i}>
                       <Lineup
                         image={player?.image}
                         id={player?.id}
@@ -94,7 +94,7 @@ const MainSection: FC<Props> = ({ lineups }) => {
               >
                 {item.map((player, i) => {
                   return (
-                    <Link href={`/player/${player.id}`} key={i}>
+                    <Link href={`/player/${player.id}/player-profile`} key={i}>
                       <Lineup
                         image={player?.image}
                         id={player?.id}

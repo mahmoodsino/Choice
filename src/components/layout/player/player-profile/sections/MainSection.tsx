@@ -91,13 +91,13 @@ const MainSection: FC<Props> = ({ player }) => {
         </div>
       </div>
       <hr />
-      <PlayerTeam />
-      <ul className="premier-ul">
+      {/* <PlayerTeam /> */}
+      {/* <ul className="premier-ul">
         <Info />
         <Info />
         <Info />
         <Info />
-      </ul>
+      </ul> */}
     </div>
   );
 };

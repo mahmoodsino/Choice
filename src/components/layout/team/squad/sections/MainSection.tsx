@@ -59,7 +59,7 @@ const MainSection = () => {
               return (
                 <div key={i}>
                   {item.position == "Goalkeeper" && (
-                    <Link href={`/player/${item.id}`}>
+                    <Link href={`/player/${item.id}/player-profile`}>
                       <Squad
                         country={item?.country}
                         image={item?.image}
@@ -78,7 +78,7 @@ const MainSection = () => {
               return (
                 <div key={i}>
                   {item.position == "Defender" && (
-                    <Link href={`/player/${item.id}`}>
+                    <Link href={`/player/${item.id}/player-profile`}>
                       <Squad
                         country={item?.country}
                         image={item?.image}
@@ -97,7 +97,7 @@ const MainSection = () => {
               return (
                 <div key={i}>
                   {item.position == "Midfielder" && (
-                    <Link href={`/player/${item.id}`}>
+                    <Link href={`/player/${item.id}/player-profile`}>
                       <Squad
                         country={item.country}
                         image={item?.image}
@@ -116,7 +116,7 @@ const MainSection = () => {
               return (
                 <div key={i}>
                   {item.position == "Attacker" && (
-                    <Link href={`/player/${item.id}`}>
+                    <Link href={`/player/${item.id}/player-profile`}>
                       <Squad
                         country={item?.country}
                         image={item?.image}

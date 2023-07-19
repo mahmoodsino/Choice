@@ -285,6 +285,7 @@ export interface PlayerType {
   country: CountryTypes | null;
   position: string;
   transfers: TransferPlayerType[];
+  trophies: TrophiesType[];
 }
 
 export interface TransferPlayerType {

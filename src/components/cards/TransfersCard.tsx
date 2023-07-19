@@ -1,4 +1,5 @@
 import { TransfersType } from "@/utils";
+import { useRouter } from "next/router";
 import React, { FC } from "react";
 
 interface Props {
@@ -6,10 +7,13 @@ interface Props {
 }
 
 const TransfersCard: FC<Props> = ({ transfers }) => {
+  const { pathname } = useRouter();
   return (
     <div className="transfer-item">
-      <img className="t-img" src={transfers?.player?.image} />
-      <h3>{transfers?.player?.name}</h3>
+      {!pathname.includes("player/[id]") && (
+        <img className="t-img" src={transfers?.player?.image} />
+      )}
+      {!pathname.includes("player/[id]") && <h3>{transfers?.player?.name}</h3>}
       <div className="trans-box">
         <div className="left">
           <a href="#" className="p-name">
