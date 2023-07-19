@@ -72,8 +72,35 @@ export interface FixtureDetailsTypes {
   events: EventsType[];
   home: TeamTypes;
   away: TeamTypes;
-  state: string;
-  time: string;
+  state:
+    | "NS"
+    | "INPLAY_1ST_HALF"
+    | "HT"
+    | "BREAK"
+    | "FT"
+    | "INPLAY_ET"
+    | "AET"
+    | "FT_PEN"
+    | "INPLAY_PENALTIES"
+    | "POSTPONED"
+    | "SUSPENDED"
+    | "CANCELLED"
+    | "TBA"
+    | "WO"
+    | "ABANDONED"
+    | "DELAYED"
+    | "AWARDED"
+    | "INTERRUPTED"
+    | "AWAITING_UPDATES"
+    | "DELETED"
+    | "EXTRA_TIME_BREAK"
+    | "INPLAY_2ND_HALF"
+    | "PENDING";
+  time: {
+    minutes: number;
+    seconds: number;
+  };
+  is_live: boolean;
   starting_at: string;
   league: LeaguesDataTypes;
   score: ScoreType;
@@ -182,18 +209,6 @@ export interface TeamDetailsType {
     league_image: string;
   }[];
   trophies: TrophiesType[];
-}
-
-export interface TeamUpcomingFixtureType {
-  id: number;
-  home: TeamTypes;
-  away: TeamTypes;
-  state: string;
-  time: string;
-  season_id?: number;
-  league: LeaguesDataTypes;
-  starting_at: string;
-  score: ScoreType;
 }
 
 export interface TeamSquadType {

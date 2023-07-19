@@ -4,7 +4,7 @@ import { MainCard, NextMatch } from "@/components/cards";
 import { TeamBox } from "@/components/layout/base-box";
 import { NoData } from "@/components/no-data";
 import { AppContext } from "@/context/BaseBox";
-import { TeamUpcomingFixtureType } from "@/utils";
+import { FixtureDetailsTypes } from "@/utils";
 import { useRouter } from "next/router";
 import { useContext, useEffect, useState } from "react";
 import MatchTr from "./MatchTr";
@@ -17,7 +17,7 @@ const MainSection = () => {
     setIsRightShow(true);
   }, []);
   const { query } = useRouter();
-  const [upcoming, setUpcoming] = useState<TeamUpcomingFixtureType[]>([]);
+  const [upcoming, setUpcoming] = useState<FixtureDetailsTypes[]>([]);
   const { isLoading, refetch, data, error, isError, isFetching } =
     useFetch<any>(query.id ? `v1/teams/upcoming/${query.id}` : "");
 

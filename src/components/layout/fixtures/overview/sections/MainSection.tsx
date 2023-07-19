@@ -2,6 +2,7 @@ import { HowWillWin } from "@/components/cards";
 import { FixturesBox } from "@/components/layout/base-box";
 import { AppContext } from "@/context/BaseBox";
 import { FixtureDetailsTypes, StatisticsTypes } from "@/utils";
+import moment from "moment";
 import React, { FC, useContext, useEffect } from "react";
 
 interface Props {
@@ -60,24 +61,41 @@ const StatisticsDetails: FC<StatisticsDetailsProps> = ({
               </div>
               <div className="img-name">
                 <div className="img-div">
-                  <img
-                    src={
-                      item?.type == "YELLOWCARD"
-                        ? "/YELLOWCARD.png"
-                        : item?.type == "REDCARD"
-                        ? "/REDCARD.png"
-                        : item?.type == "GOAL"
-                        ? "/GOAL.png"
-                        : "/SUBSTITUTION.png"
-                    }
-                  />{" "}
+                  {item?.type != "SUBSTITUTION" ? (
+                    <img
+                      src={
+                        item?.type == "YELLOWCARD"
+                          ? "/YELLOWCARD.png"
+                          : item?.type == "REDCARD"
+                          ? "/REDCARD.png"
+                          : "/GOAL.png"
+                      }
+                    />
+                  ) : (
+                    <>
+                      <img src="/right-arrow.png" />
+                      <img src="/left-arrow.png" />
+                    </>
+                  )}
                 </div>
                 <div
                   style={{ display: "flex", flexDirection: "column" }}
                   className="name"
                 >
-                  <span>{item.player1}</span>
-                  {item?.type == "SUBSTITUTION" && <span>{item?.player2}</span>}
+                  <span
+                    className={`${item?.type == "SUBSTITUTION" && "green"}`}
+                  >
+                    {item.player1}{" "}
+                    {/* {item.type == "GOAL" &&
+                      details?.score?.home - details.score.away} */}
+                  </span>
+                  {item?.type == "SUBSTITUTION" && (
+                    <span
+                      className={`${item?.type == "SUBSTITUTION" && "red"}`}
+                    >
+                      {item?.player2}
+                    </span>
+                  )}
                 </div>
               </div>
             </li>
@@ -98,11 +116,26 @@ const MainSection: FC<Props> = ({ statistics, details }) => {
     <div>
       <ul className="fixture-info-list">
         <li>
-          <img src="/star.svg" />
-          <span>beIN Sports CONNECT MENA</span>
+          <a
+            target={"_blank"}
+            href={
+              details?.venue?.lat && details?.venue?.lng
+                ? `https://www.google.com/maps?q=${details?.venue?.lat},${details?.venue?.lng}`
+                : ""
+            }
+          >
+            <img src="/football-field.png" />
+            <span>{details?.venue?.name}</span>
+          </a>
+        </li>
+        <li>
+          <img src="/clock.png" />
+          <span>
+            {moment(details?.starting_at).format("YYYY-MM-DD HH:mm:ss")}
+          </span>
         </li>
       </ul>
-      <HowWillWin />
+      {/* <HowWillWin /> */}
       {details?.state != "NS" && (
         <StatisticsDetails statistics={statistics} details={details} />
       )}

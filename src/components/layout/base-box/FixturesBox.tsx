@@ -31,26 +31,35 @@ const FixturesBox: FC<Props> = ({ children }) => {
     useFetch<FixtureDetailsDataTypes>(
       query.id ? `v1/fixtures/details/${query.id}` : ""
     );
+  const [firstTime, setFirstTime] = useState(true);
   const [selectedSeason, setSelectedSeason] = useState<number>();
 
   useEffect(() => {
     if (data) {
       setSelectedSeason(data?.data?.season_id);
+      setFirstTime(false);
     }
   }, [data]);
-
-  console.log(data?.data);
+  useEffect(() => {
+    const minutesInterval = setInterval(() => {
+      refetch();
+    }, 60000);
+    return () => {
+      clearInterval(minutesInterval);
+    };
+  }, []);
 
   return (
     <div>
       {!isLoading && !isError && (
         <div className="card">
           <TimeMatch
+            state={data?.data?.state}
             awayTeam={data?.data?.away!}
             homeTeam={data?.data?.home!}
-            startAt={data?.data?.starting_at!}
-            time={data?.data?.time!}
             score={data?.data?.score!}
+            time={data?.data?.time}
+            isLive={data?.data?.is_live}
           />
           <ul className="tabs-list">
             <li>
@@ -129,7 +138,7 @@ const FixturesBox: FC<Props> = ({ children }) => {
           )}
         </div>
       )}
-      {isLoading && <Loading style={{ width: "50px" }} />}
+      {isLoading && firstTime && <Loading style={{ width: "50px" }} />}
       {isError && <ReloadButton refetch={refetch} />}
     </div>
   );
